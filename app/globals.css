@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@plugin "daisyui";
+
 
 .font-passero {
   font-family: var(--font-passero);

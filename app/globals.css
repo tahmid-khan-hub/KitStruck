@@ -1,1 +1,9 @@
 @import "tailwindcss";
+
+.font-passero {
+  font-family: var(--font-passero);
+}
+
+.inter {
+    font-family: var(--font-inter);
+}

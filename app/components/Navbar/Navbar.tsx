@@ -1,5 +1,6 @@
 "use client";
 import UseNavbar from "./UseNavbar";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 
 const Navbar = () => {
@@ -64,15 +65,22 @@ const Navbar = () => {
               </svg>
             </label>
 
-            {isOpen && (
-              <ul
+            <AnimatePresence>
+              {isOpen && (
+              <motion.ul
+                key="mobile-menu"
+                initial={{ x: "100%", opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                exit={{ x: "100%", opacity: 0 }}
+                transition={{ duration: 0.4, ease: "easeInOut" }}
                 tabIndex={0}
                 className="absolute right-0 mt-3 w-60 p-4 rounded-2xl shadow-lg
              bg-white border border-white/20 flex flex-col gap-4 z-50 text-black"
               >
                 {links}
-              </ul>
+              </motion.ul>
             )}
+            </AnimatePresence>
           </div>
         </div>
       </div>

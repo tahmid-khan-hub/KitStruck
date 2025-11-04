@@ -1,24 +1,13 @@
 "use client";
-
-import Slider from "react-slick";
 import { motion } from "framer-motion";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
 import Link from "next/link";
 import Image from "next/image";
 
 const Banner = () => {
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 700,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 4000,
-    pauseOnHover: false,
-    arrows: false,
-  };
 
   const images = [
     "/banner1.jpeg",
@@ -26,7 +15,7 @@ const Banner = () => {
     "/banner3.avif",
   ];
 
-  return <section className="flex flex-col md:flex-row items-center justify-between px-6 md:px-16 py-10 bg-gray-50">
+  return <section className="max-w-[1350px] mx-auto"><section className="flex flex-col-reverse md:flex-row items-center justify-between px-4 md:px-3 py-10 bg-gray-50">
       {/* Left Side */}
       <motion.div
         initial={{ opacity: 0, x: -50 }}
@@ -49,28 +38,32 @@ const Banner = () => {
         </Link>
       </motion.div>
 
-      {/* Right Side - Auto Image Slider */}
-      <motion.div
-        initial={{ opacity: 0, x: 50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8, delay: 0.3 }}
-        className="md:w-1/2 mt-10 md:mt-0"
-      >
-        <Slider {...settings}>
+      {/* Right Side */}
+      <div className="md:w-1/2 w-full mt-10 md:mt-0">
+        <Swiper
+          modules={[Autoplay, Pagination]}
+          spaceBetween={30}
+          slidesPerView={1}
+          autoplay={{ delay: 3000 }}
+          pagination={{ clickable: true }}
+          loop
+          className="rounded-2xl shadow-md"
+        >
           {images.map((src, index) => (
-            <div key={index} className="relative w-full h-[400px]">
+            <SwiperSlide key={index}>
               <Image
                 src={src}
                 alt={`banner-${index}`}
-                fill
-                className="object-cover rounded-2xl shadow-md"
+                width={800}
+                height={500}
+                className="w-full h-[300px] md:h-[400px] rounded-2xl object-cover"
                 priority
               />
-            </div>
+            </SwiperSlide>
           ))}
-        </Slider>
-      </motion.div>
-    </section>;
+        </Swiper>
+      </div>
+    </section></section>;
 };
 
 export default Banner;

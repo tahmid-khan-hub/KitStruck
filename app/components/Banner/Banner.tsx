@@ -21,25 +21,27 @@ const Banner = () => {
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8 }}
-        className="md:w-1/2 space-y-6"
+        className="md:w-1/2 space-y-5 space-x-5"
       >
-        <h1 className="text-4xl md:text-6xl font-bold text-gray-900 leading-tight">
+        <h1 className="text-4xl md:text-6xl font-bold text-gray-900 leading-tight mt-7 md:mt-0 text-center md:text-left">
           Embrace the Future of Style
         </h1>
-        <p className="text-gray-600 text-lg">
+        <p className="text-gray-600 text-lg text-center md:text-left">
           Discover a new era of comfort and confidence. Elevate your lifestyle
           with our exclusive collection designed for modern explorers.
         </p>
-        <Link
-          href="#"
-          className="inline-block bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition"
-        >
-          Explore Now
-        </Link>
+        <div className="flex justify-center md:justify-start">
+          <Link
+            href="#"
+            className="inline-block bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition"
+          >
+            Explore Now
+          </Link>
+        </div>
       </motion.div>
 
       {/* Right Side */}
-      <div className="md:w-1/2 w-full mt-10 md:mt-0">
+      <div className="md:w-1/2 w-full ">
         <Swiper
           modules={[Autoplay, Pagination]}
           spaceBetween={30}

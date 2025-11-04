@@ -17,27 +17,30 @@ const Banner = () => {
 
   return <section className="max-w-[1350px] mx-auto"><section className="flex flex-col-reverse md:flex-row items-center justify-between px-4 md:px-3 py-10 bg-gray-50">
       {/* Left Side */}
-      <motion.div
-        initial={{ opacity: 0, x: -50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8 }}
+      <div
         className="md:w-1/2 space-y-5 space-x-5"
       >
-        <h1 className="text-4xl md:text-6xl font-bold text-gray-900 leading-tight mt-7 md:mt-0 text-center md:text-left">
+        <motion.h1 initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.6 }} className="text-4xl md:text-6xl font-bold text-gray-900 leading-tight mt-7 md:mt-0 text-center md:text-left">
           Elevate Your Game Day Look.
-        </h1>
-        <p className="text-gray-600 text-lg text-center md:text-left">
+        </motion.h1>
+        <motion.p initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.8 }} className="text-gray-600 text-lg text-center md:text-left">
           Find top-selling jerseys, trending collections and classic retro kits all in one place. Style that scores every time.
-        </p>
-        <div className="flex justify-center md:justify-start">
+        </motion.p>
+        <motion.div initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 1 }} className="flex justify-center md:justify-start">
           <Link
             href="#"
             className="inline-block bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition"
           >
             Get Yours Now
           </Link>
-        </div>
-      </motion.div>
+        </motion.div>
+      </div>
 
       {/* Right Side */}
       <div className="md:w-1/2 w-full ">

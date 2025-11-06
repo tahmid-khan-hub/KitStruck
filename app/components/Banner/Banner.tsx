@@ -15,7 +15,7 @@ const Banner = () => {
     "/banner3.avif",
   ];
 
-  return <section className="max-w-[1350px] mx-auto"><section className="flex flex-col-reverse md:flex-row items-center justify-between px-4 md:px-3 py-10 bg-gray-50">
+  return <section className="max-w-[1350px] mx-auto"><section className="flex flex-col-reverse md:flex-row items-center justify-between px-4 md:px-3 py-10 ">
       {/* Left Side */}
       <div
         className="md:w-1/2 space-y-5 space-x-5"

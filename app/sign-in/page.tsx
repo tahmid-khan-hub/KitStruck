@@ -9,9 +9,10 @@ const LoginPage = () => {
     <div className="max-w-[1350px] mx-auto">
       <motion.div  initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="min-h-screen flex w-full items-center justify-center p-8 mb-11"><div className="card w-full max-w-md bg-base-200 shadow-xl p-8 space-y-6">
         {/* Title */}
-        <h2 className="text-3xl font-bold text-center">Welcome Back!</h2>
+        <h2 className="text-3xl font-bold text-center pt-4">Welcome Back to Kitstruck</h2>
+        <p className="text-center">Sign In to grab your favorite team jersey and show your colors with pride.</p>
         {/* Lottie */}
-        <div className="">
+        <div className="mb-11 -mt-6">
           <Lottie
             play
             loop
@@ -40,7 +41,7 @@ const LoginPage = () => {
             </a>
           </div>
           <button type="submit" className="btn w-full">
-            Login
+            Sign In
           </button>
         </form>
 
@@ -57,7 +58,7 @@ const LoginPage = () => {
         </button>
 
         {/* link of sign up page */}
-        <p className="mb-4 mt-1 font-semibold">New to this site? Please Sign-up <Link className="text-blue-500" href={'/sign-up'}>here</Link></p>
+        <p className="mb-4 mt-1">New to this site? Please Sign-up <Link className="text-blue-500" href={'/sign-up'}>here</Link></p>
       </div></motion.div>
     </div>
   );

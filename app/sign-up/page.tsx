@@ -2,7 +2,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Lottie from "react-lottie-player";
-import SignInLottie from "@/public/sign-in.json";
+import SignInLottie from "@/public/sign-up.json";
 
 const SignUpPage = () => {
   return (

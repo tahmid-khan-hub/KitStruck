@@ -1,9 +1,10 @@
 "use client"
+import { motion } from "framer-motion";
 import Link from "next/link";
 const LoginPage = () => {
   return (
     <div className="max-w-[1350px] mx-auto">
-      <div className="flex w-full items-center justify-center p-8 mt-12"><div className="card w-full max-w-md bg-base-200 shadow-xl p-8 space-y-6">
+      <motion.div  initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="min-h-screen flex w-full items-center justify-center p-8 "><div className="card w-full max-w-md bg-base-200 shadow-xl p-8 space-y-6">
         {/* Title */}
         <h2 className="text-3xl mb-11 font-bold text-center">Welcome Back!</h2>
         {/* Form */}
@@ -45,7 +46,7 @@ const LoginPage = () => {
 
         {/* link of sign up page */}
         <p className="mb-4 mt-1 font-semibold">New to this site? Please Sign-up <Link className="text-blue-500" href={'/sign-up'}>here</Link></p>
-      </div></div>
+      </div></motion.div>
     </div>
   );
 };

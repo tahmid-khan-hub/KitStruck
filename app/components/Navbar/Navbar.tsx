@@ -40,7 +40,7 @@ const Navbar = () => {
 
         {/* Right side */}
         <div className="flex items-center gap-4">
-          <button className="btn">Login</button>
+          <Link href={'/sign-in'}><button className="btn">Sign In</button></Link>
 
           {/* Mobile menu */}
           <div className="lg:hidden relative" ref={menuRef}>

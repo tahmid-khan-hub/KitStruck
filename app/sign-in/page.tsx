@@ -1,12 +1,24 @@
 "use client"
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Lottie from "react-lottie-player";
+import SignInLottie from "@/public/sign-in.json"
+
 const LoginPage = () => {
   return (
     <div className="max-w-[1350px] mx-auto">
-      <motion.div  initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="min-h-screen flex w-full items-center justify-center p-8 "><div className="card w-full max-w-md bg-base-200 shadow-xl p-8 space-y-6">
+      <motion.div  initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="min-h-screen flex w-full items-center justify-center p-8 mb-11"><div className="card w-full max-w-md bg-base-200 shadow-xl p-8 space-y-6">
         {/* Title */}
-        <h2 className="text-3xl mb-11 font-bold text-center">Welcome Back!</h2>
+        <h2 className="text-3xl font-bold text-center">Welcome Back!</h2>
+        {/* Lottie */}
+        <div className="">
+          <Lottie
+            play
+            loop
+            animationData={SignInLottie} 
+            className="w-[250px] max-w-md mx-auto"
+          />
+        </div>
         {/* Form */}
         <form className="space-y-4">
           <input

@@ -1,24 +1,11 @@
 "use client"
-import Lottie from "react-lottie-player";
-import SignInLottie from "@/public/sign-in.json"
 import Link from "next/link";
 const LoginPage = () => {
   return (
-    <div className="min-h-screen"><div className="flex flex-col md:flex-row max-w-[1350px] mx-auto">
-      {/* Lottie */}
-      <div className="min-h-screen hidden md:flex w-1/2 items-center justify-center ">
-        <Lottie
-          play
-          loop
-          animationData={SignInLottie} 
-          className="w-3/4 max-w-md"
-        />
-      </div>
-
-      <div className="flex w-full md:w-1/2 items-center justify-center p-8"><div className="card w-full max-w-md bg-base-200 shadow-xl p-8 space-y-6">
+    <div className="max-w-[1350px] mx-auto">
+      <div className="flex w-full items-center justify-center p-8 mt-12"><div className="card w-full max-w-md bg-base-200 shadow-xl p-8 space-y-6">
         {/* Title */}
-        <h2 className="text-3xl mb-11 font-bold text-center">Welcome Back</h2>
-
+        <h2 className="text-3xl mb-11 font-bold text-center">Welcome Back!</h2>
         {/* Form */}
         <form className="space-y-4">
           <input
@@ -27,7 +14,6 @@ const LoginPage = () => {
             className="input input-bordered w-full"
             required
           />
-
           <input
             type="password"
             placeholder="Enter your password"
@@ -40,7 +26,6 @@ const LoginPage = () => {
               Forgot password?
             </a>
           </div>
-
           <button type="submit" className="btn w-full">
             Login
           </button>
@@ -61,7 +46,7 @@ const LoginPage = () => {
         {/* link of sign up page */}
         <p className="mb-4 mt-1 font-semibold">New to this site? Please Sign-up <Link className="text-blue-500" href={'/sign-up'}>here</Link></p>
       </div></div>
-    </div></div>
+    </div>
   );
 };
 

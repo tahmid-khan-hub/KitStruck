@@ -35,7 +35,7 @@ export default function RootLayout({
 
         <BannerWrapper></BannerWrapper>
 
-        <div>{children}</div>
+        <div className="min-h-screen">{children}</div>
         <Footer></Footer>
       </body>
     </html>

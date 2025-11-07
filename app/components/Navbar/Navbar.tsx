@@ -2,6 +2,7 @@
 import UseNavbar from "./UseNavbar";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 
 const Navbar = () => {
   const { isOpen, setIsOpen, menuRef } = UseNavbar();
@@ -29,8 +30,9 @@ const Navbar = () => {
     <div className="sticky top-0 z-10 bg-background/55 backdrop-blur-md text-white">
       <div className="max-w-[1350px] mx-auto w-full flex items-center justify-between px-4 md:px-3 h-16">
         {/* Left side */}
-        <Link href="/" className="font-passero text-xl font-bold text-black">
-          KitStruck
+        <Link href="/" className="font-passero text-xl font-bold text-black flex">
+        <Image src={"/Navbar-logo.png"} alt="Kitstruck-logo" width={40} height={40} ></Image>
+          <span className="mt-3 ml-1 text-gray-700">KitStruck</span>
         </Link>
 
         {/* Center links */}

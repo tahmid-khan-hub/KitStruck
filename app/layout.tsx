@@ -19,6 +19,9 @@ const passero = Passero_One({
 export const metadata: Metadata = {
   title: "KitStruck",
   description: "",
+  icons: {
+    icon: "/logo.png",
+  },
 };
 
 export default function RootLayout({

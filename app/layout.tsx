@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import BannerWrapper from "./components/Banner/BannerWrapper";
+import Providers from "./providers";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -34,12 +35,12 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${passero.variable} antialiased inter bg-white`}
       >
-        <Navbar></Navbar>
+        <Providers><Navbar></Navbar>
 
         <BannerWrapper></BannerWrapper>
 
         <div>{children}</div>
-        <Footer></Footer>
+        <Footer></Footer></Providers>
       </body>
     </html>
   );

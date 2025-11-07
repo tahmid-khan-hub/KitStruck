@@ -3,8 +3,10 @@ import UseNavbar from "./UseNavbar";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
+import { signOut, useSession } from "next-auth/react";
 
 const Navbar = () => {
+  const { data: session } = useSession(); 
   const { isOpen, setIsOpen, menuRef } = UseNavbar();
 
   const links = (
@@ -42,7 +44,9 @@ const Navbar = () => {
 
         {/* Right side */}
         <div className="flex items-center gap-4">
-          <Link href={'/sign-in'}><button className="btn">Sign In</button></Link>
+          {session ? <button onClick={() => signOut()} className="btn">Sign out</button> : <Link href={"/sign-in"}><button className="btn">Sign In</button></Link>}
+
+          {/* <Link href={'/sign-in'}><button className="btn">Sign In</button></Link> */}
 
           {/* Mobile menu */}
           <div className="lg:hidden relative" ref={menuRef}>

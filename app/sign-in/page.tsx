@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import Lottie from "react-lottie-player";
 import SignInLottie from "@/public/sign-in.json"
+import { signIn } from "next-auth/react";
 
 const LoginPage = () => {
   return (
@@ -50,6 +51,7 @@ const LoginPage = () => {
 
         {/* Google Login */}
         <button
+          onClick={() => signIn("google", { callbackUrl: "/" })}
           type="button"
           className="btn btn-outline w-full"
         >

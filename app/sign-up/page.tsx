@@ -4,6 +4,7 @@ import Link from "next/link";
 import Lottie from "react-lottie-player";
 import SignInLottie from "@/public/sign-up.json";
 import { signIn } from "next-auth/react";
+import SignUpForm from "./components/SignUpForm";
 
 const SignUpPage = () => {
   return (
@@ -24,36 +25,7 @@ const SignUpPage = () => {
             />
           </div>
           {/* Form */}
-          <form className="space-y-4">
-            <input
-              type="text"
-              placeholder="Enter your Name"
-              className="input input-bordered w-full mb-6"
-              required
-            />
-            <input
-              type="text"
-              placeholder="Enter your PhotoURL"
-              className="input input-bordered w-full mb-6"
-              required
-            />
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="input input-bordered w-full mb-6"
-              required
-            />
-            <input
-              type="password"
-              placeholder="Enter your password"
-              className="input input-bordered w-full"
-              required
-            />
-
-            <button type="submit" className="btn w-full mt-5">
-              Sign up
-            </button>
-          </form>
+          <SignUpForm></SignUpForm>
 
           {/* Divider */}
           <div className="divider">OR</div>

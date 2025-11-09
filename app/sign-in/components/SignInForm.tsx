@@ -13,7 +13,7 @@ const SignInForm = () => {
 
     const res = await signInUsers({email, password});
 
-    if (res) {
+    if (res.success) {
       alert("Sign in successful!");
       form.reset();
     } else {

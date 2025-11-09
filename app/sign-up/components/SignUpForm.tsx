@@ -1,27 +1,40 @@
 import { signUpUsers } from "@/app/actions/auth/signUpUsers";
+import { signIn } from "next-auth/react";
 import { FormEvent } from "react";
 
 const SignUpForm = () => {
-    const handleSubmit = async(e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-        const form = e.currentTarget;
-        const formData = new FormData(form);
+    const form = e.currentTarget;
+    const formData = new FormData(form);
 
-        const name = formData.get("name") as string;
-        const photoURL = formData.get("photo") as string;
-        const email = formData.get("email") as string;
-        const password = formData.get("password") as string;
+    const name = formData.get("name") as string;
+    const photoURL = formData.get("photo") as string;
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
 
-        const res = await signUpUsers({ name, email, password, photoURL });
+    const res = await signUpUsers({ name, email, password, photoURL });
 
-        if(res){
-            alert("Registration successful!");
-            form.reset();
-        }else{
-            alert("User already exists or registration failed.");
-        }
+    if (res.success) {
+      const loginRes = await signIn("credentials", {
+        redirect: false,
+        email,
+        password,
+      });
+
+      if (loginRes?.ok) {
+        alert("Registration successful!");
+        // redirect user
+        window.location.href = "/";
+      } else {
+        alert("Registered but login failed");
+      }
+      form.reset();
+    } else {
+      alert("User already exists or registration failed.");
     }
+  };
   return (
     <div>
       <form onSubmit={handleSubmit} className="space-y-4">

@@ -1,7 +1,9 @@
 import GoogleProvider from "next-auth/providers/google";
+import CredentialsProvider from "next-auth/providers/credentials";
 import pool from "./mysql";
 import { RowDataPacket } from "mysql2";
 import { User } from "next-auth";
+import bcrypt from "bcryptjs";
 
 interface DBUser {
   id: number;
@@ -13,6 +15,38 @@ interface DBUser {
 
 export const authOptions = {
   providers: [
+    CredentialsProvider({
+      name: "Credentials",
+      credentials: {
+        email: { label: "Email", type: "text" },
+        password: { label: "Password", type: "password" },
+      },
+      async authorize(credentials): Promise<User | null>{
+        if (!credentials?.email || !credentials?.password)
+          throw new Error("Invalid credentials");
+
+        const dbConnect = await pool.getConnection();
+        const [rows] = await dbConnect.query<DBUser[] & RowDataPacket[]>(
+          "SELECT * FROM users WHERE email = ?",
+          [credentials.email]
+        );
+        dbConnect.release();
+
+        if (rows.length === 0) throw new Error("No user found");
+
+        const user = rows[0];
+        const isPassword = await bcrypt.compare(credentials.password, user.password!);
+        if (!isPassword) throw new Error("Incorrect password");
+
+        // saved to session
+        return {
+          id: user.id.toString(), 
+          name: user.name,
+          email: user.email,
+          image: user.photoURL,
+        };
+      },
+    }),
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,

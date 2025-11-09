@@ -1,4 +1,5 @@
 import { signInUsers } from "@/app/actions/auth/signInUsers";
+import { signIn } from "next-auth/react";
 import { FormEvent } from "react";
 
 const SignInForm = () => {
@@ -11,10 +12,22 @@ const SignInForm = () => {
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
 
-    const res = await signInUsers({email, password});
+    const res = await signInUsers({ email, password });
 
     if (res.success) {
-      alert("Sign in successful!");
+      const loginRes = await signIn("credentials", {
+        redirect: false,
+        email,
+        password,
+      });
+
+      if (loginRes?.ok) {
+        alert("Sign in successful!");
+        // redirect user
+        window.location.href = "/";
+      } else {
+        alert("sign in failed");
+      }
       form.reset();
     } else {
       alert("Something went wrong. Sign in is not successful");

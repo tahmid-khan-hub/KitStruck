@@ -1,5 +1,6 @@
 import Feedback from "./components/Feedback/Feedback";
 import NewArrivals from "./components/NewArrivals/NewArrivals";
+import Retro from "./components/Retro/Retro";
 import TopSelling from "./components/TopSelling/TopSelling";
 
 export default function Home() {
@@ -7,6 +8,7 @@ export default function Home() {
     <div className="text-black max-w-[1350px] mx-auto px-4 md:px-3">
       <TopSelling></TopSelling>
       <NewArrivals></NewArrivals>
+      <Retro></Retro>
       <Feedback></Feedback>
     </div>
   );

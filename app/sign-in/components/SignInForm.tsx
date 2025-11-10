@@ -1,8 +1,10 @@
 import { signInUsers } from "@/app/actions/auth/signInUsers";
 import { signIn } from "next-auth/react";
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
+import { FaEye, FaEyeSlash } from "react-icons/fa6";
 
 const SignInForm = () => {
+  const [showPassword, setShowPassword] = useState(false);
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -43,13 +45,21 @@ const SignInForm = () => {
           className="input input-bordered w-full"
           required
         />
-        <input
-          type="password"
-          name="password"
-          placeholder="Enter your password"
-          className="input input-bordered w-full"
-          required
-        />
+        <div className="relative">
+          <input
+            type={showPassword ? "text" : "password"}
+            name="password"
+            placeholder="Enter your password"
+            className="input input-bordered w-full pr-10"
+            required
+          />
+          <span
+            className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-black"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
+          </span>
+        </div>
 
         <div className="text-right">
           <a href="#" className="text-sm text-blue-600 hover:underline">

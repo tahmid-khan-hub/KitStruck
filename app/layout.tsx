@@ -33,7 +33,7 @@ export default function RootLayout({
   return (
     <html lang="en" data-theme="light">
       <body
-        className={`${inter.variable} ${passero.variable} antialiased inter bg-white`}
+        className={`${inter.variable} ${passero.variable} antialiased inter bg-base-200`}
       >
         <Providers><Navbar></Navbar>
 

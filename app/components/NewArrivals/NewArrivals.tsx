@@ -15,13 +15,13 @@ const NewArrivals = () => {
       .catch((err) => console.error("Fetch error:", err));
   }, []);
   return (
-    <div>
-      <h2 className="text-xl font-bold mb-4">New Arrivals</h2>
+    <div className="my-24">
+      <h2 className="text-3xl text-center font-bold mb-8">New Arrivals</h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {data.map((jersey) => (
           <div
             key={jersey.jersey_id}
-            className="p-3 border rounded-lg flex flex-col justify-between hover:shadow-md transition"
+            className="p-3 bg-white rounded-lg flex flex-col justify-between hover:shadow-md transition"
           >
             <Image
               src={jersey.image_url}

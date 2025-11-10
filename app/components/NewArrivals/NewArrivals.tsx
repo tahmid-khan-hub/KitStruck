@@ -15,7 +15,7 @@ const NewArrivals = () => {
   }, []);
   return (
     <div>
-      <div className="my-24">
+      <div className="my-24 max-w-[1350px] mx-auto">
         <h2 className="text-3xl text-center font-bold mb-8">
           New Arrivals
         </h2>

@@ -15,7 +15,7 @@ const TopSelling = () => {
   }, []);
   return (
     <div>
-      <div className="my-24">
+      <div className="my-24 max-w-[1350px] mx-auto">
         <h2 className="text-3xl text-center font-bold mb-8">Top Selling</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {data.map((jersey) => (

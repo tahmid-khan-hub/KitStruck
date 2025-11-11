@@ -1,4 +1,6 @@
-export interface Jersey {
+import { RowDataPacket } from "mysql2";
+
+export interface Jersey extends RowDataPacket{
   jersey_id: number;
   name: string;
   team: string;

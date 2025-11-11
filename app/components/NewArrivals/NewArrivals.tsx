@@ -16,9 +16,10 @@ const NewArrivals = () => {
   return (
     <div>
       <div className="my-24 max-w-[1350px] mx-auto">
-        <h2 className="text-3xl text-center font-bold mb-8">
+        <h2 className="text-3xl text-center font-bold mb-3">
           New Arrivals
         </h2>
+        <p className="text-center text-gray-600 mb-8">Be the first to wear our latest jerseys built for speed and comfort.</p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {data.map((jersey) => (
             <div

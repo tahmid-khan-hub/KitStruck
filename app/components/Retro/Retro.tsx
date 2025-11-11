@@ -16,7 +16,8 @@ const Retro = () => {
   return (
     <div>
       <div className="my-24 max-w-[1350px] mx-auto">
-        <h2 className="text-3xl text-center font-bold mb-8">Top Retro Collection</h2>
+        <h2 className="text-3xl text-center font-bold mb-3">Top Retro Collection</h2>
+        <p className="text-center text-gray-600 mb-8">Relive the glory days with jerseys that celebrate football’s golden era.</p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {data.map((jersey) => (
             <div

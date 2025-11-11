@@ -34,7 +34,7 @@ const JerseysPage = () => {
     setPage(1);
   };
   return (
-    <div>
+    <div className="min-h-screen">
       <JerseysContainer
         jerseys={jerseys}
         search={search}

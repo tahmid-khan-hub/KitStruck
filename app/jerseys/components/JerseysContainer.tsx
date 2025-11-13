@@ -17,7 +17,7 @@ interface JerseysContainerProps {
 }
 const JerseysContainer = ({jerseys, search, setSearch, sort,handleSortChange, page, setPage, totalPage
 }: JerseysContainerProps) => {
-  return <div className="max-w-[1350px] mx-auto px-4 md:px-3 min-h-screen flex flex-col justify-center items-center">
+  return <div className="max-w-[1350px] mx-auto px-4 md:px-3 flex flex-col justify-center items-center">
      {/* Search + Sort */}
       <div className="flex flex-row items-center justify-between gap-4 mb-10 ">
         {/* Search */}
@@ -36,7 +36,7 @@ const JerseysContainer = ({jerseys, search, setSearch, sort,handleSortChange, pa
       {jerseys.length === 0 ? (
         <div className="min-h-screen"><p className="text-center text-gray-500">No jerseys found.</p></div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {jerseys.map((jersey) => (
             <motion.div
               whileHover={{

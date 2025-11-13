@@ -3,6 +3,7 @@ import { Jersey } from "@/types/jersey";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { FaArrowRightLong } from "react-icons/fa6";
+import { motion } from "framer-motion";
 
 const Retro = () => {
   const [data, setData] = useState<Jersey[]>([]);
@@ -20,9 +21,14 @@ const Retro = () => {
         <p className="text-center text-gray-600 mb-8">Relive the glory days with jerseys that celebrate football’s golden era.</p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {data.map((jersey) => (
-            <div
+            <motion.div
+              whileHover={{
+              scale: 1.02, 
+              boxShadow: "0px 0px 20px rgba(0, 123, 255, 0.7)",
+              }}
+              transition={{ duration: 0 }}
               key={jersey.jersey_id}
-              className="p-3 bg-white rounded-lg flex flex-col justify-between hover:shadow-md transition"
+              className="p-3 border-2 border-gray-200 bg-white rounded-lg flex flex-col justify-between hover:shadow-md transition"
             >
               <Image
                 src={jersey.image_url}
@@ -42,7 +48,7 @@ const Retro = () => {
                   </button>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

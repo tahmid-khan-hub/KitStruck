@@ -26,7 +26,7 @@ const Retro = () => {
               scale: 1.02, 
               boxShadow: "0px 0px 20px rgba(0, 123, 255, 0.7)",
               }}
-              transition={{ duration: 0 }}
+              transition={{ duration: 0.1 }}
               key={jersey.jersey_id}
               className="p-3 border-2 border-gray-200 bg-white rounded-lg flex flex-col justify-between hover:shadow-md transition"
             >
@@ -43,7 +43,7 @@ const Retro = () => {
                   <p className="text-gray-800 font-semibold text-lg">
                     ${jersey.price}
                   </p>
-                  <button className="flex items-center justify-center text-blue-500 p-2 rounded-md transition">
+                  <button className="flex items-center justify-center text-blue-500 p-2 rounded-md hover:bg-blue-50 transition">
                     <FaArrowRightLong />
                   </button>
                 </div>

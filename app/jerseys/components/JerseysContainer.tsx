@@ -2,6 +2,7 @@
 import { Jersey } from "@/types/jersey";
 import Image from "next/image";
 import { FaArrowRightLong, FaGreaterThan, FaLessThan } from "react-icons/fa6";
+import DropDown from "./dropDown";
 
 interface JerseysContainerProps {
   jerseys: Jersey[];
@@ -26,19 +27,8 @@ const JerseysContainer = ({jerseys, search, setSearch, sort,handleSortChange, pa
           onChange={(e) => setSearch(e.target.value)}
           className="w-full md:w-1/2 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
         />
-
-        {/* Sort Dropdown */}
-        <select
-          value={sort}
-          onChange={(e) => handleSortChange(e.target.value)}
-          className="w-full md:w-1/4 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black-500"
-        >
-          <option value="default">Featured</option>
-          <option value="price_asc">Price: Low to High</option>
-          <option value="price_desc">Price: High to Low</option>
-          <option value="popularity">Most Popular</option>
-          <option value="less_popularity">Less Popular</option>
-        </select>
+        {/* Dropdown */}
+        <DropDown sort={sort} handleSortChange={handleSortChange} />
       </div>
 
       {/* Jerseys Grid */}

@@ -33,10 +33,11 @@ const JerseysContainer = ({jerseys, search, setSearch, sort,handleSortChange, pa
           onChange={(e) => handleSortChange(e.target.value)}
           className="w-full md:w-1/4 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black-500"
         >
-          <option value="default">Sort by Default</option>
+          <option value="default">Featured</option>
           <option value="price_asc">Price: Low to High</option>
           <option value="price_desc">Price: High to Low</option>
-          <option value="popularity">Popularity</option>
+          <option value="popularity">Most Popular</option>
+          <option value="less_popularity">Less Popular</option>
         </select>
       </div>
 

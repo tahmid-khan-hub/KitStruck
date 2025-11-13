@@ -3,6 +3,7 @@ import { Jersey } from "@/types/jersey";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { FaArrowRightLong } from "react-icons/fa6";
+import { motion } from "framer-motion";
 
 const NewArrivals = () => {
   const [data, setData] = useState<Jersey[]>([]);
@@ -22,7 +23,12 @@ const NewArrivals = () => {
         <p className="text-center text-gray-600 mb-8">Be the first to wear our latest jerseys built for speed and comfort.</p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {data.map((jersey) => (
-            <div
+            <motion.div
+              whileHover={{
+              scale: 1.02, 
+              boxShadow: "0px 0px 20px rgba(0, 123, 255, 0.7)",
+              }}
+              transition={{ duration: 0.1 }}
               key={jersey.jersey_id}
               className="p-3 border-2 border-gray-200 bg-base-200 rounded-lg flex flex-col justify-between hover:shadow-md transition"
             >
@@ -39,12 +45,12 @@ const NewArrivals = () => {
                   <p className="text-gray-800 font-semibold text-lg">
                     ${jersey.price}
                   </p>
-                  <button className="flex items-center justify-center text-blue-500 p-2 rounded-md transition">
+                  <button className="flex items-center justify-center text-blue-500 p-2 rounded-md hover:bg-blue-50 transition">
                     <FaArrowRightLong />
                   </button>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

@@ -3,6 +3,7 @@ import { Jersey } from "@/types/jersey";
 import Image from "next/image";
 import { FaArrowRightLong, FaGreaterThan, FaLessThan } from "react-icons/fa6";
 import DropDown from "./dropDown";
+import { motion } from "framer-motion";
 
 interface JerseysContainerProps {
   jerseys: Jersey[];
@@ -37,7 +38,12 @@ const JerseysContainer = ({jerseys, search, setSearch, sort,handleSortChange, pa
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {jerseys.map((jersey) => (
-            <div
+            <motion.div
+              whileHover={{
+              scale: 1.02, 
+              boxShadow: "0px 0px 20px rgba(0, 123, 255, 0.7)",
+              }}
+              transition={{ duration: 0.2 }}
               key={jersey.jersey_id}
               className="p-3 border-2 border-gray-200 bg-white rounded-lg flex flex-col justify-between hover:shadow-lg"
             >
@@ -59,7 +65,7 @@ const JerseysContainer = ({jerseys, search, setSearch, sort,handleSortChange, pa
                   </button>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       )}

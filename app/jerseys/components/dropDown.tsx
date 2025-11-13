@@ -1,5 +1,6 @@
 "use client";
 import Menu from "@/app/hooks/Menu";
+import { FaChevronDown } from "react-icons/fa6";
 
 interface DropDownProps {
   sort: string;
@@ -30,6 +31,7 @@ const DropDown: React.FC<DropDownProps> = ({ sort, handleSortChange }) => {
           hover:bg-gray-50 transition"
       >
         {currentLabel}
+        <FaChevronDown />
       </button>
 
       {/* Dropdown List */}

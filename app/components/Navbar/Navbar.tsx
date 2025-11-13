@@ -1,13 +1,13 @@
 "use client";
-import UseNavbar from "./UseNavbar";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { signOut, useSession } from "next-auth/react";
+import Menu from "@/app/hooks/Menu";
 
 const Navbar = () => {
   const { data: session } = useSession(); 
-  const { isOpen, setIsOpen, menuRef } = UseNavbar();
+  const { isOpen, setIsOpen, menuRef } = Menu();
 
   const links = (
     <>

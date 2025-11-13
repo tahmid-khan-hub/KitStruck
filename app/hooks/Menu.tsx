@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 
-const UseNavbar = () => {
+const Menu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -20,7 +20,7 @@ const UseNavbar = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isOpen]);
 
-   return { isOpen, setIsOpen, menuRef };
+  return { isOpen, setIsOpen, menuRef };
 };
 
-export default UseNavbar;
+export default Menu;

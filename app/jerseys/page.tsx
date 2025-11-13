@@ -35,6 +35,8 @@ const JerseysPage = () => {
   };
   return (
     <div className="min-h-screen">
+      <h1 className="text-center text-3xl font-semibold mb-3 mt-12">Jerseys</h1>
+      <p className="text-gray-600 text-center mb-8">Whether on the field or in the stands, wear your colors loud with our top-rated jerseys.</p>
       <JerseysContainer
         jerseys={jerseys}
         search={search}

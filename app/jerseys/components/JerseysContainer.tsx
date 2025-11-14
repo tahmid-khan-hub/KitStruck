@@ -4,6 +4,8 @@ import Image from "next/image";
 import { FaArrowRightLong, FaGreaterThan, FaLessThan } from "react-icons/fa6";
 import DropDown from "./dropDown";
 import { motion } from "framer-motion";
+import Lottie from "react-lottie-player";
+import NoJerseyFound from "@/public/Not Found.json"
 
 interface JerseysContainerProps {
   jerseys: Jersey[];
@@ -34,7 +36,8 @@ const JerseysContainer = ({jerseys, search, setSearch, sort,handleSortChange, pa
 
       {/* Jerseys Grid */}
       {jerseys.length === 0 ? (
-        <div className="min-h-screen"><p className="text-center text-gray-500">No jerseys found.</p></div>
+        <div className="min-h-screen"><Lottie play loop animationData={NoJerseyFound} className="w-[250px] max-w-md mx-auto"
+          /><p className="text-center text-gray-500 -mt-5">No jerseys found.</p></div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {jerseys.map((jersey) => (
@@ -71,7 +74,7 @@ const JerseysContainer = ({jerseys, search, setSearch, sort,handleSortChange, pa
       )}
 
       {/* Pagination */}
-      <div className="flex justify-center items-center gap-4 mt-20 mb-6">
+      {jerseys.length > 0 && <div className="flex justify-center items-center gap-4 mt-20 mb-6">
         <button
           disabled={page === 1}
           onClick={() => setPage(page - 1)}
@@ -91,7 +94,7 @@ const JerseysContainer = ({jerseys, search, setSearch, sort,handleSortChange, pa
         >
           <FaGreaterThan size={20}/>
         </button>
-      </div>
+      </div>}
   </div>;
 };
 

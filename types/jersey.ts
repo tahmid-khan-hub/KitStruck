@@ -8,5 +8,6 @@ export interface Jersey extends RowDataPacket{
   price: number;
   image_url: string;
   description?: string; 
-  created_at: string;   
+  created_at: string; 
+  sells_quantity: number;  
 }

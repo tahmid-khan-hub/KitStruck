@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 const NewArrivals = () => {
   const [data, setData] = useState<Jersey[]>([]);
@@ -45,9 +46,9 @@ const NewArrivals = () => {
                   <p className="text-gray-800 font-semibold text-lg">
                     ${jersey.price}
                   </p>
-                  <button className="flex items-center justify-center text-blue-500 p-2 rounded-md hover:bg-blue-50 transition">
+                  <Link href={`/jersey-details/${jersey.jersey_id}`}><button className="flex items-center justify-center text-blue-500 p-2 rounded-md hover:bg-blue-50 transition">
                     <FaArrowRightLong />
-                  </button>
+                  </button></Link>
                 </div>
               </div>
             </motion.div>

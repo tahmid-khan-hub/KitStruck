@@ -6,6 +6,7 @@ import DropDown from "./dropDown";
 import { motion } from "framer-motion";
 import Lottie from "react-lottie-player";
 import NoJerseyFound from "@/public/Not Found.json"
+import Link from "next/link";
 
 interface JerseysContainerProps {
   jerseys: Jersey[];
@@ -63,9 +64,9 @@ const JerseysContainer = ({jerseys, search, setSearch, sort,handleSortChange, pa
                   <p className="text-gray-800 font-semibold text-lg">
                     ${jersey.price}
                   </p>
-                  <button className="flex items-center justify-center text-blue-500 p-2 rounded-md hover:bg-blue-50 transition">
+                  <Link href={`/jersey-details/${jersey.jersey_id}`}><button className="flex items-center justify-center text-blue-500 p-2 rounded-md hover:bg-blue-50 transition">
                     <FaArrowRightLong />
-                  </button>
+                  </button></Link>
                 </div>
               </div>
             </motion.div>

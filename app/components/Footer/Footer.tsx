@@ -1,3 +1,4 @@
+import Logo from "@/app/hooks/Logo";
 import Link from "next/link";
 
 const Footer = () => {
@@ -30,11 +31,11 @@ const Footer = () => {
     </>
   );
   return (
-    <footer className="bg-orange-100 text-black">
-      <div className="max-w-[1350px] w-[96%] mx-auto px-4 md:px-3 py-6 md:flex md:items-center md:justify-between">
+    <footer className="bg-white text-black">
+      <div className="max-w-[1350px] w-[96%] mx-auto px-4 md:px-3 py-8 md:flex md:items-center md:justify-between">
         {/* Left: Logo */}
         <div className="flex items-center mb-4 md:mb-0">
-          <span className="text-black text-xl font-semibold">KitSruck</span>
+          <Logo></Logo>
         </div>
 
         {/* Center: Links */}

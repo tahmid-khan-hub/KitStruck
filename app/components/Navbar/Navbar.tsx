@@ -1,7 +1,6 @@
 "use client";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import Image from "next/image";
 import { signOut, useSession } from "next-auth/react";
 import Menu from "@/app/hooks/Menu";
 import Logo from "@/app/hooks/Logo";

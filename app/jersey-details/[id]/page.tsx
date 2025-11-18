@@ -1,13 +1,19 @@
+"use client"
+import { useEffect } from "react";
 
-export default async function JerseyDetailsPage({
+export default function JerseyDetailsPage({
   params,
 }: {
-  params: Promise<{ id: string }>
+  params: { id: string }
 }) {
-  const { id } = await params;
-  const res = await fetch(`http://localhost:3000/api/jersey-details/${id}`);
-  const data = await res.json();
-  console.log(data);
+  const { id } = params;
+  console.log(params);
+  useEffect(()=>{
+    const res = fetch(`/api/jersey-details/${id}`)
+    .then((res) => res.json())
+    .then(res => console.log("res ->", res))
+    .catch((err) => console.error("Fetch error:", err));
+  },[id])
 
   return (
     <div className="p-10">

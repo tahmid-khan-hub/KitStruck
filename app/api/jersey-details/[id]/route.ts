@@ -4,11 +4,12 @@ import { NextResponse } from "next/server";
 
 export async function GET(
   req: Request,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   try {
+    const id  = context.params.id;
+
     const dbConnect = await pool.getConnection();
-    const id = params.id;
 
     const [rows] = await dbConnect.query<RowDataPacket[]>(
       "SELECT * FROM jerseys WHERE jersey_id = ?",

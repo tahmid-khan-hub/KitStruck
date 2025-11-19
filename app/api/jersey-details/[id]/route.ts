@@ -4,16 +4,18 @@ import { NextResponse } from "next/server";
 
 export async function GET(
   req: Request,
-  context: { params: { id: string } }
+   { params }: { params: { id: string } }
 ) {
   try {
-    const id  = context.params.id;
+    const p  = await params;
+    const jerseyID = p.id;
+    console.log("Here is my id --------------",jerseyID);
 
     const dbConnect = await pool.getConnection();
 
     const [rows] = await dbConnect.query<RowDataPacket[]>(
       "SELECT * FROM jerseys WHERE jersey_id = ?",
-      [id]
+      [jerseyID]
     ); 
 
     dbConnect.release();
@@ -25,7 +27,8 @@ export async function GET(
       );
     }
 
-    return NextResponse.json({ jersey: rows[0] });
+    return NextResponse.json( { success: true, data: rows[0] },
+      { status: 200 });
   } catch (error) {
     console.log(error);
     return NextResponse.json(

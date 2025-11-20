@@ -1,5 +1,8 @@
 "use client";
 import { Jersey } from "@/types/jersey";
+import Image from "next/image";
+import { FaShoppingCart } from "react-icons/fa";
+import { FaMoneyBillWave } from "react-icons/fa6";
 
 interface Props {
   jersey: Jersey;
@@ -7,8 +10,52 @@ interface Props {
 
 export default function JerseyDetailsContainer({ jersey }: Props) {
   return (
-    <div>
-      <h1>{jersey.name}</h1>
+    <div className="">
+      <div className="bg-white p-4 rounded-lg w-full flex flex-col md:flex-row gap-8">
+        {/* (IMAGE) */}
+        <div className="w-full md:w-1/2">
+          <div className="relative w-full h-[400px] md:h-[500px] rounded-lg overflow-hidden">
+            <Image
+              src={jersey.image_url}
+              alt={jersey.name}
+              fill
+              className="object-cover"
+              sizes="100%"
+            />
+          </div>
+        </div>
+
+        {/* (DETAILS) */}
+        <div className="w-full md:w-1/2 flex flex-col justify-between">
+          {/* CONTENT */}
+          <div className="space-y-4">
+            <h1 className="text-3xl font-bold">{jersey.name}</h1>
+
+            <p className="text-gray-600">Category: {jersey.category}</p>
+
+            <p className="text-2xl font-semibold text-green-600">
+              Price: ${jersey.price}
+            </p>
+
+            {jersey.description && (
+              <p className="text-gray-700 leading-relaxed">
+                {jersey.description}
+              </p>
+            )}
+          </div>
+
+          {/* ACTION BUTTONS */}
+          <div className="flex gap-4 pt-6 mt-6">
+            <button className="flex items-center gap-2 bg-green-600 text-white px-5 py-3 rounded-lg text-lg w-full justify-center hover:bg-green-700">
+              <FaMoneyBillWave size={20} /> Buy Now
+            </button>
+
+            <button className="flex items-center gap-2 bg-blue-600 text-white px-5 py-3 rounded-lg text-lg w-full justify-center hover:bg-blue-700">
+              <FaShoppingCart size={20} /> Add to Cart
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

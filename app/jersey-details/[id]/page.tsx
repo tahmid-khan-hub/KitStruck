@@ -30,7 +30,7 @@ export default async function JerseyDetailsPage(props: {
   }
 
   return (
-    <div className="p-8 space-y-4">
+    <div className="max-w-[1350px] mx-auto px-4 md:px-3 p-8 py-12 min-h-screen">
       <JerseyDetailsContainer jersey={jersey}></JerseyDetailsContainer>
     </div>
   );

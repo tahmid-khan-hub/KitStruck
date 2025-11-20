@@ -9,7 +9,6 @@ export async function GET(
   try {
     const p  = await params;
     const jerseyID = p.id;
-    console.log("Here is my id --------------",jerseyID);
 
     const dbConnect = await pool.getConnection();
 

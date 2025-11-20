@@ -3,6 +3,7 @@ import { Jersey } from "@/types/jersey";
 import Image from "next/image";
 import { FaShoppingCart } from "react-icons/fa";
 import { FaMoneyBillWave } from "react-icons/fa6";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface Props {
   jersey: Jersey;
@@ -11,7 +12,7 @@ interface Props {
 export default function JerseyDetailsContainer({ jersey }: Props) {
   return (
     <div className="">
-      <div className="bg-white p-4 rounded-lg w-full flex flex-col md:flex-row gap-8">
+      <AnimatePresence><motion.div initial={{ opacity: 0, y: 60 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 60 }} transition={{ duration: 0.6, ease: "easeOut" }}  className="bg-white p-4 rounded-lg w-full flex flex-col md:flex-row gap-8 border-2 border-gray-200 shadow-md">
         {/* (IMAGE) */}
         <div className="w-full md:w-1/2">
           <div className="relative w-full h-[400px] md:h-[500px] rounded-lg overflow-hidden">
@@ -30,6 +31,8 @@ export default function JerseyDetailsContainer({ jersey }: Props) {
           {/* CONTENT */}
           <div className="space-y-4">
             <h1 className="text-3xl font-bold">{jersey.name}</h1>
+
+            <p className="">{jersey.team}</p>
 
             <p className="text-gray-600">Category: {jersey.category}</p>
 
@@ -55,7 +58,7 @@ export default function JerseyDetailsContainer({ jersey }: Props) {
             </button>
           </div>
         </div>
-      </div>
+      </motion.div></AnimatePresence>
     </div>
   );
 }

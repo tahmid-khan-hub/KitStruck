@@ -19,7 +19,7 @@ export async function GET(req: Request) {
     const dbConnect = await pool.getConnection();
 
     const [countRows] = await dbConnect.query<CountRow[] & RowDataPacket>(
-      "SELECT COUNT(*) as total FROM jerseys"
+      "SELECT COUNT(*) as total FROM jersey_table"
     );
 
     const total = countRows[0]?.total || 0;
@@ -32,7 +32,7 @@ export async function GET(req: Request) {
     if(sort == "less_popularity") orderBy = "ORDER BY sells_quantity";
 
     const [rows] = await dbConnect.query<Jersey[] & RowDataPacket>(
-      `SELECT * FROM jerseys WHERE name LIKE ? ${orderBy} LIMIT ? OFFSET ?`,
+      `SELECT * FROM jersey_table WHERE name LIKE ? ${orderBy} LIMIT ? OFFSET ?`,
       [`%${search}%`, limit, offset]
     );
 

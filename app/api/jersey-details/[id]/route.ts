@@ -13,7 +13,7 @@ export async function GET(
     const dbConnect = await pool.getConnection();
 
     const [rows] = await dbConnect.query<RowDataPacket[]>(
-      "SELECT * FROM jerseys WHERE jersey_id = ?",
+      "SELECT * FROM jersey_table WHERE jersey_id = ?",
       [jerseyID]
     ); 
 

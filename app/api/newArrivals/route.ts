@@ -6,7 +6,7 @@ export async function GET() {
     const dbConnect = await pool.getConnection();
 
     const [rows] = await dbConnect.query(
-      "SELECT * FROM jerseys ORDER BY created_at DESC LIMIT 3"
+      "SELECT * FROM jersey_table ORDER BY created_at DESC LIMIT 3"
     );
 
     dbConnect.release();

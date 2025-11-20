@@ -11,7 +11,9 @@ interface Props {
 
 export default function JerseyDetailsContainer({ jersey }: Props) {
   return (
-    <div className="">
+    <div className="py-5 mb-9">
+      <h1 className="text-center font-semibold text-3xl mb-4">Jersey Details</h1>
+      <p className="text-center text-gray-600 mb-9">This premium jersey delivers comfort, durability and authentic design, giving fans a stylish and reliable choice.</p>
       <AnimatePresence><motion.div initial={{ opacity: 0, y: 60 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 60 }} transition={{ duration: 0.6, ease: "easeOut" }}  className="bg-white p-4 rounded-lg w-full flex flex-col md:flex-row gap-8 border-2 border-gray-200 shadow-md">
         {/* (IMAGE) */}
         <div className="w-full md:w-1/2">

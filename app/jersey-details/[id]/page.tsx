@@ -1,4 +1,5 @@
 import { Jersey } from "@/types/jersey";
+import JerseyDetailsContainer from "./components/JerseyDetailsContainer";
 
 async function getJersey(id: string): Promise<Jersey | null> {
   try {
@@ -30,7 +31,7 @@ export default async function JerseyDetailsPage(props: {
 
   return (
     <div className="p-8 space-y-4">
-      <h1 className="text-3xl font-bold">{jersey.name}</h1>
+      <JerseyDetailsContainer jersey={jersey}></JerseyDetailsContainer>
     </div>
   );
 }

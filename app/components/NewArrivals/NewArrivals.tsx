@@ -10,7 +10,7 @@ const NewArrivals = () => {
   const [data, setData] = useState<Jersey[]>([]);
 
   useEffect(() => {
-    fetch("/api/newArrivals", { cache: "no-store" })
+    fetch("/api/kitsTruck/newArrivals", { cache: "no-store" })
       .then((res) => res.json())
       .then((data: Jersey[]) => setData(data))
       .catch((err) => console.error("Fetch error:", err));

@@ -35,14 +35,14 @@ const CartPage = () => {
 
     const totalPrice = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
     return (
-        <div className="max-w-[1350px] mx-auto px-4 md:px-3">
-      <h1 className="text-3xl font-bold mb-6">Your Cart</h1>
+        <div className="max-w-[1350px] mx-auto px-4 md:px-3 min-h-screen">
+      <h1 className="text-3xl font-bold text-center mt-12 mb-7">Your Cart</h1>
       {cart.length === 0 ? (
         <p>Your cart is empty.</p>
       ) : (
         <div className="flex flex-col gap-4">
           {cart.map(item => (
-            <div key={item.jersey_id} className="flex items-center gap-4 border p-4 rounded-lg">
+            <div key={item.jersey_id} className="bg-white flex items-center gap-4 border-2 border-gray-200 p-4 rounded-lg">
               <div className="w-32 h-32 relative">
                 <Image src={item.image_url} alt={item.name} fill className="object-cover rounded" />
               </div>

@@ -1,5 +1,5 @@
 "use client";
-import { Jersey } from "@/types/jersey";
+import { CartItem, Jersey } from "@/types/jersey";
 import Image from "next/image";
 import { FaShoppingCart } from "react-icons/fa";
 import { FaMoneyBillWave } from "react-icons/fa6";
@@ -10,6 +10,22 @@ interface Props {
 }
 
 export default function JerseyDetailsContainer({ jersey }: Props) {
+
+  const handleAddToCart = () =>{
+    const exitingCart: CartItem[] = JSON.parse(localStorage.getItem("cart") || "[]");
+
+    // jersey exist or not
+    const index = exitingCart.findIndex(i => i.jersey_id === jersey.jersey_id);
+    if(index !== -1){
+      exitingCart[index].quantity += 1;
+    }else{
+      exitingCart.push({...jersey, quantity: 1});
+    }
+
+    localStorage.setItem("cart", JSON.stringify(exitingCart));
+    alert("Item added to cart!");
+  }
+
   return (
     <div className="py-5 mb-9">
       <h1 className="text-center font-semibold text-3xl mb-4">Jersey Details</h1>
@@ -55,7 +71,7 @@ export default function JerseyDetailsContainer({ jersey }: Props) {
               <FaMoneyBillWave size={20} /> Buy Now
             </button>
 
-            <button className="flex items-center gap-2 bg-blue-600 text-white px-5 py-3 rounded-lg text-lg w-full justify-center hover:bg-blue-700">
+            <button onClick={handleAddToCart} className="flex items-center gap-2 bg-blue-600 text-white px-5 py-3 rounded-lg text-lg w-full justify-center hover:bg-blue-700">
               <FaShoppingCart size={20} /> Add to Cart
             </button>
           </div>

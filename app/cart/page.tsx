@@ -9,6 +9,12 @@ const CartPage = () => {
         const storedCart = JSON.parse(localStorage.getItem("cart") || "[]");
         setTimeout(() => setCart(storedCart), 0);
     },[])
+
+    const handleRemove = (id: number) => {
+        const updatedCart = cart.filter(i => i.jersey_id !== id);
+        localStorage.setItem("cart", JSON.stringify(updatedCart));
+        setCart(updatedCart);
+    }
     return (
         <div className="max-w-[1350px] mx-auto px-4 md:px-3">
       <h1 className="text-3xl font-bold mb-6">Your Cart</h1>
@@ -29,6 +35,7 @@ const CartPage = () => {
                 <p className="font-bold text-lg">Price: ${item.price * item.quantity}</p>
               </div>
               <button
+                onClick={()=>handleRemove(item.jersey_id)}
                 className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700"
               >
                 Remove

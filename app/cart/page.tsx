@@ -21,13 +21,15 @@ const CartPage = () => {
         const updatedCart = cart.map(item => item.jersey_id === id ?
             {...item, quantity: item.quantity + 1} : item
         );
+        localStorage.setItem("cart", JSON.stringify(updatedCart));
         setCart(updatedCart);
     }
 
     const handleDecrease = (id: number) => {
         const updatedCart = cart.map(item => item.jersey_id === id?
             {...item, quantity: item.quantity > 1 ? item.quantity - 1 : 1} : item
-        )
+        );
+        localStorage.setItem("cart", JSON.stringify(updatedCart));
         setCart(updatedCart);
     }
 

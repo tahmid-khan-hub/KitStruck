@@ -4,6 +4,7 @@ import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
 import Menu from "@/app/hooks/Menu";
 import Logo from "@/app/hooks/Logo";
+import { FaCartShopping } from "react-icons/fa6";
 
 const Navbar = () => {
   const { data: session } = useSession(); 
@@ -41,6 +42,8 @@ const Navbar = () => {
 
         {/* Right side */}
         <div className="flex items-center gap-4">
+          {/* cart */}
+          <FaCartShopping size={23} className="text-black"/>
           {session ? <button onClick={() => signOut()} className="btn">Sign out</button> : <Link href={"/sign-in"}><button className="btn">Sign In</button></Link>}
 
           {/* <Link href={'/sign-in'}><button className="btn">Sign In</button></Link> */}

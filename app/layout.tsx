@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import BannerWrapper from "./components/Banner/BannerWrapper";
 import Providers from "./providers";
+import CartSync from "./components/CartSync/CartSync";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -39,7 +40,7 @@ export default function RootLayout({
 
         <BannerWrapper></BannerWrapper>
 
-        <div>{children}</div>
+        <div><CartSync/>{children}</div>
         <Footer></Footer></Providers>
       </body>
     </html>

@@ -26,17 +26,17 @@ const SignUpForm = () => {
       });
 
       if (loginRes?.ok) {
-        const localCart = JSON.parse(localStorage.getItem("cart") || "[]");
-        // after login -> sending cart localstorage data to db 
-        if(localCart.length > 0){
-          await fetch("/api/cart/sync",{
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ cartItems: localCart }),
-          })
-        }
+        // const localCart = JSON.parse(localStorage.getItem("cart") || "[]");
+        // // after login -> sending cart localstorage data to db 
+        // if(localCart.length > 0){
+        //   await fetch("/api/cart/sync",{
+        //     method: "POST",
+        //     headers: { "Content-Type": "application/json" },
+        //     body: JSON.stringify({ cartItems: localCart }),
+        //   })
+        // }
 
-        localStorage.removeItem("cart");
+        // localStorage.removeItem("cart");
         alert("Registration successful!");
         // redirect user
         window.location.href = "/";

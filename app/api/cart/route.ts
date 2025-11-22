@@ -27,3 +27,42 @@ export async function GET() {
         dbConnect.release();
     }
 }
+
+export async function PATCH(req: Request) {
+    const session = await getServerSession(authOptions);
+    const dbConnect = await pool.getConnection();
+    if (!session) return NextResponse.json({ error: "Not logged in" }, { status: 401 });
+    const { jersey_id, quantity } = await req.json();
+    try {
+        await dbConnect.query(
+            `UPDATE cart_table SET quantity = ? WHERE user_id = ?
+            AND jersey_id = ?`,
+            [quantity, session.user.id, jersey_id]
+        )
+        return NextResponse.json({ success: true });
+    } catch (error) {
+        console.log(error);
+        return NextResponse.json({ error }, { status: 500 });
+    } finally {
+        dbConnect.release();
+    }
+}
+
+export async function DELETE(req: Request) {
+    const session = await getServerSession(authOptions);
+    const dbConnect = await pool.getConnection();
+    if (!session) return NextResponse.json({ error: "Not logged in" }, { status: 401 });
+    const { jersey_id } = await req.json();
+    try {
+        await dbConnect.query(
+            `DELETE FROM cart_table WHERE user_id = ? AND jersey_id = ?`,
+            [session.user.id, jersey_id]
+        )
+        return NextResponse.json({ success: true });
+    } catch (error) {
+        console.log(error);
+        return NextResponse.json({ error }, { status: 500 });
+    } finally {
+        dbConnect.release();
+    }
+}

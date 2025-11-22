@@ -2,7 +2,7 @@ import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import pool from "./mysql";
 import { RowDataPacket } from "mysql2";
-import { User } from "next-auth";
+import { NextAuthOptions, User } from "next-auth";
 import bcrypt from "bcryptjs";
 
 interface DBUser {
@@ -13,7 +13,7 @@ interface DBUser {
   role: string;
 }
 
-export const authOptions = {
+export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -80,6 +80,18 @@ export const authOptions = {
         console.log(error);
         return false;
       }
+    },
+    async session({ session, token}) {
+      if (session.user && token.sub) {
+        session.user.id = token.sub; // token.sub is user id
+      }
+      return session;
+    },
+    async jwt({ token, user }) {
+      if (user) {
+        token.sub = user.id; // store user id in token
+      }
+      return token;
     },
   },
 };

@@ -31,7 +31,7 @@ const SignInForm = () => {
           await fetch("/api/cart/sync",{
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(localCart),
+            body: JSON.stringify({ cartItems: localCart }),
           })
         }
 

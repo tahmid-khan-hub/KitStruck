@@ -17,3 +17,9 @@ declare module "next-auth" {
     image?: string | null;
   }
 }
+
+declare module "next-auth/jwt" {
+  interface JWT {
+    sub?: string;
+  }
+}

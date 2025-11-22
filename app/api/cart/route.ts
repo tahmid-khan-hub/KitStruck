@@ -10,7 +10,13 @@ export async function GET() {
     if(!session) return Response.json([]);
     try {
         const [rows] = await dbConnect.query(
-            "SELECT * FROM cart_table WHERE user_id = ?",
+            `SELECT c.cart_id, c.quantity,
+            j.jersey_id, j.name, j.team, j.image_url, j.category, 
+            j.price, j.description, j.sells_quantity
+            FROM cart_table c
+            JOIN jersey_table j
+            ON c.jersey_id = j.jersey_id
+            WHERE c.user_id = ?`,
             [session?.user?.id]
         )
         return Response.json(rows);

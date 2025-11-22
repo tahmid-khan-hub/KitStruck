@@ -1,15 +1,23 @@
 "use client";
 import { CartItem } from "@/types/jersey";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { FaMinus, FaPlus, FaTrash } from "react-icons/fa6";
 
 const CartPage = () => {
     const [cart, setCart] = useState<CartItem[]>([]);
+    const { data: session } = useSession();
     useEffect(() => {
-        const storedCart = JSON.parse(localStorage.getItem("cart") || "[]");
+        if(!session){
+          const storedCart = JSON.parse(localStorage.getItem("cart") || "[]");
         setTimeout(() => setCart(storedCart), 0);
-    },[])
+        }else{
+          fetch("/api/cart")
+          .then(res => res.json())
+          .then(data => setCart(data))
+        }
+    },[session])
 
     const handleRemove = (id: number) => {
         const updatedCart = cart.filter(i => i.jersey_id !== id);

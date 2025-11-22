@@ -21,23 +21,56 @@ const CartPage = () => {
 
     const handleRemove = (id: number) => {
         const updatedCart = cart.filter(i => i.jersey_id !== id);
-        localStorage.setItem("cart", JSON.stringify(updatedCart));
+        if(session){
+          fetch("/api/cart", {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ jersey_id: id })
+          })
+        }
+        else{
+          localStorage.setItem("cart", JSON.stringify(updatedCart));
+        }
         setCart(updatedCart);
     }
 
     const handleIncrease = (id: number) => {
+        const currItem = cart.find(i => i.jersey_id === id);
+        if (!currItem) return;
+
         const updatedCart = cart.map(item => item.jersey_id === id ?
             {...item, quantity: item.quantity + 1} : item
         );
-        localStorage.setItem("cart", JSON.stringify(updatedCart));
+        if(session){
+          fetch("/api/cart", {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ jersey_id: id, quantity: currItem.quantity + 1 })
+          })
+        }
+        else{
+          localStorage.setItem("cart", JSON.stringify(updatedCart));
+        }
         setCart(updatedCart);
     }
 
     const handleDecrease = (id: number) => {
+        const currItem = cart.find(i => i.jersey_id === id);
+        if (!currItem) return;
+
         const updatedCart = cart.map(item => item.jersey_id === id?
             {...item, quantity: item.quantity > 1 ? item.quantity - 1 : 1} : item
         );
-        localStorage.setItem("cart", JSON.stringify(updatedCart));
+        if(session){
+          fetch("/api/cart", {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ jersey_id: id, quantity: currItem.quantity - 1 })
+          })
+        }
+        else{
+          localStorage.setItem("cart", JSON.stringify(updatedCart));
+        }
         setCart(updatedCart);
     }
 

@@ -4,15 +4,14 @@ import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
+    const session = await getServerSession(authOptions);
+    if (!session) {
+        return NextResponse.json({ error: "Not logged in" }, { status: 401 });
+    }
+    const userId = session.user.id;
+    const dbConnect = await pool.getConnection();
+    const {cartItems} = await req.json();
     try {
-        const session = await getServerSession(authOptions);
-        if (!session) {
-            return NextResponse.json({ error: "Not logged in" }, { status: 401 });
-        }
-        const userId = session.user.id;
-        const dbConnect = await pool.getConnection();
-        const {cartItems} = await req.json();
-
         // insert cart item to db
         for(const item of cartItems){
             await dbConnect.query(
@@ -22,11 +21,12 @@ export async function POST(req: NextRequest) {
                 [userId, item.jersey_id, item.quantity, item.quantity]
             )
         }
-        dbConnect.release();
         return NextResponse.json({ message: "Cart synced successfully" });
 
     } catch (error) {
         console.log(error);
         return NextResponse.json({ error }, { status: 500 });
+    } finally{
+        dbConnect.release();
     }
 }

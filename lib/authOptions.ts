@@ -81,17 +81,29 @@ export const authOptions: NextAuthOptions = {
         return false;
       }
     },
-    async session({ session, token}) {
-      if (session.user && token.sub) {
-        session.user.id = token.sub; // token.sub is user id
+    async jwt({ token }) {
+      if (token.email) {
+        const db = await pool.getConnection();
+        const [rows] = await db.query("SELECT id FROM users WHERE email = ?", [
+          token.email,
+        ]);
+        db.release();
+
+        const dbUser = rows as { id: number }[];
+
+        if (dbUser.length > 0) {
+          token.userId = dbUser[0].id;   // Always use DB id
+        }
+      }
+
+      return token;
+    },
+
+    async session({ session, token }) {
+      if (session.user && token.userId) {
+        session.user.id = String(token.userId);
       }
       return session;
-    },
-    async jwt({ token, user }) {
-      if (user) {
-        token.sub = user.id; // store user id in token
-      }
-      return token;
     },
   },
 };

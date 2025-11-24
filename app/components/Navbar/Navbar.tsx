@@ -27,6 +27,11 @@ const Navbar = () => {
           About
         </Link>
       </li>
+      {session && <li>
+        <Link href={"/dashboard"} className="font-semibold">
+          Dashbaord
+        </Link>
+      </li>}
     </>
   );
   return (

@@ -13,5 +13,5 @@ export const middleware = async (req: NextRequest) => {
 
 // Paths that require authentication
 export const config = {
-  matcher: ["/my-bookings/:path*", "/dashboard"],
+  matcher: ["/my-bookings/:path*", "/dashboard/:path*"],
 };

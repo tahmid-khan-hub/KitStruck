@@ -84,15 +84,16 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token }) {
       if (token.email) {
         const db = await pool.getConnection();
-        const [rows] = await db.query("SELECT id FROM users WHERE email = ?", [
+        const [rows] = await db.query("SELECT id, role FROM users WHERE email = ?", [
           token.email,
         ]);
         db.release();
 
-        const dbUser = rows as { id: number }[];
+        const dbUser = rows as { id: number; role: string }[];
 
         if (dbUser.length > 0) {
           token.userId = dbUser[0].id;   // Always use DB id
+          token.role = dbUser[0].role;  
         }
       }
 
@@ -101,7 +102,8 @@ export const authOptions: NextAuthOptions = {
 
     async session({ session, token }) {
       if (session.user && token.userId) {
-        session.user.id = String(token.userId);
+        if(token.userId) session.user.id = String(token.userId);
+        if(token.role) session.user.role = token.role; 
       }
       return session;
     },

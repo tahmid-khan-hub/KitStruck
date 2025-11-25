@@ -1,7 +1,9 @@
 "use client";
+import UseSweetAlert from "@/app/hooks/UseSweetAlert";
 import { FormEvent } from "react";
 
 const ReviewForm = () => {
+  const {successToast, errorToast} = UseSweetAlert(); 
   const handleSubmit = async(e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
@@ -16,10 +18,10 @@ const ReviewForm = () => {
     });
 
     if(res){
-        alert("Review Submitted successfully!");
+        successToast("Review Submitted successfully!");
         form.reset();
     } else {
-      alert("Something went wrong. Review submission failed!");
+      errorToast("Something went wrong. Review submission failed!");
     }
   }
   return (

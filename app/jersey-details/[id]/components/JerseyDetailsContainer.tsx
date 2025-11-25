@@ -4,26 +4,33 @@ import Image from "next/image";
 import { FaShoppingCart } from "react-icons/fa";
 import { FaMoneyBillWave } from "react-icons/fa6";
 import { motion, AnimatePresence } from "framer-motion";
+import UseSweetAlert from "@/app/hooks/UseSweetAlert";
 
 interface Props {
   jersey: Jersey;
 }
 
 export default function JerseyDetailsContainer({ jersey }: Props) {
+  const {successToast, errorToast} = UseSweetAlert();
 
   const handleAddToCart = () =>{
-    const exitingCart: CartItem[] = JSON.parse(localStorage.getItem("cart") || "[]");
+    try {
+      const exitingCart: CartItem[] = JSON.parse(localStorage.getItem("cart") || "[]");
 
-    // jersey exist or not
-    const index = exitingCart.findIndex(i => i.jersey_id === jersey.jersey_id);
-    if(index !== -1){
-      exitingCart[index].quantity += 1;
-    }else{
-      exitingCart.push({...jersey, quantity: 1});
+      // jersey exist or not
+      const index = exitingCart.findIndex(i => i.jersey_id === jersey.jersey_id);
+      if(index !== -1){
+        exitingCart[index].quantity += 1;
+      }else{
+        exitingCart.push({...jersey, quantity: 1});
+      }
+
+      localStorage.setItem("cart", JSON.stringify(exitingCart));
+      successToast("Item added to cart!");
+    } catch (error) {
+      console.log(error);
+      errorToast("Failed to add item!");
     }
-
-    localStorage.setItem("cart", JSON.stringify(exitingCart));
-    alert("Item added to cart!");
   }
 
   return (

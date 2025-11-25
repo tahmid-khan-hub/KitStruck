@@ -4,8 +4,10 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { FaMinus, FaPlus, FaTrash } from "react-icons/fa6";
+import UseSweetAlert from "../hooks/UseSweetAlert";
 
 const CartPage = () => {
+    const {confirmDelete, errorToast, successToast} = UseSweetAlert();
     const [cart, setCart] = useState<CartItem[]>([]);
     const { data: session } = useSession();
     useEffect(() => {
@@ -19,20 +21,34 @@ const CartPage = () => {
         }
     },[session])
 
-    const handleRemove = (id: number) => {
-        const updatedCart = cart.filter(i => i.jersey_id !== id);
-        if(session){
-          fetch("/api/cart", {
+    const handleRemove = async (id: number) => {
+      const ok = await confirmDelete("Do you really want to remove this from the cart?");
+
+      if (!ok) return;
+      const updatedCart = cart.filter(i => i.jersey_id !== id);
+      try {
+        if (session) {
+          const res = await fetch("/api/cart", {
             method: "DELETE",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ jersey_id: id })
-          })
-        }
-        else{
+          });
+
+          if (!res.ok) {
+            errorToast("Failed to delete item.");
+            return;
+          }
+        } else {
           localStorage.setItem("cart", JSON.stringify(updatedCart));
         }
         setCart(updatedCart);
-    }
+        successToast("Item removed successfully!");
+
+      } catch (error) {
+        console.log(error);
+        errorToast("Something went wrong!");
+      }
+    };
 
     const handleIncrease = (id: number) => {
         const currItem = cart.find(i => i.jersey_id === id);

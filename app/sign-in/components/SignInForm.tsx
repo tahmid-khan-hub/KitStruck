@@ -1,9 +1,11 @@
 import { signInUsers } from "@/app/actions/auth/signInUsers";
+import UseSweetAlert from "@/app/hooks/UseSweetAlert";
 import { signIn } from "next-auth/react";
 import { FormEvent, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
 
 const SignInForm = () => {
+  const {successToast, errorToast} = UseSweetAlert();
   const [showPassword, setShowPassword] = useState(false);
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -24,15 +26,15 @@ const SignInForm = () => {
       });
 
       if (loginRes?.ok) {
-        alert("Sign in successful!");
+        successToast("Sign in successful!");
         // redirect user
         window.location.href = "/";
       } else {
-        alert("sign in failed");
+        errorToast("sign In failed.");
       }
       form.reset();
     } else {
-      alert("Something went wrong. Sign in is not successful");
+      errorToast("Something went wrong. Please try again.");
     }
   };
   return (

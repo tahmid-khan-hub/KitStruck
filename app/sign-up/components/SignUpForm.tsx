@@ -1,9 +1,11 @@
 import { signUpUsers } from "@/app/actions/auth/signUpUsers";
+import UseSweetAlert from "@/app/hooks/UseSweetAlert";
 import { signIn } from "next-auth/react";
 import { FormEvent, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
 
 const SignUpForm = () => {
+  const {successToast, errorToast} = UseSweetAlert();
   const [showPassword, setShowPassword] = useState(false);
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -26,15 +28,15 @@ const SignUpForm = () => {
       });
 
       if (loginRes?.ok) {
-        alert("Registration successful!");
+        successToast("Registration successful!");
         // redirect user
         window.location.href = "/";
       } else {
-        alert("Registered but login failed");
+        errorToast("Registered but login failed");
       }
       form.reset();
     } else {
-      alert("User already exists or registration failed.");
+      errorToast("User already exists or registration failed.");
     }
   };
   return (

@@ -1,4 +1,4 @@
-import { userReview } from "@/app/actions/userReview";
+"use client";
 import { FormEvent } from "react";
 
 const ReviewForm = () => {
@@ -7,9 +7,15 @@ const ReviewForm = () => {
     const form = e.currentTarget;
     const formData = new FormData(form);
     const review = formData.get("review") as string;
+    const rating = Number(formData.get("rating"));
 
-    const res = await userReview({review});
-    if(res?.success){
+    const res = await fetch("/api/review", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ rating, review }),
+    });
+
+    if(res){
         alert("Review Submitted successfully!");
         form.reset();
     } else {

@@ -12,14 +12,14 @@ export default function DashboardSidebar() {
   return (
     <div
       data-aos="fade-right"
-      className="drawer-side border-r border-r-orange-500"
+      className="drawer-side border-r border-r-gray-400"
     >
       <label
         htmlFor="my-drawer-2"
         aria-label="close sidebar"
         className="drawer-overlay"
       ></label>
-      <ul className="menu text-base-content bg-base-100 min-h-full w-80 p-4">
+      <ul className="menu text-base-content bg-white min-h-full w-80 p-4">
         {/* Logo */}
         <div className="flex items-center ml-2 mb-4">
           <Logo></Logo>

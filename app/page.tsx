@@ -1,6 +1,6 @@
-import Feedback from "./components/Feedback/Feedback";
 import NewArrivals from "./components/NewArrivals/NewArrivals";
 import Retro from "./components/Retro/Retro";
+import Review from "./components/Review/Review";
 import TopSelling from "./components/TopSelling/TopSelling";
 
 export default function Home() {
@@ -9,7 +9,7 @@ export default function Home() {
       <TopSelling></TopSelling>
       <NewArrivals></NewArrivals>
       <Retro></Retro>
-      <Feedback></Feedback>
+      <Review></Review>
     </div>
   );
 }

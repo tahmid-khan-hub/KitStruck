@@ -1,8 +1,8 @@
 "use client";
+import ActiveLink from "@/app/hooks/ActiveLink";
 import Logo from "@/app/hooks/Logo";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import Link from "next/link";
 
 export default function DashboardSidebar() {
   const { data: session } = useSession();
@@ -46,14 +46,15 @@ export default function DashboardSidebar() {
         {role === "admin" ? (
         // admin dashboard links
           <>
-            <li><Link href={"/"}></Link>Home</li>
-            <li><Link href={"/"}></Link>Sign Out</li>
+            <li><ActiveLink href="/">Home</ActiveLink></li>
+            <li><ActiveLink href="">Sign Out</ActiveLink></li>
           </>
         ) : (
         // user dashboard links
           <>
-            <li><Link href={"/"}></Link>Home</li>
-            <li><Link href={"/"}></Link>Sign Out</li>
+            <li><ActiveLink href="/">Home</ActiveLink></li>
+            <li><ActiveLink href="/dashboard/user/reviewPage">Review</ActiveLink></li>
+            <li><ActiveLink href="">Sign Out</ActiveLink></li>
           </>
         )}
       </ul>

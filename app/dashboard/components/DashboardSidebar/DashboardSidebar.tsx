@@ -19,7 +19,7 @@ export default function DashboardSidebar() {
         aria-label="close sidebar"
         className="drawer-overlay"
       ></label>
-      <ul className="menu text-base-content min-h-full w-80 p-4">
+      <ul className="menu text-base-content bg-base-100 min-h-full w-80 p-4">
         {/* Logo */}
         <div className="flex items-center ml-2 mb-4">
           <Logo></Logo>
@@ -31,8 +31,8 @@ export default function DashboardSidebar() {
             <Image
               src={user?.image ?? "/default-user.png"}
               alt="User"
-              width={22}
-              height={22}
+              width={52}
+              height={52}
               className="rounded-full object-cover border"
             />
             <span className="font-semibold text-xl mt-2">

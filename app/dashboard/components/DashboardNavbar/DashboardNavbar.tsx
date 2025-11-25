@@ -1,10 +1,10 @@
-"use client"
+"use client";
 import Logo from "@/app/hooks/Logo";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 
 export default function DashboardNavbar() {
-  const { data: session } = useSession(); 
+  const { data: session } = useSession();
   const user = session?.user;
   return (
     <div className="navbar sticky top-0 z-50 bg-base-100 w-full lg:hidden">

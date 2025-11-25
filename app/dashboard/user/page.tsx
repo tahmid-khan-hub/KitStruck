@@ -7,8 +7,6 @@ export default async function UserDashboard() {
     if(!session) redirect("/sign-in");
 
     return(
-        <div>
-            user dashboard
-        </div>
+        <div>user dashboard</div>
     )
 }

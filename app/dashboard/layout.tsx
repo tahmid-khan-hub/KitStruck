@@ -1,4 +1,5 @@
 import DashboardNavbar from "./components/DashboardNavbar/DashboardNavbar";
+import DashboardSidebar from "./components/DashboardSidebar/DashboardSidebar";
 
 export default function DashboardLayout({
   children,
@@ -12,6 +13,9 @@ export default function DashboardLayout({
       {/* navbar for small screen */}
       <DashboardNavbar></DashboardNavbar>
       {children}
+
+      {/* sidebar */}
+      <DashboardSidebar></DashboardSidebar>
     </div>
   );
 }

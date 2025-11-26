@@ -105,6 +105,9 @@ export const authOptions: NextAuthOptions = {
         if(token.userId) session.user.id = String(token.userId);
         if(token.role) session.user.role = token.role; 
       }
+      if (!session.user.image || session.user.image.trim() === "") {
+        session.user.image = null;
+      }
       return session;
     },
   },

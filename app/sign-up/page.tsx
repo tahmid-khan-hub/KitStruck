@@ -65,7 +65,7 @@ const SignUpPage = () => {
           {/* link of sign up page */}
           <p className="mb-4 mt-1 ">
             Already have an account? Please Sign-in{" "}
-            <Link className="text-blue-500" href={"/sign-in"}>
+            <Link className="text-blue-500 hover:underline" href={"/sign-in"}>
               here
             </Link>
           </p>

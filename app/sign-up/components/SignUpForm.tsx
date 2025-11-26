@@ -7,6 +7,9 @@ import { FaEye, FaEyeSlash } from "react-icons/fa6";
 const SignUpForm = () => {
   const {successToast, errorToast} = UseSweetAlert();
   const [showPassword, setShowPassword] = useState(false);
+
+  // password pattern
+  const passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[\W_]).{8,}$/;
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -17,6 +20,13 @@ const SignUpForm = () => {
     const photoURL = formData.get("photo") as string;
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
+
+    if (!passwordPattern.test(password)) {
+      errorToast(
+        "Password must be at least 8 characters and include: 1 uppercase letter, 1 lowercase letter and 1 special character."
+      );
+      return;
+    }
 
     const res = await signUpUsers({ name, email, password, photoURL });
 

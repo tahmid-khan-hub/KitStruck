@@ -39,7 +39,7 @@ const LoginPage = () => {
         </button>
 
         {/* link of sign up page */}
-        <p className="mb-4 mt-1">New to this site? Please Sign-up <Link className="text-blue-500" href={'/sign-up'}>here</Link></p>
+        <p className="mb-4 mt-1">New to this site? Please Sign-up <Link className="text-blue-500 hover:underline" href={'/sign-up'}>here</Link></p>
       </div></motion.div>
     </div>
   );

@@ -4,6 +4,8 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import UseSweetAlert from "../hooks/UseSweetAlert";
 import CartList from "./components/CartList";
+import Lottie from "react-lottie-player";
+import emptyCart from "@/public/Empty Cart.json"
 
 const CartPage = () => {
     const {confirmDelete, errorToast, successToast} = UseSweetAlert();
@@ -94,7 +96,9 @@ const CartPage = () => {
         <div className="max-w-[1350px] mx-auto px-4 md:px-3 min-h-screen">
       <h1 className="text-3xl font-bold text-center mt-12 mb-7">Your Cart</h1>
       {cart.length === 0 ? (
-        <p>Your cart is empty.</p>
+        <div className="min-h-screen"><Lottie play loop animationData={emptyCart} className="w-[250px] max-w-md mx-auto"
+          /><p className="text-center text-gray-500 text-xl font-semibold mt-5">Cart is empty</p>
+        </div>
       ) : (
         <div className="flex flex-col gap-4">
           {cart.map(item => (

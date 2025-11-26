@@ -33,10 +33,10 @@ export async function POST(req: Request) {
     try {
         await dbConnect.query(
         `INSERT INTO review 
-        (user_id, reviewer_name, reviewer_email, rating, comment)
+        (user_id, reviewer_name, reviewer_email, reviewer_image, rating, comment)
          VALUES
-        (?, ?, ?, ?, ?)`,
-        [user.id, user.name, user.email, rating, review]
+        (?, ?, ?, ?, ?, ?)`,
+        [user.id, user.name, user.email, user.image, rating, review]
         );
     } catch (error) {
         console.error("Review submission error:", error);

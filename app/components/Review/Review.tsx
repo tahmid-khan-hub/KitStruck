@@ -21,21 +21,21 @@ const Review = () => {
       </h2>
 
       <Marquee pauseOnHover speed={50}>
-        <div className="flex gap-6">
+        <div className="flex">
           {data.map((review, i) => (
             <div
               key={i}
-              className="bg-white my-5 border-2 border-gray-100 shadow-md rounded-xl p-5 w-72 shrink-0"
+              className="bg-white my-5 mr-5 border-2 border-gray-100 shadow-md rounded-xl p-5 w-72 shrink-0"
             >
               {/* Person */}
               <div className="flex items-center gap-3 mb-3">
-                {/* <Image
-                  src={review.image || "/default-user.png"}
+                <Image
+                  src={review.reviewer_image || "/default-user.png"}
                   alt="user"
                   width={50}
                   height={50}
                   className="rounded-full border object-cover"
-                /> */}
+                />
                 <div>
                   <p className="font-semibold">{review.reviewer_name}</p>
                 </div>

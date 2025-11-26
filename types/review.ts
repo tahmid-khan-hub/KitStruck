@@ -4,5 +4,5 @@ export interface ReviewInterface{
   comment: string;
   reviewer_name: string;
   reviewer_email: string;
-  images: string;
+  reviewer_image: string;
 }

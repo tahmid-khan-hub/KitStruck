@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 export async function GET() {
   const dbConnect = await pool.getConnection();
   try {
-    const [rows] = await dbConnect.query("SELECT * FROM review LIMIT 5");
+    const [rows] = await dbConnect.query("SELECT * FROM review ORDER BY rating DESC LIMIT 5");
     return NextResponse.json(rows);
   } catch (error) {
     console.error("Error fetching review", error);

@@ -11,7 +11,7 @@ export async function GET() {
   } catch (error) {
     console.error("Error fetching review", error);
     return NextResponse.json(
-      { message: "Failed to fetch new arrivals" },
+      { message: "Failed to fetch review" },
       { status: 500 }
     );
   } finally {

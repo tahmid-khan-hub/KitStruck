@@ -12,6 +12,7 @@ interface Props {
 
 export default function JerseyDetailsContainer({ jersey }: Props) {
   const {successToast, errorToast} = UseSweetAlert();
+  const available = jersey.stock - jersey.sells_quantity;
 
   const handleAddToCart = () =>{
     try {
@@ -60,6 +61,8 @@ export default function JerseyDetailsContainer({ jersey }: Props) {
             <p className="">{jersey.team}</p>
 
             <p className="text-gray-600">Category: {jersey.category}</p>
+
+            {available > 0 ? <p className="w-[88px] border-2 p-1 bg-green-600 hover:bg-green-700 text-white -ml-0.5 pl-2 rounded-xl">Available</p> : <p className="w-[120px] border-2 p-1 bg-red-600 hover:bg-red-700 text-white -ml-0.5 pl-2 rounded-xl">Not Available</p>}
 
             <p className="text-2xl font-semibold text-green-600">
               Price: ${jersey.price}

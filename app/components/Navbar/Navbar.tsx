@@ -23,7 +23,7 @@ const Navbar = () => {
         </Link>
       </li>
       <li>
-        <Link href={"/"} className="font-semibold">
+        <Link href={"/about"} className="font-semibold">
           About
         </Link>
       </li>

@@ -3,6 +3,9 @@ import ActiveLink from "@/app/hooks/ActiveLink";
 import Logo from "@/app/hooks/Logo";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import { AiFillHome } from "react-icons/ai";
+import { IoLogOut } from "react-icons/io5";
+import { MdModeComment } from "react-icons/md";
 
 export default function DashboardSidebar() {
   const { data: session } = useSession();
@@ -58,15 +61,15 @@ export default function DashboardSidebar() {
         {role === "admin" ? (
         // admin dashboard links
           <>
-            <li><ActiveLink href="/">Home</ActiveLink></li>
-            <li><ActiveLink href="">Sign Out</ActiveLink></li>
+            <li><ActiveLink href="/"><AiFillHome size={20}/><span className="mt-1 text-[16px] ml-1">Home</span></ActiveLink></li>
+            <li><ActiveLink href=""><IoLogOut size={20}/><span className=" text-[16px] ml-1">Sign Out</span></ActiveLink></li>
           </>
         ) : (
         // user dashboard links
           <>
-            <li><ActiveLink href="/">Home</ActiveLink></li>
-            <li><ActiveLink href="/dashboard/user/reviewPage">Review</ActiveLink></li>
-            <li><ActiveLink href="">Sign Out</ActiveLink></li>
+            <li><ActiveLink href="/"><AiFillHome size={20}/><span className="mt-1 text-[16px] ml-1">Home</span></ActiveLink></li>
+            <li><ActiveLink href="/dashboard/user/reviewPage"><MdModeComment size={20}/><span className=" text-[16px] ml-1">Review</span></ActiveLink></li>
+            <li><ActiveLink href=""><IoLogOut size={20}/><span className=" text-[16px] ml-1">Sign Out</span></ActiveLink></li>
           </>
         )}
       </ul>

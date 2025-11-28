@@ -14,7 +14,7 @@ export default function ActiveLink({ href, children }: Props) {
   return (
     <Link
       href={href}
-      className={`block px-3 py-2 font-semibold rounded-md transition ${
+      className={`flex px-3 py-3 font-semibold rounded-md transition ${
         isActive
           ? "border-2 border-gray-200"
           : "block px-3 py-2"

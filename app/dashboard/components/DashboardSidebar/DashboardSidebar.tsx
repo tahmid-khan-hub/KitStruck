@@ -62,14 +62,14 @@ export default function DashboardSidebar() {
         // admin dashboard links
           <>
             <li><ActiveLink href="/"><AiFillHome size={20}/><span className="mt-1 text-[16px] ml-1">Home</span></ActiveLink></li>
-            <li><ActiveLink href=""><IoLogOut size={20}/><span className=" text-[16px] ml-1">Sign Out</span></ActiveLink></li>
+            <li><ActiveLink><IoLogOut size={20}/><span className=" text-[16px] ml-1">Sign Out</span></ActiveLink></li>
           </>
         ) : (
         // user dashboard links
           <>
             <li><ActiveLink href="/"><AiFillHome size={20}/><span className="mt-1 text-[16px] ml-1">Home</span></ActiveLink></li>
             <li><ActiveLink href="/dashboard/user/reviewPage"><MdModeComment size={20}/><span className=" text-[16px] ml-1">Review</span></ActiveLink></li>
-            <li><ActiveLink href=""><IoLogOut size={20}/><span className=" text-[16px] ml-1">Sign Out</span></ActiveLink></li>
+            <li><ActiveLink><IoLogOut size={20}/><span className=" text-[16px] ml-1">Sign Out</span></ActiveLink></li>
           </>
         )}
       </ul>

@@ -9,6 +9,8 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@stripe/react-stripe-js": "^5.4.1",
+    "@stripe/stripe-js": "^8.5.3",
     "bcryptjs": "^3.0.3",
     "framer-motion": "^12.23.24",
     "jsonwebtoken": "^9.0.2",
@@ -21,6 +23,7 @@
     "react-fast-marquee": "^1.6.5",
     "react-icons": "^5.5.0",
     "react-lottie-player": "^2.1.0",
+    "stripe": "^20.0.0",
     "sweetalert2": "^11.26.3",
     "swiper": "^12.0.3"
   },

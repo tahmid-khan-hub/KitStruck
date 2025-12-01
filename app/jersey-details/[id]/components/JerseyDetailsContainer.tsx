@@ -77,9 +77,11 @@ export default function JerseyDetailsContainer({ jersey }: Props) {
 
           {/* ACTION BUTTONS */}
           <div className="flex gap-4 pt-6 mt-6">
-            <button className="flex items-center gap-2 bg-green-600 text-white px-5 py-3 rounded-lg text-lg w-full justify-center hover:bg-green-700">
+            {available ? <button className="flex items-center gap-2 bg-green-600 text-white px-5 py-3 rounded-lg text-lg w-full justify-center hover:bg-green-700">
               <FaMoneyBillWave size={20} /> Buy Now
-            </button>
+            </button>: <button className="flex items-center gap-2 bg-gray-300 text-white px-5 py-3 rounded-lg text-lg w-full justify-center cursor-not-allowed">
+              <FaMoneyBillWave size={20} /> Buy Now
+            </button>}
 
             <button onClick={handleAddToCart} className="flex items-center gap-2 bg-blue-600 text-white px-5 py-3 rounded-lg text-lg w-full justify-center hover:bg-blue-700">
               <FaShoppingCart size={20} /> Add to Cart

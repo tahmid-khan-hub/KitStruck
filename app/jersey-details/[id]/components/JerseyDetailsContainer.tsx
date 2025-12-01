@@ -5,6 +5,7 @@ import { FaShoppingCart } from "react-icons/fa";
 import { FaMoneyBillWave } from "react-icons/fa6";
 import { motion, AnimatePresence } from "framer-motion";
 import UseSweetAlert from "@/app/hooks/UseSweetAlert";
+import Link from "next/link";
 
 interface Props {
   jersey: Jersey;
@@ -77,9 +78,11 @@ export default function JerseyDetailsContainer({ jersey }: Props) {
 
           {/* ACTION BUTTONS */}
           <div className="flex gap-4 pt-6 mt-6">
-            {available ? <button className="flex items-center gap-2 bg-green-600 text-white px-5 py-3 rounded-lg text-lg w-full justify-center hover:bg-green-700">
+            {available ? 
+            <Link href={`/payment?amount=${jersey.price}&jersey_id=${jersey.jersey_id}`}><button className="flex items-center gap-2 bg-green-600 text-white px-5 py-3 rounded-lg text-lg w-full justify-center hover:bg-green-700">
               <FaMoneyBillWave size={20} /> Buy Now
-            </button>: <button className="flex items-center gap-2 bg-gray-300 text-white px-5 py-3 rounded-lg text-lg w-full justify-center cursor-not-allowed">
+            </button></Link>
+            : <button className="flex items-center gap-2 bg-gray-300 text-white px-5 py-3 rounded-lg text-lg w-full justify-center cursor-not-allowed">
               <FaMoneyBillWave size={20} /> Buy Now
             </button>}
 

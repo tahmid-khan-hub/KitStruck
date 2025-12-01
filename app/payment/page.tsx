@@ -29,7 +29,7 @@ export default function PaymentPage() {
 
     return(
         <Elements stripe={stripePromise} options={{clientSecret}}>
-            <CheckoutForm amount={amount} jerseyId={JerseyId}></CheckoutForm>
+            <CheckoutForm amount={amount} jerseyId={JerseyId} clientSecret={clientSecret}></CheckoutForm>
         </Elements>
     )
 }

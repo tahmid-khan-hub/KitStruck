@@ -15,7 +15,7 @@ const Review = () => {
       .catch((err) => console.error("Fetch error:", err));
   }, []);
   return (
-    <div><div className="bg-gray-50 py-24 max-w-[1350px] mx-auto">
+    <div className="bg-white"><div className=" py-24 max-w-[1350px] mx-auto">
       <h2 className="text-center text-3xl font-bold mb-8">
         What Our Users Say
       </h2>

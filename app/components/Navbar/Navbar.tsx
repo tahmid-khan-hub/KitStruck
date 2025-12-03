@@ -35,7 +35,7 @@ const Navbar = () => {
     </>
   );
   return (
-    <div className="sticky top-0 z-10 bg-background/55 backdrop-blur-md text-white">
+    <div className="sticky top-0 z-10 bg-gray-50 text-white">
       <div className="max-w-[1350px] mx-auto w-full flex items-center justify-between px-4 md:px-3 h-16">
         {/* Left side */}
         <Logo></Logo>

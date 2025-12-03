@@ -5,6 +5,8 @@ import { signOut, useSession } from "next-auth/react";
 import Menu from "@/app/hooks/Menu";
 import Logo from "@/app/hooks/Logo";
 import { FaCartShopping } from "react-icons/fa6";
+import ActiveLink from "@/app/hooks/ActiveLink";
+import NavLink from "@/app/hooks/NavLink";
 
 const Navbar = () => {
   const { data: session } = useSession(); 
@@ -13,24 +15,16 @@ const Navbar = () => {
   const links = (
     <>
       <li>
-        <Link href={"/"} className="font-semibold">
-          Home
-        </Link>
+         <NavLink href="/">Home</NavLink>      
       </li>
       <li>
-        <Link href={"/jerseys"} className="font-semibold">
-          Jerseys
-        </Link>
+         <NavLink href="/jerseys">Jerseys</NavLink>      
       </li>
       <li>
-        <Link href={"/about"} className="font-semibold">
-          About
-        </Link>
+         <NavLink href="/about">About</NavLink>      
       </li>
       {session && <li>
-        <Link href={"/dashboard"} className="font-semibold">
-          Dashbaord
-        </Link>
+        <NavLink href="/dashboard">Dashbaord</NavLink>
       </li>}
     </>
   );

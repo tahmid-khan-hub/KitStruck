@@ -88,7 +88,7 @@ const SignUpForm = () => {
           </span>
         </div>
 
-        <button type="submit" className="btn w-full mt-5">
+        <button type="submit" className="btns w-full mt-5">
           Sign up
         </button>
       </form>

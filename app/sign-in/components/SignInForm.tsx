@@ -68,7 +68,7 @@ const SignInForm = () => {
             Forgot password?
           </a>
         </div>
-        <button type="submit" className="btn w-full">
+        <button type="submit" className="btns w-full">
           Sign In
         </button>
       </form>

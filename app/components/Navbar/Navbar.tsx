@@ -49,7 +49,7 @@ const Navbar = () => {
         <div className="flex items-center gap-4">
           {/* cart */}
           <Link href={"/cart"}><FaCartShopping size={23} className="text-black"/></Link>
-          {session ? <button onClick={() => signOut()} className="btn">Sign out</button> : <Link href={"/sign-in"}><button className="btn">Sign In</button></Link>}
+          {session ? <button onClick={() => signOut()} className="small-btn">Sign out</button> : <Link href={"/sign-in"}><button className="small-btn">Sign In</button></Link>}
 
           {/* <Link href={'/sign-in'}><button className="btn">Sign In</button></Link> */}
 

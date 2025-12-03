@@ -23,3 +23,15 @@
   background-color: #1d4ed8; /* blue-700 */
 }
 
+.small-btn {
+  background-color: #2563eb; /* blue-600 */
+  color: #ffffff;
+  padding: 0.50rem 1.2rem;
+  border-radius: 0.55rem; 
+  font-weight: 500; 
+  transition: background-color 0.2s ease; 
+}
+
+.small-btn:hover {
+  background-color: #1d4ed8; /* blue-700 */
+}

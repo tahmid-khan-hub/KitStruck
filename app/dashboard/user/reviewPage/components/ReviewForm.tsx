@@ -42,7 +42,7 @@ const ReviewForm = () => {
           className="textarea textarea-bordered w-full h-32"
           required
         ></textarea>
-        <button type="submit" className="btn w-full">
+        <button type="submit" className="btns w-full">
           Submit Review
         </button>
       </form>

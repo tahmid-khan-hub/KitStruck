@@ -31,7 +31,7 @@ const SignUpPage = () => {
           <div className="divider">OR</div>
 
           {/* Google Login */}
-          <button onClick={() => signIn("google", { callbackUrl: "/" })} type="button" className="btn border-blue-500 hover:bg-blue-600 hover:text-white btn-outline w-full">
+          <button onClick={() => signIn("google", { callbackUrl: "/" })} type="button" className="btn border-blue-500 hover:bg-blue-600 hover:text-white btn-outline rounded-lg w-full">
             <svg
               aria-label="Google logo"
               width="20"

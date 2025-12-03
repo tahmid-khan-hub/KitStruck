@@ -2,6 +2,7 @@ import NewArrivals from "./components/NewArrivals/NewArrivals";
 import Retro from "./components/Retro/Retro";
 import Review from "./components/Review/Review";
 import TopSelling from "./components/TopSelling/TopSelling";
+import WhyChooseUs from "./components/WhyChooseUs/WhyChooseUs";
 
 export default function Home() {
   return (
@@ -10,6 +11,7 @@ export default function Home() {
       <NewArrivals></NewArrivals>
       <Retro></Retro>
       <Review></Review>
+      <WhyChooseUs></WhyChooseUs>
     </div>
   );
 }

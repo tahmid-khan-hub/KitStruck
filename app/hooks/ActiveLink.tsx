@@ -12,7 +12,7 @@ export default function ActiveLink({ href, children }: Props) {
   const isActive = href ? pathname === href : false;
 
   const className = `flex px-3 py-3 font-semibold rounded-md transition ${
-    isActive ? "border-2 border-gray-200" : "block px-3 py-2"
+    isActive ? "bg-blue-600 text-white hover:bg-blue-700 my-2" : "block px-3 py-2"
   }`;
 
   if (!href) {

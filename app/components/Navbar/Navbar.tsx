@@ -5,7 +5,6 @@ import { signOut, useSession } from "next-auth/react";
 import Menu from "@/app/hooks/Menu";
 import Logo from "@/app/hooks/Logo";
 import { FaCartShopping } from "react-icons/fa6";
-import ActiveLink from "@/app/hooks/ActiveLink";
 import NavLink from "@/app/hooks/NavLink";
 
 const Navbar = () => {

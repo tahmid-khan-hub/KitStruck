@@ -9,3 +9,17 @@
 .inter {
     font-family: var(--font-inter);
 }
+
+.btns {
+  background-color: #2563eb; /* blue-600 */
+  color: #ffffff;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem; 
+  font-weight: 600; 
+  transition: background-color 0.2s ease; 
+}
+
+.btns:hover {
+  background-color: #1d4ed8; /* blue-700 */
+}
+

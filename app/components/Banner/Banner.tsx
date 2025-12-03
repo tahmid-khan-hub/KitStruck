@@ -34,8 +34,8 @@ const Banner = () => {
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 1 }} className="flex justify-center md:justify-start">
           <Link
-            href="#"
-            className="inline-block bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition"
+            href="/jerseys"
+            className="btns"
           >
             Get Yours Now
           </Link>

@@ -14,7 +14,7 @@ export default function PaymentPage() {
     const [clientSecret, setClientSecret] = useState("");
     
     useEffect(()=>{
-        fetch("/api/payment-intent", {
+        fetch("/api/payment/payment-intent", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({

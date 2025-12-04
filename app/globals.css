@@ -23,6 +23,21 @@
   background-color: #1d4ed8; /* blue-700 */
 }
 
+.border-btn {
+  border: 2px solid #2563eb; /* blue-600 */
+  color: #3b82f6; /* text-blue-500 */
+  padding: 0.65rem 1.5rem;
+  border-radius: 0.75rem; 
+  font-weight: 600;
+  background-color: transparent;
+  transition: all 0.2s ease;
+}
+
+.border-btn:hover {
+  background-color: #2563eb; /* blue-600 */
+  color: #ffffff;
+}
+
 .small-btn {
   background-color: #2563eb; /* blue-600 */
   color: #ffffff;

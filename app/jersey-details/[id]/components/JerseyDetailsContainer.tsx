@@ -78,17 +78,29 @@ export default function JerseyDetailsContainer({ jersey }: Props) {
 
           {/* ACTION BUTTONS */}
           <div className="flex gap-4 pt-6 mt-6">
-            {available ? 
-            <Link href={`/payment?amount=${jersey.price}&jersey_id=${jersey.jersey_id}`}><button className="flex items-center gap-2 bg-green-600 text-white px-5 py-3 rounded-lg text-lg w-full justify-center hover:bg-green-700">
-              <FaMoneyBillWave size={20} /> Buy Now
-            </button></Link>
-            : <button className="flex items-center gap-2 bg-gray-300 text-white px-5 py-3 rounded-lg text-lg w-full justify-center cursor-not-allowed">
-              <FaMoneyBillWave size={20} /> Buy Now
-            </button>}
-
-            <button onClick={handleAddToCart} className="flex items-center gap-2 bg-blue-600 text-white px-5 py-3 rounded-lg text-lg w-full justify-center hover:bg-blue-700">
-              <FaShoppingCart size={20} /> Add to Cart
-            </button>
+            {/* Buy Now */}
+            <div className="w-full">
+              {available ? (
+                <Link href={`/payment?amount=${jersey.price}&jersey_id=${jersey.jersey_id}`}>
+                  <button className="btns flex items-center gap-2 w-full justify-center">
+                    <FaMoneyBillWave size={20} /> Buy Now
+                  </button>
+                </Link>
+              ) : (
+                <button className="flex items-center gap-2 bg-gray-300 text-white px-5 py-3 rounded-lg text-lg w-full justify-center cursor-not-allowed">
+                  <FaMoneyBillWave size={20} className="mr-2.5"/> Buy Now
+                </button>
+              )}
+            </div>
+            {/* Add to Cart */}
+            <div className="w-full">
+              <button
+                onClick={handleAddToCart}
+                className="border-btn flex items-center w-full justify-center"
+              >
+                <FaShoppingCart size={20} className="mr-2.5"/> Add to Cart
+              </button>
+            </div>
           </div>
         </div>
       </motion.div></AnimatePresence>

@@ -2,6 +2,8 @@
 import Image from "next/image";
 import { FaMinus, FaPlus, FaTrash } from "react-icons/fa6";
 import { CartItem } from "@/types/jersey";
+import { PiShoppingCartSimpleFill } from "react-icons/pi";
+import Link from "next/link";
 
 interface Props {
   item: CartItem;
@@ -31,30 +33,41 @@ export default function CartList({
       </div>
       <div className="flex-1">
         <h2 className="text-xl font-semibold">{item.name}</h2>
-        <p>Team: {item.team}</p>
-        <p>Category: {item.category}</p>
         <div className="flex items-center gap-2 mt-2">
+          
           <button
-            onClick={() => handleDecrease(item.jersey_id)}
-            className="bg-gray-200 px-2 py-1 rounded"
+            onClick={() => {
+              if (item.quantity > 1) handleDecrease(item.jersey_id);
+            }}
+            disabled={item.quantity === 1}
+            className={`px-2 py-1 rounded border 
+              ${item.quantity === 1 
+                ? "bg-gray-200 text-gray-400 border-gray-300 cursor-not-allowed" 
+                : "bg-white hover:bg-blue-500 hover:text-white text-blue-500 border-blue-500"
+              }`}
           >
             <FaMinus />
           </button>
           <span className="px-2">{item.quantity}</span>
           <button
             onClick={() => handleIncrease(item.jersey_id)}
-            className="bg-gray-200 px-2 py-1 rounded"
+            className="bg-white hover:bg-blue-500 hover:text-white text-blue-500 border border-blue-500 px-2 py-1 rounded"
           >
             <FaPlus />
           </button>
         </div>
-        <p className="font-bold text-lg">
+        <p className="font-bold text-lg mt-2">
           Price: ${item.price * item.quantity}
         </p>
       </div>
+      <Link href={`/payment?amount=${item.price}&jersey_id=${item.jersey_id}`}><button
+        className="bg-blue-600 text-xl text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+      >
+        <PiShoppingCartSimpleFill />
+      </button></Link>
       <button
         onClick={() => handleRemove(item.jersey_id)}
-        className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700"
+        className="border border-blue-500 text-xl hover:bg-gray-100 text-black px-4 py-2 rounded-lg "
       >
         <FaTrash />
       </button>

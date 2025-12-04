@@ -41,7 +41,12 @@ const Navbar = () => {
         {/* Right side */}
         <div className="flex items-center gap-4">
           {/* cart */}
-          <Link href={"/cart"}><FaCartShopping size={23} className="text-black hover:text-blue-600"/></Link>
+          <Link
+            className="border border-transparent hover:border-blue-300 hover:bg-gray-100 rounded-full p-2 inline-flex items-center justify-center"
+            href="/cart"
+          >
+            <FaCartShopping size={23} className="text-black" />
+          </Link>
           {session ? <button onClick={() => signOut()} className="small-btn">Sign out</button> : <Link href={"/sign-in"}><button className="small-btn">Sign In</button></Link>}
 
           {/* <Link href={'/sign-in'}><button className="btn">Sign In</button></Link> */}

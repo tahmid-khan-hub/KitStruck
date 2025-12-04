@@ -14,7 +14,7 @@ const CartPage = () => {
     useEffect(() => {
         if(!session){
           const storedCart = JSON.parse(localStorage.getItem("cart") || "[]");
-        setTimeout(() => setCart(storedCart), 0);
+        setCart(storedCart);
         }else{
           fetch("/api/cart")
           .then(res => res.json())
@@ -92,6 +92,14 @@ const CartPage = () => {
     }
 
     const totalPrice = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+
+    if (cart === null) {
+      return (
+        <div className="h-screen flex justify-center items-center">
+          <p>Loading...</p>
+        </div>
+      );
+    }
     return (
         <div className="max-w-[1350px] mx-auto px-4 md:px-3 min-h-screen">
       <h1 className="text-3xl font-bold text-center mt-12 mb-7">Your Cart</h1>

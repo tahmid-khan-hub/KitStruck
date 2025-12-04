@@ -49,11 +49,11 @@ export default function CheckoutForm({
     if (paymentIntent?.status === "succeeded") {
       successToast("Payment successful!");
 
-      await fetch("/api/save-payment", {
+      await fetch("/api/payment/save-payment", {
         method: "POST",
         body: JSON.stringify({
           payment_id: paymentIntent.id,
-          amount: paymentIntent.amount,
+          amount: amount,
           jersey_id: jerseyId,
           status: paymentIntent.status,
         }),

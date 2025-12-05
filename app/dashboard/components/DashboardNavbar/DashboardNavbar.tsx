@@ -10,7 +10,6 @@ const ProfileSkeleton = () => (
 
 export default function DashboardNavbar() {
   const { data: session, status } = useSession();
-
   const user = session?.user;
   const profilePic =
     user?.image && user.image.trim() !== "" && isValidUrl(user.image)
@@ -27,27 +26,44 @@ export default function DashboardNavbar() {
             viewBox="0 0 24 24"
             className="h-6 w-6 stroke-current"
           >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
-              d="M4 6h16M4 12h16M4 18h16" />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            />
           </svg>
         </label>
       </div>
-
       <div className="mx-2 flex-1 mb-1 lg:hidden">
         <Logo />
       </div>
-
       <div className="ml-auto flex items-center">
         {status === "loading" ? (
           <ProfileSkeleton />
         ) : (
-          <Image
-            src={profilePic}
-            alt="User"
-            width={36}
-            height={36}
-            className="rounded-full object-cover border"
-          />
+          <div
+            className="relative group cursor-pointer"
+          >
+            <Image
+              src={profilePic}
+              alt="User"
+              width={36}
+              height={36}
+              className="rounded-full object-cover border"
+            />
+            {/* Tooltip */}
+            <div className="
+                absolute right-0 translate-y-2
+                hidden group-hover:block
+                bg-black text-white text-sm 
+                py-1 px-2 rounded-md 
+                whitespace-nowrap shadow-lg
+              "
+            >
+              {user?.name ?? "User"}
+            </div>
+          </div>
         )}
       </div>
     </div>

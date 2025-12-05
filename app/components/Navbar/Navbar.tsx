@@ -6,6 +6,7 @@ import Menu from "@/app/hooks/Menu";
 import Logo from "@/app/hooks/Logo";
 import { FaCartShopping } from "react-icons/fa6";
 import NavLink from "@/app/hooks/NavLink";
+import { MdLogin, MdLogout } from "react-icons/md";
 
 const Navbar = () => {
   const { data: session, status } = useSession(); 
@@ -53,11 +54,12 @@ const Navbar = () => {
             <FaCartShopping size={23} className="text-black" />
           </Link>
           {status === "loading" ? (
-            <div className="h-8 w-20 bg-gray-200 rounded animate-pulse"></div>
+            <div className="h-8 w-9 bg-gray-200 rounded animate-pulse"></div>
           ) : session ? (
-            <button onClick={() => signOut()} className="small-btn">Sign out</button>
+            <MdLogout className="text-blue-600 hover:border hover:border-blue-600 hover:bg-blue-600 hover:text-white hover:rounded-full p-1 hover:p-2" onClick={() => signOut()} size={36}/>
+            
           ) : (
-            <Link href="/sign-in"><button className="small-btn">Sign In</button></Link>
+            <Link href="/sign-in"><MdLogin className="text-blue-600 hover:border hover:border-blue-600 hover:bg-blue-600 hover:text-white hover:rounded-full p-1 hover:p-2" size={36}/></Link>
           )}
           {/* Mobile menu */}
           <div className="lg:hidden relative" ref={menuRef}>

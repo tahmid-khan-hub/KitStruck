@@ -60,7 +60,7 @@ export default function CartList({
           Price: ${item.price * item.quantity}
         </p>
       </div>
-      <Link href={`/payment?amount=${item.price}&jersey_id=${item.jersey_id}`}><button
+      <Link href={`/payment?amount=${item.price * item.quantity}&jersey_id=${item.jersey_id}&qty=${item.quantity}`}><button
         className="bg-blue-600 text-xl text-white px-4 py-2 rounded-lg hover:bg-blue-700"
       >
         <PiShoppingCartSimpleFill />

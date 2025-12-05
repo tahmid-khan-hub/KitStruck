@@ -9,15 +9,16 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const body = await req.json();
-  const { payment_id, amount, jersey_id, status } = body;
+  const { payment_id, amount, jersey_id, status, quantity } = body;
+  const orderStatus = "pending";
 
   const dbConnect = await pool.getConnection();
 
   try {
     await dbConnect.query(
-      `INSERT INTO payments (user_id, jersey_id, payment_id, amount, status)
-       VALUES (?, ?, ?, ?, ?)`,
-      [session.user.id, jersey_id, payment_id, amount, status]
+      `INSERT INTO payments (user_id, jersey_id, payment_id, amount, status, quantity, order_status)
+       VALUES (?, ?, ?, ?, ?, ?, ?)`,
+      [session.user.id, jersey_id, payment_id, amount, status, quantity, orderStatus]
     );
 
     return NextResponse.json({ success: true });

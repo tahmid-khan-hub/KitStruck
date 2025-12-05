@@ -8,7 +8,7 @@ import { FaCartShopping } from "react-icons/fa6";
 import NavLink from "@/app/hooks/NavLink";
 
 const Navbar = () => {
-  const { data: session } = useSession(); 
+  const { data: session, status } = useSession(); 
   const { isOpen, setIsOpen, menuRef } = Menu();
 
   const links = (
@@ -22,9 +22,14 @@ const Navbar = () => {
       <li>
          <NavLink href="/about">About</NavLink>      
       </li>
-      {session && <li>
-        <NavLink href="/dashboard">Dashbaord</NavLink>
-      </li>}
+      {status === "loading" && (
+        <div className="h-6 w-20 rounded bg-gray-200 animate-pulse"></div>
+      )}
+      {status === "authenticated" && (
+        <li>
+          <NavLink href="/dashboard">Dashboard</NavLink>
+        </li>
+      )}
     </>
   );
   return (
@@ -47,10 +52,13 @@ const Navbar = () => {
           >
             <FaCartShopping size={23} className="text-black" />
           </Link>
-          {session ? <button onClick={() => signOut()} className="small-btn">Sign out</button> : <Link href={"/sign-in"}><button className="small-btn">Sign In</button></Link>}
-
-          {/* <Link href={'/sign-in'}><button className="btn">Sign In</button></Link> */}
-
+          {status === "loading" ? (
+            <div className="h-8 w-20 bg-gray-200 rounded animate-pulse"></div>
+          ) : session ? (
+            <button onClick={() => signOut()} className="small-btn">Sign out</button>
+          ) : (
+            <Link href="/sign-in"><button className="small-btn">Sign In</button></Link>
+          )}
           {/* Mobile menu */}
           <div className="lg:hidden relative" ref={menuRef}>
             <label

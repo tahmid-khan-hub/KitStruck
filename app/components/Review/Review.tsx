@@ -1,4 +1,5 @@
 "use client";
+import ReviewCardSkeleton from "@/app/SkeletonLoading/ReviewCardSkeleton";
 import { ReviewInterface } from "@/types/review";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -6,13 +7,20 @@ import Marquee from "react-fast-marquee";
 import { FaStar } from "react-icons/fa6";
 
 const Review = () => {
+  const [loading, setLoading] = useState(true);
   const [data, setData] = useState<ReviewInterface[]>([]);
 
   useEffect(() => {
     fetch("/api/review", { cache: "no-store" })
       .then((res) => res.json())
-      .then((data: ReviewInterface[]) => setData(data))
-      .catch((err) => console.error("Fetch error:", err));
+      .then((data: ReviewInterface[]) => {
+        setData(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Fetch error:", err);
+        setLoading(false);
+      });
   }, []);
   return (
     <div className="bg-white"><div className=" py-24 max-w-[1350px] mx-auto">
@@ -22,7 +30,7 @@ const Review = () => {
 
       <Marquee pauseOnHover speed={50}>
         <div className="flex">
-          {data.map((review, i) => (
+          {loading ? Array.from({ length: 5 }).map((_, i) => <ReviewCardSkeleton key={i} /> ) : data.map((review, i) => (
             <div
               key={i}
               className="bg-white my-5 mr-5 border-2 border-gray-100 shadow-md rounded-xl p-5 w-72 shrink-0"

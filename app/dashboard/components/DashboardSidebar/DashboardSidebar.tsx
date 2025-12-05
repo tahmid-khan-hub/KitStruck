@@ -1,9 +1,7 @@
 "use client";
 import ActiveLink from "@/app/hooks/ActiveLink";
-import { isValidUrl } from "@/app/hooks/isValidUrl";
 import Logo from "@/app/hooks/Logo";
 import { signOut, useSession } from "next-auth/react";
-import Image from "next/image";
 import { AiFillHome } from "react-icons/ai";
 import { FaUserCircle } from "react-icons/fa";
 import { IoLogOut } from "react-icons/io5";
@@ -11,9 +9,7 @@ import { MdModeComment } from "react-icons/md";
 
 export default function DashboardSidebar() {
   const { data: session } = useSession();
-  const user = session?.user;
   const role = session?.user?.role;
-  const imageSrc = user?.image && user.image.trim() !== "" && isValidUrl(user.image) ? user.image : "/default_user.jpg";
 
   return (
     <div
@@ -30,24 +26,6 @@ export default function DashboardSidebar() {
         <div className="flex items-center ml-2 mb-4">
           <Logo></Logo>
         </div>
-
-        {/* user photo & name in sidebar */}
-        {user && (
-          <div className="hidden lg:flex flex-col items-center gap-2 p-2 rounded-lg mb-4 mt-5">
-            <Image
-              src={imageSrc}
-              alt="User"
-              width={52}
-              height={52}
-              className="rounded-full object-cover border"
-            />
-            <span className="font-semibold text-xl mt-2">
-              {user.name}
-            </span>
-            <span className="font-medium text-gray-500 ">{user.email}</span>
-          </div>
-        )}
-
         {/* Links */}
         {role === "admin" ? (
         // admin dashboard links

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import JerseysContainer from "./components/JerseysContainer";
 
 const JerseysPage = () => {
+  const [loading, setLoading] = useState(true);
   const [jerseys, setJerseys] = useState<Jersey[]>([]);
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
@@ -13,6 +14,8 @@ const JerseysPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true); // start loading
+      try {
       const params = new URLSearchParams({
         page: String(page),
         limit: String(limit),
@@ -25,6 +28,13 @@ const JerseysPage = () => {
 
       setJerseys(jerseyData.data || []);
       setTotalPage(jerseyData.pagination?.totalPages || 1);
+      } catch (err) {
+        console.error("Fetch error:", err);
+        setJerseys([]);
+        setTotalPage(1);
+      } finally {
+        setLoading(false); // stop loading
+      }
     };
     fetchData();
   }, [sort, search, page]);
@@ -46,6 +56,7 @@ const JerseysPage = () => {
         page={page}
         setPage={setPage}
         totalPage={totalPage}
+        loading={loading} 
       />
     </div>
   );

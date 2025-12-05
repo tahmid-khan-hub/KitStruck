@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import Lottie from "react-lottie-player";
 import NoJerseyFound from "@/public/Not Found.json"
 import Link from "next/link";
+import JerseyCardSkeleton from "@/app/SkeletonLoading/JerseyCardSkeleton";
 
 interface JerseysContainerProps {
   jerseys: Jersey[];
@@ -17,9 +18,19 @@ interface JerseysContainerProps {
   page: number;
   setPage: (value: number) => void;
   totalPage: number;
+  loading: boolean;
 }
-const JerseysContainer = ({jerseys, search, setSearch, sort,handleSortChange, page, setPage, totalPage
+const JerseysContainer = ({jerseys, search, setSearch, sort,handleSortChange, page, setPage, totalPage, loading
 }: JerseysContainerProps) => {
+  if(loading){
+    return (
+      <div className="max-w-[1350px] mx-auto px-4 md:px-3 "><div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {Array.from({ length: 8 }).map((_, i) => (
+          <JerseyCardSkeleton key={i} />
+        ))}
+      </div></div>
+    );
+  }
   return <div className="max-w-[1350px] mx-auto px-4 md:px-3 flex flex-col justify-center items-center">
      {/* Search + Sort */}
       <div className="flex flex-row items-center justify-between gap-4 mb-10 ">
@@ -36,12 +47,19 @@ const JerseysContainer = ({jerseys, search, setSearch, sort,handleSortChange, pa
       </div>
 
       {/* Jerseys Grid */}
-      {jerseys.length === 0 ? (
-        <div className="min-h-screen"><Lottie play loop animationData={NoJerseyFound} className="w-[250px] max-w-md mx-auto"
-          /><p className="text-center text-gray-500 -mt-5">No jerseys found.</p></div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {jerseys.map((jersey) => (
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">{jerseys.length === 0
+        ? (
+          <div className="min-h-screen">
+            <Lottie
+                play
+                loop
+                animationData={NoJerseyFound}
+                className="w-[250px] max-w-md mx-auto"
+            />
+            <p className="text-center text-gray-500 -mt-5">No jerseys found.</p>
+          </div>
+        )
+        : jerseys.map((jersey) => (
             <motion.div
               whileHover={{
               scale: 1.02, 
@@ -72,7 +90,7 @@ const JerseysContainer = ({jerseys, search, setSearch, sort,handleSortChange, pa
             </motion.div>
           ))}
         </div>
-      )}
+      
 
       {/* Pagination */}
       {jerseys.length > 0 && <div className="flex justify-center items-center gap-4 mt-20 mb-6">

@@ -4,6 +4,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import CheckoutForm from "./CheckoutForm";
+import PaymentSkeleton from "../SkeletonLoading/PaymentSkeleton";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
@@ -26,7 +27,7 @@ export default function PaymentPage() {
         .then((data) => setClientSecret(data.clientSecret));
     },[amount, JerseyId, Quantity]);
 
-    if (!clientSecret) return <p>Loading payment...</p>;
+    if (!clientSecret) return <PaymentSkeleton />;
 
     return(
         <Elements stripe={stripePromise} options={{clientSecret}}>

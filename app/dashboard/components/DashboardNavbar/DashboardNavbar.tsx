@@ -1,4 +1,5 @@
 "use client";
+import { isValidUrl } from "@/app/hooks/isValidUrl";
 import Logo from "@/app/hooks/Logo";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
@@ -6,6 +7,7 @@ import Image from "next/image";
 export default function DashboardNavbar() {
   const { data: session } = useSession();
   const user = session?.user;
+  const profilePic = user?.image && user.image.trim() !== "" && isValidUrl(user.image) ? user.image : "/default_user.jpg";
   return (
     <div className="navbar sticky top-0 z-50 bg-base-100 w-full lg:hidden">
       {/* menu */}
@@ -38,10 +40,10 @@ export default function DashboardNavbar() {
           {user && (
             <div className="flex items-center ml-auto">
               <Image
-                src={user?.image ?? "/default-user.png"}
+                src={profilePic}
                 alt="User"
-                width={22}
-                height={22}
+                width={28}
+                height={28}
                 className="rounded-full object-cover ml-2"
               />
             </div>

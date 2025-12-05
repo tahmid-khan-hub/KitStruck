@@ -1,5 +1,6 @@
 "use client";
 import ActiveLink from "@/app/hooks/ActiveLink";
+import { isValidUrl } from "@/app/hooks/isValidUrl";
 import Logo from "@/app/hooks/Logo";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
@@ -12,8 +13,7 @@ export default function DashboardSidebar() {
   const { data: session } = useSession();
   const user = session?.user;
   const role = session?.user?.role;
-  const imageSrc =
-  user?.image && user.image.trim() !== "" ? user.image : null;
+  const imageSrc = user?.image && user.image.trim() !== "" && isValidUrl(user.image) ? user.image : "/default_user.jpg";
 
   return (
     <div
@@ -34,7 +34,6 @@ export default function DashboardSidebar() {
         {/* user photo & name in sidebar */}
         {user && (
           <div className="hidden lg:flex flex-col items-center gap-2 p-2 rounded-lg mb-4 mt-5">
-            {imageSrc ? (
             <Image
               src={imageSrc}
               alt="User"
@@ -42,15 +41,6 @@ export default function DashboardSidebar() {
               height={52}
               className="rounded-full object-cover border"
             />
-          ) : (
-            <Image
-              src="/default-user.png"
-              alt="Default User"
-              width={52}
-              height={52}
-              className="rounded-full object-cover border"
-            />
-          )}
             <span className="font-semibold text-xl mt-2">
               {user.name}
             </span>

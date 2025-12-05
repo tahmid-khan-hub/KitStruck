@@ -1,3 +1,4 @@
+import { isValidUrl } from "@/app/hooks/isValidUrl";
 import { authOptions } from "@/lib/authOptions";
 import { getServerSession } from "next-auth";
 import Image from "next/image";
@@ -7,13 +8,14 @@ export default async function UserDashboard() {
   const session = await getServerSession(authOptions);
   if (!session) redirect("/sign-in");
   const user = session?.user;
+  const profilePic = user?.image && user.image.trim() !== "" && isValidUrl(user.image) ? user.image : "/default_user.jpg";
 
   return (
     <div className="min-h-screen mt-5 mx-auto">
       <div className="bg-white p-8 rounded-xl shadow-md text-center w-full">
         {/* User Image */}
-        <Image
-          src={user.image || "/default.png"}
+         <Image
+          src={profilePic}
           alt="User"
           width={52}
           height={52}

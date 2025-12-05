@@ -5,7 +5,8 @@ import { FaShoppingCart } from "react-icons/fa";
 import { FaMoneyBillWave } from "react-icons/fa6";
 import { motion, AnimatePresence } from "framer-motion";
 import UseSweetAlert from "@/app/hooks/UseSweetAlert";
-import Link from "next/link";
+import { useState } from "react";
+import JerseyPurchaseModal from "./JerseyPurchaseModal";
 
 interface Props {
   jersey: Jersey;
@@ -13,6 +14,7 @@ interface Props {
 
 export default function JerseyDetailsContainer({ jersey }: Props) {
   const {successToast, errorToast} = UseSweetAlert();
+  const [openModal, setOpenModal] = useState(false);
   const available = jersey.stock - jersey.sells_quantity;
 
   const handleAddToCart = () =>{
@@ -80,15 +82,16 @@ export default function JerseyDetailsContainer({ jersey }: Props) {
           <div className="flex gap-4 pt-6 mt-6">
             {/* Buy Now */}
             <div className="w-full">
-              {available ? (
-                <Link href={`/payment?amount=${jersey.price}&jersey_id=${jersey.jersey_id}`}>
-                  <button className="btns flex items-center gap-2 w-full justify-center">
-                    <FaMoneyBillWave size={20} /> Buy Now
-                  </button>
-                </Link>
+              {available > 0 ? (
+                <button
+                  onClick={() => setOpenModal(true)}
+                  className="btns flex items-center gap-2 w-full justify-center"
+                >
+                  <FaMoneyBillWave size={20} /> Buy Now
+                </button>
               ) : (
                 <button className="flex items-center gap-2 bg-gray-300 text-white px-5 py-3 rounded-lg text-lg w-full justify-center cursor-not-allowed">
-                  <FaMoneyBillWave size={20} className="mr-2.5"/> Buy Now
+                  <FaMoneyBillWave size={20}/> Buy Now
                 </button>
               )}
             </div>
@@ -104,6 +107,13 @@ export default function JerseyDetailsContainer({ jersey }: Props) {
           </div>
         </div>
       </motion.div></AnimatePresence>
+      {/* modal for buy now button */}
+      <JerseyPurchaseModal
+        jersey={jersey}
+        available={available}
+        open={openModal}
+        onClose={() => setOpenModal(false)}
+      />
     </div>
   );
 }

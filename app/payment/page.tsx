@@ -11,6 +11,7 @@ export default function PaymentPage() {
     const params = useSearchParams();
     const amount = Number(params.get("amount")); 
     const JerseyId = Number(params.get("jersey_id")); 
+    const Quantity = Number(params.get("qty"));
     const [clientSecret, setClientSecret] = useState("");
     
     useEffect(()=>{
@@ -18,18 +19,19 @@ export default function PaymentPage() {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                amount, JerseyId,
+                amount, JerseyId, Quantity
             }),
         })
         .then((res) => res.json())
         .then((data) => setClientSecret(data.clientSecret));
-    },[amount, JerseyId]);
+    },[amount, JerseyId, Quantity]);
 
     if (!clientSecret) return <p>Loading payment...</p>;
 
     return(
         <Elements stripe={stripePromise} options={{clientSecret}}>
-            <CheckoutForm amount={amount} jerseyId={JerseyId} clientSecret={clientSecret}></CheckoutForm>
+            <CheckoutForm amount={amount} jerseyId={JerseyId} 
+            quantity={Quantity} clientSecret={clientSecret}></CheckoutForm>
         </Elements>
     )
 }

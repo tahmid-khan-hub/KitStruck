@@ -9,10 +9,12 @@ export default function CheckoutForm({
   amount,
   jerseyId,
   clientSecret,
+  quantity,
 }: {
   amount: number;
   jerseyId: number;
   clientSecret: string;
+  quantity: number;
 }) {
   const { errorToast, successToast } = UseSweetAlert();
   const stripe = useStripe();
@@ -55,6 +57,7 @@ export default function CheckoutForm({
           payment_id: paymentIntent.id,
           amount: amount,
           jersey_id: jerseyId,
+          quantity: quantity,
           status: paymentIntent.status,
         }),
       });

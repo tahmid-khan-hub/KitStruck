@@ -48,7 +48,7 @@ const Navbar = () => {
         <div className="flex items-center gap-4">
           {/* cart */}
           <Link
-            className="border border-transparent hover:border-blue-300 hover:bg-gray-100 rounded-full p-2 inline-flex items-center justify-center"
+            className="border border-transparent hover:border-blue-600 hover:bg-gray-100 rounded-full p-2 inline-flex items-center justify-center"
             href="/cart"
           >
             <FaCartShopping size={23} className="text-black" />

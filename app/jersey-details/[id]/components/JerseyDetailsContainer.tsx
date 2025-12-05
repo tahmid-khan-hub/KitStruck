@@ -88,11 +88,11 @@ export default function JerseyDetailsContainer({ jersey }: Props) {
 
               {available > 0 ? (
                 <p className="w-[88px] border-2 p-1 bg-green-600 text-white rounded-xl">
-                  Available
+                  <span className="ml-1">Available</span>
                 </p>
               ) : (
                 <p className="w-[120px] border-2 p-1 bg-red-600 text-white rounded-xl">
-                  Not Available
+                  <span className="ml-1">Not Available</span>
                 </p>
               )}
 
@@ -113,14 +113,14 @@ export default function JerseyDetailsContainer({ jersey }: Props) {
                 onClick={() => setOpenModal(true)}
                 className="btns flex items-center w-full justify-center"
               >
-                <FaMoneyBillWave size={20} /> Buy Now
+                <FaMoneyBillWave size={20} className="mr-2.5" /> Buy Now
               </button>
 
               <button
                 onClick={handleAddToCart}
                 className="border-btn flex items-center w-full justify-center"
               >
-                <FaShoppingCart size={20} className="mr-2.5" /> Add to Cart
+                <FaShoppingCart size={20} className="mr-2.5" /> Cart
               </button>
             </div>
           </div>

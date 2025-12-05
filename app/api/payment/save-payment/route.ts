@@ -15,11 +15,20 @@ export async function POST(req: Request) {
   const dbConnect = await pool.getConnection();
 
   try {
+    // save payment
     await dbConnect.query(
       `INSERT INTO payments (user_id, jersey_id, payment_id, amount, status, quantity, order_status)
        VALUES (?, ?, ?, ?, ?, ?, ?)`,
       [session.user.id, jersey_id, payment_id, amount, status, quantity, orderStatus]
     );
+
+    // updated sells_quantity after payment
+    await dbConnect.query(
+      `UPDATE jersey_table
+      SET sells_quantity = sells_quantity + ?
+      WHERE jersey_id = ?`,
+      [quantity, jersey_id]
+    )
 
     return NextResponse.json({ success: true });
   } catch(error) {

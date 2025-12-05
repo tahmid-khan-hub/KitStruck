@@ -4,15 +4,23 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import CardSkeleton from "@/app/SkeletonLoading/CardSkeleton";
 
 const TopSelling = () => {
+  const [loading, setLoading] = useState(true);
   const [data, setData] = useState<Jersey[]>([]);
 
   useEffect(() => {
     fetch("/api/kitsTruck/topSelling", { cache: "no-store" })
       .then((res) => res.json())
-      .then((data: Jersey[]) => setData(data))
-      .catch((err) => console.error("Fetch error:", err));
+      .then((data: Jersey[]) => {
+        setData(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Fetch error:", err);
+        setLoading(false);
+      });
   }, []);
   return (
     <div>
@@ -20,7 +28,7 @@ const TopSelling = () => {
         <h2 className="text-3xl text-center font-bold mb-3">Top Selling</h2>
         <p className="text-center text-gray-600 mb-8">Popular designs that capture team spirit and unbeatable performance in every stitch.</p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {data.map((jersey) => (
+          {loading ? Array.from({ length: 3 }).map((_, i) => <CardSkeleton key={i} /> ) : data.map((jersey) => (
             <Link key={jersey.jersey_id} href={`/jersey-details/${jersey.jersey_id}`}><motion.div
               whileHover={{
               scale: 1.02, 

@@ -4,13 +4,13 @@ import OrderRow from "./OrderRow";
 export default function OrdersTable({ Myorders }: { Myorders: orders[] }) {
   return (
     <div className="overflow-x-auto">
-      <table className="table w-full border">
+      <table className="table w-full border border-gray-200">
         <thead className="bg-gray-100">
           <tr>
             <th>Image</th>
             <th>Jersey</th>
             <th>Amount</th>
-            <th>Qty</th>
+            <th>Quantity</th>
             <th>Status</th>
             <th>Order Date</th>
           </tr>

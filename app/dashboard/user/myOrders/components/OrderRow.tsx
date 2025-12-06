@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function OrderRow({ item }: { item: orders }) {
   return (
-    <tr className="border-b">
+    <tr className="border-b border-b-gray-200">
       <td>
         <Image
           src={item?.jerseyData?.image_url || "/default.png"}

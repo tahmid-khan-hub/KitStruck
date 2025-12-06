@@ -3,23 +3,7 @@ import pool from "@/lib/mysql";
 import { RowDataPacket } from "mysql2";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
-
-interface PaymentRow extends RowDataPacket {
-  payment_id: string;
-  amount: number;
-  status: string;
-  payment_at: string;
-  quantity: number;
-  order_status: string;
-
-  jersey_id: number;
-  name: string;
-  team: string;
-  image_url: string;
-  category: string;
-  price: number;
-}
-
+import { PaymentRow } from "@/types/PaymentRow";
 interface CountRow extends RowDataPacket {
   total: number;
 }

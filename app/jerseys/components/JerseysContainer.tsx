@@ -97,7 +97,7 @@ const JerseysContainer = ({jerseys, search, setSearch, sort,handleSortChange, pa
         <button
           disabled={page === 1}
           onClick={() => setPage(page - 1)}
-          className="px-3 py-3 bg-gray-200 text-gray-700 rounded-md disabled:opacity-50 hover:bg-gray-300 transition"
+          className="px-3 py-3 bg-gray-200 text-black rounded-md disabled:opacity-50 hover:bg-blue-600 hover:text-white transition"
         >
         <FaLessThan size={20}/>
         </button>
@@ -109,7 +109,7 @@ const JerseysContainer = ({jerseys, search, setSearch, sort,handleSortChange, pa
         <button
           disabled={page === totalPage}
           onClick={() => setPage(page + 1)}
-          className="px-4 py-3 bg-gray-200 text-gray-700 rounded-md disabled:opacity-50 hover:bg-gray-300 transition"
+          className="px-3 py-3 bg-gray-200 text-black rounded-md disabled:opacity-50 hover:bg-blue-600 hover:text-white transition"
         >
           <FaGreaterThan size={20}/>
         </button>

@@ -4,6 +4,7 @@ import { useState } from "react";
 import UseSweetAlert from "../hooks/UseSweetAlert";
 import Lottie from "react-lottie-player";
 import PaymentLottie from "@/public/Payment.json"
+import { useRouter } from "next/navigation";
 
 export default function CheckoutForm({
   amount,
@@ -16,6 +17,7 @@ export default function CheckoutForm({
   clientSecret: string;
   quantity: number;
 }) {
+  const router = useRouter();
   const { errorToast, successToast } = UseSweetAlert();
   const stripe = useStripe();
   const elements = useElements();
@@ -76,6 +78,7 @@ export default function CheckoutForm({
       } catch (err) {
         console.log("Cart clear error:", err);
       }
+      router.push("/dashboard/user/myOrders");
     }
     setLoading(false);
   };

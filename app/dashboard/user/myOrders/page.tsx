@@ -4,6 +4,9 @@ import { useEffect, useState } from "react";
 import OrdersSkeleton from "./components/OrdersSkeleton";
 import OrdersPagination from "./components/OrdersPagination";
 import OrdersTable from "./components/OrdersTable";
+import Lottie from "react-lottie-player";
+import noMyOrders from "@/public/No Item Found.json"
+import Link from "next/link";
 
 const LIMIT = 5;
 
@@ -38,11 +41,29 @@ export default function MyOrdersPage() {
 
      return (
         <div className="w-full p-6">
-            <h1 className="text-2xl font-bold mb-6">My Orders</h1>
-
-            {loading ? <OrdersSkeleton rows={LIMIT} /> : <OrdersTable Myorders={orders} />}
-
-            <OrdersPagination page={page} setPage={setPage} totalPages={totalPages} />
+            <h1 className="text-3xl text-center font-bold mb-6">My Orders</h1>
+            {loading ? (
+                <OrdersSkeleton rows={LIMIT} />
+            ) : orders.length === 0 ? (
+                <div className="flex flex-col items-center justify-center py-10">
+                <Lottie
+                    animationData={noMyOrders}
+                    loop={true}
+                    className="w-64 h-64"
+                />
+                <p className="text-gray-500 text-lg mt-4">No My orders found</p>
+                <p className="text-gray-500 text-lg mt-5">Want to buy jerseys? Please visit <Link href={"/jerseys"}><span className="text-blue-600 hover:underline">jerseys</span> page</Link></p>
+                </div>
+            ) : (
+                <OrdersTable Myorders={orders} />
+            )}
+            {orders.length > 0 && (
+                <OrdersPagination
+                page={page}
+                setPage={setPage}
+                totalPages={totalPages}
+                />
+            )}
         </div>
     );
 }

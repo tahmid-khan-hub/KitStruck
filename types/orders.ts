@@ -1,3 +1,5 @@
+import { Jersey } from "./jersey";
+
 export interface orders {
     payment_id: string;
     user_id: string;
@@ -7,4 +9,5 @@ export interface orders {
     jersey_id: number;
     quantity: number;
     order_status: string;
+    jerseyData?: Jersey;
 }

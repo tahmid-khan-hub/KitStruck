@@ -4,22 +4,27 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import UseSweetAlert from "../hooks/UseSweetAlert";
 import CartList from "./components/CartList";
-import Lottie from "react-lottie-player";
-import emptyCart from "@/public/Empty Cart.json"
-import Link from "next/link";
+import CartSkeleton from "./components/CartSkeleton";
+import EmptyCartLottie from "./components/EmptyCartLottie";
 
 const CartPage = () => {
     const {confirmDelete, errorToast, successToast} = UseSweetAlert();
+    const [loading, setLoading] = useState(true);
     const [cart, setCart] = useState<CartItem[]>([]);
     const { data: session } = useSession();
     useEffect(() => {
+        setLoading(true);
         if(!session){
           const storedCart = JSON.parse(localStorage.getItem("cart") || "[]");
         setCart(storedCart);
+        setLoading(false);
         }else{
           fetch("/api/cart")
           .then(res => res.json())
-          .then(data => setCart(data))
+          .then(data => {
+            setCart(data)
+            setLoading(false);
+          })
         }
     },[session])
 
@@ -93,23 +98,12 @@ const CartPage = () => {
     }
 
     const totalPrice = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
-
-    if (cart === null) {
-      return (
-        <div className="h-screen flex justify-center items-center">
-          <p>Loading...</p>
-        </div>
-      );
-    }
     return (
         <div className="max-w-[1350px] mx-auto px-4 md:px-3 min-h-screen">
       <h1 className="text-3xl font-bold text-center mt-12 mb-7">Your Cart</h1>
-      {cart.length === 0 ? (
-        <div className="min-h-screen"><Lottie play loop animationData={emptyCart} className="w-[250px] max-w-md mx-auto"
-          /><p className="text-center text-gray-500 text-xl font-semibold mt-5">Cart is empty</p>
-          <p className="text-center text-gray-500 text-xl font-semibold mt-5">Visit the <Link href={"/jerseys"}><span className="text-blue-600 hover:underline">Jerseys</span></Link> page to add jersey in the cart</p>
-        </div>
-      ) : (
+      {loading && <CartSkeleton rows={2} />}
+      {!loading && cart.length === 0 && <EmptyCartLottie />}
+      {!loading && cart.length > 0 && (
         <div className="flex flex-col gap-4">
           {cart.map(item => (
             <CartList

@@ -6,7 +6,7 @@ import emptyCart from "@/public/Empty Cart.json"
 
 export default function EmptyCartLottie() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen mt-24">
       <Lottie
         play
         loop

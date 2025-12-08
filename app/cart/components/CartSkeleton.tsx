@@ -6,7 +6,7 @@ interface Props {
 
 export default function CartSkeleton({ rows = 2 }: Props) {
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 max-w-[1350px] mx-auto px-4 md:px-3 min-h-screen mt-24">
       {Array.from({ length: rows }).map((_, i) => (
         <div
           key={i}

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import CardSkeleton from "@/app/SkeletonLoading/CardSkeleton";
+import { isValidUrl } from "@/app/hooks/isValidUrl";
 
 const Retro = () => {
   const [loading, setLoading] = useState(true);
@@ -25,27 +26,48 @@ const Retro = () => {
   return (
     <div>
       <div className="my-24 max-w-[1350px] mx-auto">
-        <h2 className="text-3xl text-center font-bold mb-3">Top Retro Collection</h2>
-        <p className="text-center text-gray-600 mb-8">Relive the glory days with jerseys that celebrate football’s golden era.</p>
+        <h2 className="text-3xl text-center font-bold mb-3">
+          Top Retro Collection
+        </h2>
+        <p className="text-center text-gray-600 mb-8">
+          Relive the glory days with jerseys that celebrate football’s golden
+          era.
+        </p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {loading ? Array.from({ length: 6 }).map((_, i) => <CardSkeleton key={i} /> ) : data.map((jersey) => (
-            <Link key={jersey.jersey_id} href={`/jersey-details/${jersey.jersey_id}`}><motion.div
-              whileHover={{
-              scale: 1.02, 
-              boxShadow: "0px 0px 20px rgba(0, 123, 255, 0.7)",
-              }}
-              transition={{ duration: 0.1 }}
-              className="p-3 border-2 border-gray-200 bg-white rounded-lg flex flex-col justify-between hover:shadow-md transition"
-            >
-              <Image
-                src={jersey.image_url}
-                alt={jersey.name}
-                width={200}
-                height={200}
-                className="object-cover rounded-md w-full h-[350px]"
-              />
-            </motion.div></Link>
-          ))}
+          {loading
+            ? Array.from({ length: 6 }).map((_, i) => <CardSkeleton key={i} />)
+            : data.map((jersey) => {
+                const imgSrc =
+                  jersey.image_url &&
+                  jersey.image_url.trim() !== "" &&
+                  isValidUrl(jersey.image_url)
+                    ? jersey.image_url
+                    : "/default.png";
+
+                return (
+                  <Link
+                    key={jersey.jersey_id}
+                    href={`/jersey-details/${jersey.jersey_id}`}
+                  >
+                    <motion.div
+                      whileHover={{
+                        scale: 1.02,
+                        boxShadow: "0px 0px 20px rgba(0, 123, 255, 0.7)",
+                      }}
+                      transition={{ duration: 0.1 }}
+                      className="p-3 border-2 border-gray-200 bg-white rounded-lg flex flex-col justify-between hover:shadow-md transition"
+                    >
+                      <Image
+                        src={imgSrc}
+                        alt={jersey.name}
+                        width={200}
+                        height={200}
+                        className="object-cover rounded-md w-full h-[350px]"
+                      />
+                    </motion.div>
+                  </Link>
+                );
+              })}
         </div>
       </div>
     </div>

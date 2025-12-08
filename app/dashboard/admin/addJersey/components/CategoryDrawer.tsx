@@ -22,7 +22,7 @@ const CategoryDrawer: React.FC<CategoryDrawerProps> = ({ value, onChange }) => {
     <div className="relative w-full" ref={menuRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between px-4 py-2 bg-white border border-gray-300 rounded-md shadow-sm text-gray-700 hover:bg-gray-50"
+        className="w-full flex items-center justify-between px-4 py-3 bg-white border border-gray-300 rounded-md shadow-sm text-gray-800"
       >
         {currentLabel}
         <FaChevronDown />

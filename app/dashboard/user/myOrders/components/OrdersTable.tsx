@@ -1,7 +1,9 @@
 import { orders } from "@/types/orders";
 import OrderRow from "./OrderRow";
+import { useSession } from "next-auth/react";
 
 export default function OrdersTable({ Myorders }: { Myorders: orders[] }) {
+  const { data: session } = useSession(); 
   return (
     <div className="overflow-x-auto">
       <table className="table w-full border border-gray-200">
@@ -13,6 +15,7 @@ export default function OrdersTable({ Myorders }: { Myorders: orders[] }) {
             <th>Quantity</th>
             <th>Status</th>
             <th>Order Date</th>
+            {session?.user?.role === 'admin' && <th>Action</th>}
           </tr>
         </thead>
 

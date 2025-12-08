@@ -1,7 +1,9 @@
 import { orders } from "@/types/orders";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 
 export default function OrderRow({ item }: { item: orders }) {
+  const { data: session } = useSession(); 
   return (
     <tr className="border-b border-b-gray-200">
       <td>
@@ -38,6 +40,10 @@ export default function OrderRow({ item }: { item: orders }) {
       </td>
 
       <td>{new Date(item.payment_at).toLocaleDateString()}</td>
+
+      {session?.user?.role === "admin" && <td className="capitalize">
+        <span className="px-2 py-1.5 rounded text-white font-semibold bg-blue-600 hover:bg-blue-700 text-xs">Proceed</span>
+        </td>}
     </tr>
   );
 }

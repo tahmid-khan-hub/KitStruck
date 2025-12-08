@@ -38,7 +38,7 @@ const Review = () => {
               {/* Person */}
               <div className="flex items-center gap-3 mb-3">
                 <Image
-                  src={review.reviewer_image || "/default-user.png"}
+                  src={review.reviewer_image || "/default_user.jpg"}
                   alt="user"
                   width={50}
                   height={50}

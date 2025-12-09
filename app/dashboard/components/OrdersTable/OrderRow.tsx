@@ -1,9 +1,34 @@
+import UseSweetAlert from "@/app/hooks/UseSweetAlert";
 import { orders } from "@/types/orders";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 
 export default function OrderRow({ item }: { item: orders }) {
   const { data: session } = useSession(); 
+  const { confirmProceed, successToast, errorToast } = UseSweetAlert();
+  const handleProceed = async() => {
+    const confirmed = await confirmProceed("Mark this order as processing?");
+    if (!confirmed) return; 
+
+    try {
+      const res = await fetch(`/api/admin/manage-orders/${item.payment_id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          status: "processing"
+        })
+      })
+
+      if (res.ok) successToast("Order moved to processing!");
+      else errorToast("Failed to update order");
+      
+    } catch (error) {
+      console.error(error);
+      errorToast("Something went wrong");
+    }
+  }
   return (
     <tr className="border-b border-b-gray-200">
       <td>
@@ -41,7 +66,7 @@ export default function OrderRow({ item }: { item: orders }) {
 
       <td>{new Date(item.payment_at).toLocaleDateString()}</td>
 
-      {session?.user?.role === "admin" && <td className="capitalize">
+      {session?.user?.role === "admin" && <td onClick={handleProceed} className="capitalize">
         <span className="px-2 py-1.5 rounded text-white font-semibold bg-blue-600 hover:bg-blue-700 text-xs">Proceed</span>
         </td>}
     </tr>

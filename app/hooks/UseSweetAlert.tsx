@@ -45,5 +45,21 @@ export default function UseSweetAlert() {
     return result.isConfirmed; // returns true or false
   };
 
-  return { successToast, errorToast, confirmDelete };
+  const confirmProceed = async (
+    message: string = "Do you want to mark this order as processing?"
+  ) => {
+    const result = await Swal.fire({
+      title: "Proceed with Order?",
+      text: message,
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#2563eb", 
+      cancelButtonColor: "#6b7280", 
+      confirmButtonText: "Yes, proceed",
+    });
+
+    return result.isConfirmed; // true or false
+  };
+
+  return { successToast, errorToast, confirmDelete, confirmProceed };
 }

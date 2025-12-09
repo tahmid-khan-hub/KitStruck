@@ -34,7 +34,7 @@ export default function DashboardSidebar() {
             <li><ActiveLink href="/"><AiFillHome size={20}/><span className="mt-1 text-[16px] ml-1">Home</span></ActiveLink></li>
             <li><ActiveLink href="/dashboard/admin"><FaUserCircle size={20}/><span className="text-[16px] ml-1">Profile</span></ActiveLink></li>
             <li><ActiveLink href="/dashboard/admin/addJersey"><IoAddCircle size={20}/><span className="text-[16px] ml-1">Add Jersey</span></ActiveLink></li>
-            <li><ActiveLink href="/dashboard/admin/manageUsers"><RiShoppingBag4Fill size={20}/><span className="text-[16px] ml-1 mt-1">Manage Orders</span></ActiveLink></li>
+            <li><ActiveLink href="/dashboard/admin/manageOrders"><RiShoppingBag4Fill size={20}/><span className="text-[16px] ml-1 mt-1">Manage Orders</span></ActiveLink></li>
             <li onClick={() => signOut()}><ActiveLink><IoLogOut size={20}/><span className=" text-[16px] ml-1">Sign Out</span></ActiveLink></li>
           </>
         ) : (

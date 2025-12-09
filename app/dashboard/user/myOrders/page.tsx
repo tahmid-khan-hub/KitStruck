@@ -1,12 +1,12 @@
 "use client"
 import { orders } from "@/types/orders";
 import { useEffect, useState } from "react";
-import OrdersSkeleton from "./components/OrdersSkeleton";
-import OrdersPagination from "./components/OrdersPagination";
-import OrdersTable from "./components/OrdersTable";
 import Lottie from "react-lottie-player";
 import noMyOrders from "@/public/No Item Found.json"
 import Link from "next/link";
+import OrdersSkeleton from "../../components/OrdersTable/OrdersSkeleton";
+import OrdersTable from "../../components/OrdersTable/OrdersTable";
+import OrdersPagination from "../../components/OrdersTable/OrdersPagination";
 
 const LIMIT = 5;
 

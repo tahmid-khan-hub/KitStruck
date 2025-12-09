@@ -17,11 +17,14 @@ export default function OrderRow({ item }: { item: orders }) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          status: "processing"
+          order_status: "processing"
         })
       })
 
-      if (res.ok) successToast("Order moved to processing!");
+      if (res.ok) {
+        successToast("Order moved to processing!")
+        setTimeout(() => location.reload(), 300);
+      }
       else errorToast("Failed to update order");
       
     } catch (error) {

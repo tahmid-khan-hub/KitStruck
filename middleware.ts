@@ -7,8 +7,10 @@ export const middleware = async (req: NextRequest) => {
   // token exists, allow access
   if (token) return NextResponse.next();
 
+  const callbackUrl = req.nextUrl.pathname + req.nextUrl.search;
+
   // Otherwise redirect -> sign in page
-  return NextResponse.redirect(new URL("/sign-in", req.url));
+  return NextResponse.redirect(new URL(`/sign-in?callbackUrl=${encodeURIComponent(callbackUrl)}`, req.url));
 };
 
 // Paths that require authentication

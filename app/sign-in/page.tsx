@@ -5,8 +5,11 @@ import Lottie from "react-lottie-player";
 import SignInLottie from "@/public/sign-in.json"
 import { signIn } from "next-auth/react";
 import SignInForm from "./components/SignInForm";
+import { useSearchParams } from "next/navigation";
 
 const LoginPage = () => {
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || "/";
   return (
     <div className="max-w-[1350px] mx-auto">
       <motion.div  initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="min-h-screen flex w-full items-center justify-center p-8 mb-11"><div className="card w-full max-w-md bg-base-200 shadow-xl p-8 space-y-6">
@@ -23,14 +26,14 @@ const LoginPage = () => {
           />
         </div>
         {/* Form */}
-        <SignInForm></SignInForm>
+        <SignInForm callbackUrl={callbackUrl}></SignInForm>
 
         {/* Divider */}
         <div className="divider">OR</div>
 
         {/* Google Login */}
         <button
-          onClick={() => signIn("google", { callbackUrl: "/" })}
+          onClick={() => signIn("google", { callbackUrl })}
           type="button"
           className="btn border-blue-500 hover:bg-blue-600 hover:text-white btn-outline rounded-lg w-full"
         >

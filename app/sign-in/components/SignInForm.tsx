@@ -4,7 +4,11 @@ import { signIn } from "next-auth/react";
 import { FormEvent, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
 
-const SignInForm = () => {
+type SignInFormProps = {
+  callbackUrl: string;
+};
+
+const SignInForm = ({ callbackUrl }: SignInFormProps) => {
   const {successToast, errorToast} = UseSweetAlert();
   const [showPassword, setShowPassword] = useState(false);
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -23,12 +27,13 @@ const SignInForm = () => {
         redirect: false,
         email,
         password,
+        callbackUrl,
       });
 
       if (loginRes?.ok) {
         successToast("Sign in successful!");
         // redirect user
-        window.location.href = "/";
+        window.location.href = loginRes.url || callbackUrl;
       } else {
         errorToast("sign In failed.");
       }

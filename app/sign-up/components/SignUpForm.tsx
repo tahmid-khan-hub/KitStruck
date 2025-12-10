@@ -4,7 +4,11 @@ import { signIn } from "next-auth/react";
 import { FormEvent, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
 
-const SignUpForm = () => {
+type SignUpFormProps = {
+  callbackUrl: string;
+};
+
+const SignUpForm = ({ callbackUrl }: SignUpFormProps) => {
   const {successToast, errorToast} = UseSweetAlert();
   const [showPassword, setShowPassword] = useState(false);
 
@@ -35,12 +39,13 @@ const SignUpForm = () => {
         redirect: false,
         email,
         password,
+        callbackUrl
       });
 
       if (loginRes?.ok) {
         successToast("Registration successful!");
         // redirect user
-        window.location.href = "/";
+        window.location.href = loginRes.url || callbackUrl;
       } else {
         errorToast("Registered but login failed");
       }

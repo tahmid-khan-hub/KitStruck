@@ -5,8 +5,11 @@ import Lottie from "react-lottie-player";
 import SignInLottie from "@/public/sign-up.json";
 import { signIn } from "next-auth/react";
 import SignUpForm from "./components/SignUpForm";
+import { useSearchParams } from "next/navigation";
 
 const SignUpPage = () => {
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || "/";
   return (
     <div className="max-w-[1350px] mx-auto">
       <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="min-h-screen flex w-full items-center justify-center p-8 mb-11"
@@ -25,13 +28,13 @@ const SignUpPage = () => {
             />
           </div>
           {/* Form */}
-          <SignUpForm></SignUpForm>
+          <SignUpForm callbackUrl={callbackUrl}></SignUpForm>
 
           {/* Divider */}
           <div className="divider">OR</div>
 
           {/* Google Login */}
-          <button onClick={() => signIn("google", { callbackUrl: "/" })} type="button" className="btn border-blue-500 hover:bg-blue-600 hover:text-white btn-outline rounded-lg w-full">
+          <button onClick={() => signIn("google", { callbackUrl })} type="button" className="btn border-blue-500 hover:bg-blue-600 hover:text-white btn-outline rounded-lg w-full">
             <svg
               aria-label="Google logo"
               width="20"

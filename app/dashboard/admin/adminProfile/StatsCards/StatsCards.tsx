@@ -31,7 +31,7 @@ export default function StatsCards() {
 
   return (
     <div>
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-6">
         <div className="p-6 shadow rounded-xl bg-white">
           <h2 className="text-xl font-semibold">Total Jerseys</h2>
           <p className="text-3xl font-bold">{stats.totalJerseys}</p>

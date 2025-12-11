@@ -2,6 +2,7 @@ import { authOptions } from "@/lib/authOptions";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import StatsCards from "./adminProfile/StatsCards/StatsCards";
+import RecentData from "./adminProfile/RecentData/RecentData";
 
 export default async function AdminDashboard() {
     const session = await getServerSession(authOptions);
@@ -11,6 +12,7 @@ export default async function AdminDashboard() {
     return(
         <div>
             <StatsCards />
+            <RecentData />
         </div>
     )
 }

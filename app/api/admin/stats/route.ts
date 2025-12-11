@@ -1,8 +1,18 @@
 import { authOptions } from "@/lib/authOptions";
 import pool from "@/lib/mysql";
-import { Jersey } from "@/types/jersey";
+import { RowDataPacket } from "mysql2";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
+
+interface CountJerseys extends RowDataPacket {
+  totalJerseys: number;
+}
+interface CountUsers extends RowDataPacket {
+  totalUsers: number;
+}
+interface SumEarned extends RowDataPacket {
+    totalEarned: number;
+}
 
 export async function GET() {
     const session = await getServerSession(authOptions);
@@ -12,14 +22,15 @@ export async function GET() {
     const dbConnect = await pool.getConnection();
 
     try {
-        const [ jerseyRows ] = await dbConnect.query<Jersey[]>(`SELECT COUNT(*) AS totalJerseys FROM jersey_table`);
-        const totalJerseys = jerseyRows[0].totalJerseys;
+        const [ jerseyRows ] = await dbConnect.query<CountJerseys[]>(`SELECT COUNT(*) AS totalJerseys FROM jersey_table`);
 
-        const [ totalUsers ] = await dbConnect.query(`SELECT COUNT(*) AS totalUsers FROM users`);
-        const [ totalEarned ] = await dbConnect.query(`SELECT SUM(amount) AS totalEarned FROM payments`);
+        const [ userRows ] = await dbConnect.query<CountUsers[]>(`SELECT COUNT(*) AS totalUsers FROM users`);
+
+        const [ earnedRows ] = await dbConnect.query<SumEarned[]>(`SELECT SUM(amount) AS totalEarned FROM payments`);
+
 
         return NextResponse.json({
-            totalJerseys, totalUsers, totalEarned: totalEarned || 0
+            totalJerseys: jerseyRows[0].totalJerseys, totalUsers: userRows[0].totalUsers, totalEarned: earnedRows[0].totalEarned
         });
     } catch (error) {
         console.log(error);

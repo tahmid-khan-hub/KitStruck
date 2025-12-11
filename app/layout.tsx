@@ -7,6 +7,7 @@ import BannerWrapper from "./components/Banner/BannerWrapper";
 import Providers from "./providers";
 import CartSync from "./components/CartSync/CartSync";
 import LayoutVisibility from "./components/LayoutVisibility/LayoutVisibility";
+import QueryProvider from "./QueryProvider";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -37,16 +38,18 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${passero.variable} antialiased inter bg-base-200`}
       >
-        <Providers>
-          <LayoutVisibility>
-            <Navbar />
-            <BannerWrapper/>
-          </LayoutVisibility>
-            <div><CartSync/>{children}</div>
-          <LayoutVisibility>
-            <Footer></Footer>
-          </LayoutVisibility>
-        </Providers>
+        <QueryProvider>
+          <Providers>
+            <LayoutVisibility>
+              <Navbar />
+              <BannerWrapper/>
+            </LayoutVisibility>
+              <div><CartSync/>{children}</div>
+            <LayoutVisibility>
+              <Footer></Footer>
+            </LayoutVisibility>
+          </Providers>
+        </QueryProvider>
       </body>
     </html>
   );

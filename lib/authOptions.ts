@@ -4,6 +4,7 @@ import pool from "./mysql";
 import { RowDataPacket } from "mysql2";
 import { NextAuthOptions, User } from "next-auth";
 import bcrypt from "bcryptjs";
+import { encode } from "next-auth/jwt";
 
 interface DBUser {
   id: number;
@@ -108,6 +109,10 @@ export const authOptions: NextAuthOptions = {
       if (!session.user.image || session.user.image.trim() === "") {
         session.user.image = null;
       }
+      session.accessToken = await encode({
+        token,
+        secret: process.env.NEXTAUTH_SECRET!,
+      });
       return session;
     },
   },

@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import StatsCards from "./adminProfile/StatsCards/StatsCards";
 import RecentData from "./adminProfile/RecentData/RecentData";
+import DashboardGraph from "./adminProfile/DashboardGraph/DashboardGraph";
 
 export default async function AdminDashboard() {
     const session = await getServerSession(authOptions);
@@ -13,6 +14,7 @@ export default async function AdminDashboard() {
         <div>
             <StatsCards />
             <RecentData />
+            <DashboardGraph />
         </div>
     )
 }

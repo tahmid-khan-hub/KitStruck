@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Jersey } from "@/types/jersey";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 interface Props {
   jersey: Jersey;
@@ -12,6 +13,7 @@ interface Props {
 }
 
 export default function JerseyPurchaseModal({ jersey, available, open, onClose }: Props) {
+  const { data: session } = useSession();
   const [qty, setQty] = useState(1);
 
   const increaseQty = () => {
@@ -76,8 +78,7 @@ export default function JerseyPurchaseModal({ jersey, available, open, onClose }
             </span>
           </div>
 
-          {/* Buttons */}
-          <div className="flex justify-end gap-3">
+          {session?.user?.role === "user" ? <div className="flex justify-end gap-3">
             <button
               onClick={onClose}
               className="border-btn px-4 py-2 rounded-lg"
@@ -92,7 +93,15 @@ export default function JerseyPurchaseModal({ jersey, available, open, onClose }
                 Proceed
               </button>
             </Link>
-          </div>
+          </div> : <div>
+            <p className="mt-9 mb-8 text-gray-500">Buy option is currently not opened for admins. Thank You.</p>
+          <div className="flex justify-end"><button
+              onClick={onClose}
+              className="border-btn px-4 py-2 rounded-lg"
+            >
+              Cancel
+          </button></div>
+          </div>}
         </motion.div>
       </motion.div>
     </AnimatePresence>

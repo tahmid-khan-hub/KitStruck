@@ -51,7 +51,7 @@ export default function JerseyDetailsContainer({ jersey }: Props) {
 
   return (
     <div className="py-5 mb-9">
-      <h1 className="text-center font-semibold text-3xl mb-4">
+      <h1 className="text-center font-bold text-3xl mb-4">
         Jersey Details
       </h1>
       <p className="text-center text-gray-600 mb-9">
@@ -87,17 +87,17 @@ export default function JerseyDetailsContainer({ jersey }: Props) {
               <p className="text-gray-600">Category: {jersey.category}</p>
 
               {available > 0 ? (
-                <p className="w-[88px] border-2 p-1 bg-blue-600 text-white rounded-xl">
+                <p className="w-[88px] border-2 p-1 bg-blue-600 text-white rounded-xl -ml-1">
                   <span className="ml-1">Available</span>
                 </p>
               ) : (
-                <p className="w-[120px] border-2 p-1 bg-gray-600 text-white rounded-xl">
+                <p className="w-[120px] border-2 p-1 bg-gray-600 text-white rounded-xl -ml-1">
                   <span className="ml-1">Not Available</span>
                 </p>
               )}
 
-              <p className="text-2xl font-semibold text-green-600">
-                Price: ${jersey.price}
+              <p className="font-semibold text-gray-600">
+                Price: <span className="text-2xl font-bold text-blue-600">${jersey.price}</span>
               </p>
 
               {jersey.description && (
@@ -124,13 +124,11 @@ export default function JerseyDetailsContainer({ jersey }: Props) {
               </button>
               </> : <>
               <button
-                onClick={() => setOpenModal(true)}
                 className="bg-gray-400 text-white rounded-lg border border-gray-300 flex items-center w-full justify-center cursor-not-allowed "
               >
                 <FaMoneyBillWave size={20} className="mr-2.5" /> Buy Now
               </button>
               <button
-                onClick={handleAddToCart}
                 className="not-allowed-btn flex items-center w-full justify-center cursor-not-allowed"
               >
                 <FaShoppingCart size={20} className="mr-2.5" /> Cart

@@ -25,8 +25,8 @@ export default function DashboardGraph() {
   ];
 
   return (
-    <div className="p-6 bg-white shadow rounded-xl my-24 max-w-5xl mx-auto">
-      <h2 className="text-3xl font-semibold mb-4">Admin Overview Graph</h2>
+    <div className="p-6 bg-white/60 backdrop-blur-md shadow rounded-xl my-24 max-w-5xl mx-auto border border-gray-200">
+      <h2 className="text-3xl font-semibold mb-4">Overview Graph</h2>
       <div className="mt-12" style={{ width: "100%", height: "400px" }}>
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={chartData}>

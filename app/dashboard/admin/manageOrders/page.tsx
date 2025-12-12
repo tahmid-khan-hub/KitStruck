@@ -40,7 +40,7 @@ export default function ManageOrders() {
 
   return (
     <div className="w-full p-6">
-      <h1 className="text-3xl text-center font-bold mb-6">My Orders</h1>
+      <h1 className="text-3xl text-center font-bold mb-11 mt-5">Manage Orders</h1>
       {loading ? (
         <OrdersSkeleton rows={LIMIT} />
       ) : orders.length === 0 ? (

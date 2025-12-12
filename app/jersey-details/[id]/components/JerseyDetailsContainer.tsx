@@ -87,11 +87,11 @@ export default function JerseyDetailsContainer({ jersey }: Props) {
               <p className="text-gray-600">Category: {jersey.category}</p>
 
               {available > 0 ? (
-                <p className="w-[88px] border-2 p-1 bg-green-600 text-white rounded-xl">
+                <p className="w-[88px] border-2 p-1 bg-blue-600 text-white rounded-xl">
                   <span className="ml-1">Available</span>
                 </p>
               ) : (
-                <p className="w-[120px] border-2 p-1 bg-red-600 text-white rounded-xl">
+                <p className="w-[120px] border-2 p-1 bg-gray-600 text-white rounded-xl">
                   <span className="ml-1">Not Available</span>
                 </p>
               )}
@@ -109,19 +109,34 @@ export default function JerseyDetailsContainer({ jersey }: Props) {
 
             {/* BUTTONS */}
             <div className="flex gap-4 pt-6 mt-6">
+              {available ? <>
               <button
                 onClick={() => setOpenModal(true)}
                 className="btns flex items-center w-full justify-center"
               >
                 <FaMoneyBillWave size={20} className="mr-2.5" /> Buy Now
               </button>
-
               <button
                 onClick={handleAddToCart}
                 className="border-btn flex items-center w-full justify-center"
               >
                 <FaShoppingCart size={20} className="mr-2.5" /> Cart
               </button>
+              </> : <>
+              <button
+                onClick={() => setOpenModal(true)}
+                className="bg-gray-400 text-white rounded-lg border border-gray-300 flex items-center w-full justify-center cursor-not-allowed "
+              >
+                <FaMoneyBillWave size={20} className="mr-2.5" /> Buy Now
+              </button>
+              <button
+                onClick={handleAddToCart}
+                className="not-allowed-btn flex items-center w-full justify-center cursor-not-allowed"
+              >
+                <FaShoppingCart size={20} className="mr-2.5" /> Cart
+              </button>
+              </> 
+              }
             </div>
           </div>
         </motion.div>

@@ -50,3 +50,14 @@
 .small-btn:hover {
   background-color: #1d4ed8; /* blue-700 */
 }
+
+.not-allowed-btn {
+  background-color: #bbbbbd;
+  border: 2px solid gray;
+  color: black;
+  padding: 0.65rem 1.5rem;
+  border-radius: 0.75rem; 
+  font-weight: 600;
+  background-color: transparent;
+  transition: all 0.2s ease;
+}

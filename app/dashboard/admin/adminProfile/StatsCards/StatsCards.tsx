@@ -33,6 +33,11 @@ export default function StatsCards() {
           <h2 className="text-xl font-semibold">Total Earned</h2>
           <p className="text-3xl font-bold">${data.totalEarned}</p>
         </div>
+
+        <div className="p-6 shadow rounded-xl bg-white">
+          <h2 className="text-xl font-semibold">User Review</h2>
+          <p className="text-3xl font-bold">{data.totalReviews}</p>
+        </div>
       </div>
     </div>
   );

@@ -21,6 +21,7 @@ export default function DashboardGraph() {
     { name: "Jerseys", value: data.totalJerseys },
     { name: "Users", value: data.totalUsers },
     { name: "Earned", value: data.totalEarned },
+    { name: "Review", value: data.totalReviews },
   ];
 
   return (

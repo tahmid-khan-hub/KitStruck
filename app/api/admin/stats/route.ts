@@ -13,6 +13,9 @@ interface CountUsers extends RowDataPacket {
 interface SumEarned extends RowDataPacket {
     totalEarned: number;
 }
+interface CountReviews extends RowDataPacket {
+    totalReviews: number;
+}
 
 export async function GET() {
     const session = await getServerSession(authOptions);
@@ -28,9 +31,12 @@ export async function GET() {
 
         const [ earnedRows ] = await dbConnect.query<SumEarned[]>(`SELECT SUM(amount) AS totalEarned FROM payments`);
 
+        const [ userReviews ] = await dbConnect.query<CountReviews[]>(`SELECT COUNT(*) AS totalReviews FROM review`);
+
 
         return NextResponse.json({
-            totalJerseys: jerseyRows[0].totalJerseys, totalUsers: userRows[0].totalUsers, totalEarned: earnedRows[0].totalEarned
+            totalJerseys: jerseyRows[0].totalJerseys, totalUsers: userRows[0].totalUsers, totalEarned: earnedRows[0].totalEarned,
+            totalReviews: userReviews[0].totalReviews
         });
     } catch (error) {
         console.log(error);

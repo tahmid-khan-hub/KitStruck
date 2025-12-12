@@ -18,13 +18,18 @@ export default function RecentData() {
   if (isLoading) return <RecentDataSkeleton />;
 
   return (
-    <div className="grid grid-cols-1 gap-6">
-      <div className="p-6 bg-white shadow rounded-xl">
-        <h2 className="text-xl font-semibold mb-4">Recent Users</h2>
+    <div className="p-6 bg-white/60 backdrop-blur-md border border-gray-200 rounded-xl shadow">
+      <h2 className="text-3xl font-semibold mb-9">Recent Users</h2>
+
+      <div className="space-y-4 mb-9">
         {data?.map((user, i) => (
-          <p key={i}>
-            👤 {user.name} • {user.email}
-          </p>
+          <div key={i} className="flex justify-between items-center p-3 bg-white/50 rounded-lg border">
+            <div>
+              <p className="font-semibold">{user.name}</p>
+              <p className="text-sm text-gray-500">{user.email}</p>
+            </div>
+            <span className="text-xs text-gray-400">NEW</span>
+          </div>
         ))}
       </div>
     </div>

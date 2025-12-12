@@ -11,7 +11,7 @@ export default async function AdminDashboard() {
     if(role !== "admin") redirect("/dashboard/user");
 
     return(
-        <div>
+        <div className="px-2">
             <StatsCards />
             <RecentData />
             <DashboardGraph />

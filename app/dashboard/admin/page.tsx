@@ -12,6 +12,7 @@ export default async function AdminDashboard() {
 
     return(
         <div className="px-2">
+            <h2 className="text-center font-bold text-3xl mt-11">Overview</h2>
             <StatsCards />
             <RecentData />
             <DashboardGraph />

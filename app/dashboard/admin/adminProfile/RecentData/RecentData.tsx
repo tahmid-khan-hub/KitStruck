@@ -23,7 +23,7 @@ export default function RecentData() {
 
       <div className="space-y-4 mb-9">
         {data?.map((user, i) => (
-          <div key={i} className="flex justify-between items-center p-3 bg-white/50 rounded-lg border border-gray-300 hover:bg-gray-50">
+          <div key={i} className="flex justify-between items-center p-3 bg-white/50 rounded-lg border border-gray-300 hover:bg-blue-100">
             <div>
               <p className="font-semibold">{user.name}</p>
               <p className="text-sm text-gray-500">{user.email}</p>

@@ -25,14 +25,14 @@ const JerseysTableRow = ({ item }: { item: Jersey }) => {
 
       return res.json();
     },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["allJersey"] });
+    },
     onSuccess: () => {
-      successToast("Jersey deleted");
-      queryClient.invalidateQueries({
-        queryKey: ["allJerseys"],
-      });
+      successToast("Jersey has been removed successfully");
     },
     onError: () => {
-      errorToast("Delete failed");
+      errorToast("Failed to removed the jersey");
     },
   });
 

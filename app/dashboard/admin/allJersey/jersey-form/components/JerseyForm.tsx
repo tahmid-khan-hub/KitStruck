@@ -34,6 +34,11 @@ export default function JerseyForm({ jerseyData }: { jerseyData: Jersey }) {
   const handleSubmit = async(e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    const nativeEvent = e.nativeEvent as SubmitEvent;
+    const submitter = nativeEvent.submitter as HTMLButtonElement | null;
+
+    if (!submitter || submitter.name !== "submitBtn") return;
+
     const formData = new FormData(e.currentTarget);
 
     const payload: jerseyPayload = {
@@ -51,13 +56,12 @@ export default function JerseyForm({ jerseyData }: { jerseyData: Jersey }) {
     };
 
     mutate(payload);
-    successToast("")
   }
   return (
     <div className="px-20">
       <form onSubmit={handleSubmit} className="space-y-4">
         <JerseyFormFields jerseyData={jerseyData} category={category} setCategory={setCategory} />
-        <button disabled={isPending} className="w-full btns my-7">{isPending ? "Updating..." : "Update"}</button>
+        <button type="submit" name="submitBtn" value="update" disabled={isPending} className="w-full btns my-7">{isPending ? "Updating..." : "Update"}</button>
       </form>
     </div>
   );

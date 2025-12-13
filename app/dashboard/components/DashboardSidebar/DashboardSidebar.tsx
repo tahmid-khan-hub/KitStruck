@@ -3,7 +3,7 @@ import ActiveLink from "@/app/hooks/ActiveLink";
 import Logo from "@/app/hooks/Logo";
 import { signOut, useSession } from "next-auth/react";
 import { AiFillHome } from "react-icons/ai";
-import { FaUserCircle } from "react-icons/fa";
+import { FaTshirt, FaUserCircle } from "react-icons/fa";
 import { FaRegChartBar } from "react-icons/fa6";
 import { IoAddCircle, IoLogOut } from "react-icons/io5";
 import { MdModeComment } from "react-icons/md";
@@ -34,6 +34,7 @@ export default function DashboardSidebar() {
           <>
             <li><ActiveLink href="/"><AiFillHome size={20}/><span className="mt-1 text-[16px] ml-1">Home</span></ActiveLink></li>
             <li><ActiveLink href="/dashboard/admin"><FaRegChartBar size={20}/><span className="text-[16px] ml-1 mt-0.5">Overview</span></ActiveLink></li>
+            <li><ActiveLink href="/dashboard/admin/allJersey"><FaTshirt size={20}/><span className="text-[16px] ml-1 mt-0.5">All Jerseys</span></ActiveLink></li>
             <li><ActiveLink href="/dashboard/admin/addJersey"><IoAddCircle size={20}/><span className="text-[16px] ml-1">Add Jersey</span></ActiveLink></li>
             <li><ActiveLink href="/dashboard/admin/manageOrders"><RiShoppingBag4Fill size={20}/><span className="text-[16px] ml-1 mt-1">Manage Orders</span></ActiveLink></li>
             <li onClick={() => signOut()}><ActiveLink><IoLogOut size={20}/><span className=" text-[16px] ml-1">Sign Out</span></ActiveLink></li>

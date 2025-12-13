@@ -11,6 +11,7 @@ export interface Jersey extends RowDataPacket{
   created_at: string; 
   sells_quantity: number;  
   stock: number;
+  offer: number;
 }
 
 export interface CartItem extends Jersey{

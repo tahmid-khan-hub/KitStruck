@@ -3,6 +3,7 @@ import { Jersey } from "@/types/jersey";
 import Image from "next/image";
 import { FaEdit } from "react-icons/fa";
 import { RiDeleteBin5Fill } from "react-icons/ri";
+import Link from "next/link";
 
 const JerseysTableRow = ({ item }: { item: Jersey }) => {
   return (
@@ -28,7 +29,7 @@ const JerseysTableRow = ({ item }: { item: Jersey }) => {
       
       {/* action */}
       <td>
-        <button className="group border border-gray-400 hover:bg-blue-600 hover:text-white p-2 rounded-full"><FaEdit className="ml-0.5 text-blue-600 group-hover:text-white transition" size={18}/></button>
+        <Link href={`/dashboard/admin/allJersey/jersey-form?jerseyId=${item.jersey_id}`}><button className="group border border-gray-400 hover:bg-blue-600 hover:text-white p-2 rounded-full"><FaEdit className="ml-0.5 text-blue-600 group-hover:text-white transition" size={18}/></button></Link>
         <button className="group border border-gray-400 hover:bg-blue-600 hover:text-white p-2 ml-3 rounded-full"><RiDeleteBin5Fill className=" text-blue-600 group-hover:text-white transition" size={18}/></button>
       </td>
     </tr>

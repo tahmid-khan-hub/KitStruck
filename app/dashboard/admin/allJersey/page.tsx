@@ -5,6 +5,7 @@ import Lottie from "react-lottie-player";
 import noJerseys from "@/public/No Jersey.json"
 import JerseysTable from "./components/JerseysTable";
 import JerseysPagination from "./components/JerseysPagination";
+import JerseysTableSkeleton from "./components/JerseysTableSkeleton";
 
 const LIMIT = 10;
 
@@ -23,7 +24,7 @@ export default function AllJersey() {
     const jerseys = data?.data ?? [];
     const totalPages = data?.totalPages ?? 1;
 
-    if (isLoading) return <p>Loading orders...</p>;
+    if (isLoading) return <JerseysTableSkeleton />;
 
     return (
         <div>
@@ -34,9 +35,11 @@ export default function AllJersey() {
                     className="w-64 h-64"
                 />
                 <p className="text-gray-500 text-lg mt-4">No jerseys found</p>
-            </div> : <JerseysTable /> }
+            </div> : <JerseysTable jerseys={jerseys} /> }
             {jerseys.length > 0 && 
-                <JerseysPagination />
+                <JerseysPagination page={page}
+                setPage={setPage}
+                totalPages={totalPages} />
             }
         </div>
     )

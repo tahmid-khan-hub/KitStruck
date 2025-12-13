@@ -3,7 +3,7 @@ const JerseysPagination = ({ page, setPage, totalPages,
 }: { page: number; setPage: (p: number) => void; totalPages: number;
 }) => {
   return (
-    <div className="flex justify-center gap-4 mt-6">
+    <div className="flex justify-center gap-4 my-6">
       <button
         disabled={page === 1}
         onClick={() => setPage(page - 1)}

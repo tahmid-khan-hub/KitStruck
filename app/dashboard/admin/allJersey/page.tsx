@@ -35,7 +35,12 @@ export default function AllJersey() {
                     className="w-64 h-64"
                 />
                 <p className="text-gray-500 text-lg mt-4">No jerseys found</p>
-            </div> : <JerseysTable jerseys={jerseys} /> }
+            </div> : <>
+                <h2 className="my-12 text-center font-bold text-3xl">All Jerseys</h2>
+                <div className="px-6">
+                    <JerseysTable jerseys={jerseys} />
+                </div>
+            </> }
             {jerseys.length > 0 && 
                 <JerseysPagination page={page}
                 setPage={setPage}

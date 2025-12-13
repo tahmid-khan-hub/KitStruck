@@ -1,6 +1,8 @@
 "use client";
 import { Jersey } from "@/types/jersey";
 import Image from "next/image";
+import { FaEdit } from "react-icons/fa";
+import { RiDeleteBin5Fill } from "react-icons/ri";
 
 const JerseysTableRow = ({ item }: { item: Jersey }) => {
   return (
@@ -21,10 +23,14 @@ const JerseysTableRow = ({ item }: { item: Jersey }) => {
         <span className="text-sm text-gray-500">{item?.jerseyData?.team}</span>
       </td>
 
-      <td>${item.amount}</td>
-      <td>{item.quantity}</td>
+      <td className="pl-7.5">${item?.price}</td>
+      <td className="pl-9">{item?.sells_quantity}</td>
       
       {/* action */}
+      <td>
+        <button className="group border border-gray-400 hover:bg-blue-600 hover:text-white p-2 rounded-full"><FaEdit className="ml-0.5 text-blue-600 group-hover:text-white transition" size={18}/></button>
+        <button className="group border border-gray-400 hover:bg-blue-600 hover:text-white p-2 ml-3 rounded-full"><RiDeleteBin5Fill className=" text-blue-600 group-hover:text-white transition" size={18}/></button>
+      </td>
     </tr>
   );
 };

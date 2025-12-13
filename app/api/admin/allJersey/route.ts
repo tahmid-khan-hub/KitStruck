@@ -42,3 +42,37 @@ export async function GET(req: Request) {
     dbConnect.release();
   }
 }
+
+export async function DELETE(req: Request) {
+  try {
+    const session = await getServerSession(authOptions);
+
+    if (!session || session.user?.role !== "admin") {
+      return NextResponse.json( { message: "Unauthorized" }, { status: 401 });
+    }
+
+    const { searchParams } = new URL(req.url);
+    const jerseyId = searchParams.get("jerseyId");
+
+    if (!jerseyId) {
+      return NextResponse.json( { message: "Jersey ID is required" }, { status: 400 } );
+    }
+
+    const dbConnect = await pool.getConnection();
+
+    try {
+      await dbConnect.query( "DELETE FROM jersey_table WHERE jersey_id = ?", [jerseyId] );
+
+      return NextResponse.json({
+        message: "Jersey deleted successfully",
+      });
+    } finally {
+      dbConnect.release();
+    }
+  } catch (error) {
+    console.error("DELETE JERSEY ERROR:", error);
+    return NextResponse.json( { message: "Internal Server Error" }, { status: 500 }
+    );
+  }
+}
+

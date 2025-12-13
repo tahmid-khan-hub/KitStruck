@@ -2,8 +2,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
 import JerseyFormSkeleton from "./components/JerseyFormSkeleton";
+import JerseyForm from "./components/JerseyForm";
 
-export default function JerseyForm() {
+export default function JerseyFormPage() {
     const searchParams = useSearchParams();
     const jerseyId = searchParams.get("jerseyId");
 
@@ -20,7 +21,8 @@ export default function JerseyForm() {
 
     return (
         <div>
-            {data.name}
+            <h2 className="my-12 text-center font-bold text-3xl">Jersey Form</h2>
+            <JerseyForm jerseyData={data}/>
         </div>
     )
 }

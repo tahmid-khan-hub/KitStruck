@@ -1,8 +1,7 @@
-"use client";
-
 import CategoryDrawer from "@/app/dashboard/components/CategoryDrawer/CategoryDrawer";
+import { Jersey } from "@/types/jersey";
 
-export default function FormFields({ category, setCategory } : {category: string; setCategory: (value: string) => void; }) {
+export default function JerseyFormFields({ category, setCategory, jerseyData }: { category: string; setCategory: (value: string) => void; jerseyData: Jersey; }) {
   return (
     <>
       {/* Row 1 */}
@@ -10,6 +9,7 @@ export default function FormFields({ category, setCategory } : {category: string
         <input
           name="name"
           placeholder="Jersey Name"
+          defaultValue={jerseyData.name}
           className="bg-white border border-gray-300 rounded-md shadow-sm text-gray-800 p-3 w-full mb-5"
           required
         />

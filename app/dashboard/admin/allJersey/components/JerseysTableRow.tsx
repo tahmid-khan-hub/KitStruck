@@ -28,7 +28,7 @@ const JerseysTableRow = ({ item }: { item: Jersey }) => {
       <td className="pl-9">{item?.sells_quantity}</td>
       
       {/* action */}
-      <td>
+      <td className="flex mt-3">
         <Link href={`/dashboard/admin/allJersey/jersey-form?jerseyId=${item.jersey_id}`}><button className="group border border-gray-400 hover:bg-blue-600 hover:text-white p-2 rounded-full"><FaEdit className="ml-0.5 text-blue-600 group-hover:text-white transition" size={18}/></button></Link>
         <button className="group border border-gray-400 hover:bg-blue-600 hover:text-white p-2 ml-3 rounded-full"><RiDeleteBin5Fill className=" text-blue-600 group-hover:text-white transition" size={18}/></button>
       </td>

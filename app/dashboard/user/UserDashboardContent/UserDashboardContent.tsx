@@ -2,6 +2,7 @@
 import { isValidUrl } from "@/app/hooks/isValidUrl";
 import Image from "next/image";
 import LastOrders from "./LastOrders/LastOrders";
+import UserStats from "./UserStats/UserStats";
 
 interface Props {
   user: {
@@ -16,7 +17,7 @@ export default function UserDashboardContent({ user }: Props) {
   const profilePic = user?.image && user.image.trim() !== "" && isValidUrl(user.image) ? user.image : "/default_user.jpg";
 
   return (
-    <div>
+    <div className="max-w-5xl mx-auto">
       {/* USER CARD */}
       <div className="p-6 mt-6 text-center">
         <Image
@@ -29,6 +30,9 @@ export default function UserDashboardContent({ user }: Props) {
 
         <h2 className="text-xl font-bold">{user.name}</h2>
         <p className="text-gray-600">{user.email}</p>
+        <div>
+          <UserStats />
+        </div>
       </div>
 
       {/* LAST 3 ORDER */}

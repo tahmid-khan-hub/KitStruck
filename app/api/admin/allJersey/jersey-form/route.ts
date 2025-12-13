@@ -53,3 +53,32 @@ export async function GET(req: Request) {
     );
   }
 }
+
+export async function PATCH(req: Request) {
+  try {
+    const session = await getServerSession(authOptions);
+
+    if (!session || session.user?.role !== "admin") { return NextResponse.json( { message: "Unauthorized" }, { status: 401 } );
+    }
+
+    const body = await req.json();
+    const { jersey_id, name, team, price, description, image_url, stock, offer, category } = body;
+
+    if (!jersey_id) { return NextResponse.json( { message: "Jersey ID is required" }, { status: 400 } );
+    }
+
+    const dbConnect = await pool.getConnection();
+
+    try {
+      await dbConnect.query(` UPDATE jersey_table SET name = ?, team = ?, price = ?, description = ?, image_url = ?, stock = ?, offer = ?, category = ? WHERE jersey_id = ? `,
+        [ name, team, price, description, image_url, stock, offer, category, jersey_id, ] );
+
+      return NextResponse.json({ message: "Jersey updated successfully" });
+    } finally {
+      dbConnect.release();
+    }
+  } catch (error) {
+    console.error("UPDATE JERSEY ERROR:", error);
+    return NextResponse.json( { message: "Internal Server Error" },{ status: 500 });
+  }
+}

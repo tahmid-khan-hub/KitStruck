@@ -42,7 +42,7 @@ const Review = () => {
                   alt="user"
                   width={50}
                   height={50}
-                  className="rounded-full border object-cover"
+                  className="rounded-full border object-cover w-12 h-12"
                 />
                 <div>
                   <p className="font-semibold">{review.reviewer_name}</p>

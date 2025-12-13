@@ -50,7 +50,7 @@ export default function DashboardNavbar() {
               alt="User"
               width={36}
               height={36}
-              className="rounded-full object-cover border"
+              className="rounded-full object-cover border w-12 h-12"
             />
             {/* Tooltip */}
             <div className="

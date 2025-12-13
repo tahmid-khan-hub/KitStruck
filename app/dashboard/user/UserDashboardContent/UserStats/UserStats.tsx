@@ -2,6 +2,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { FaTshirt } from "react-icons/fa";
 import { FaStar } from "react-icons/fa6";
+import UserStatsSkeleton from "./UserStatsSkeleton";
 
 export default function UserStats() {
   const { data, isLoading } = useQuery({
@@ -13,7 +14,7 @@ export default function UserStats() {
     },
   });
 
-  if (isLoading) return <p>loading</p>;
+  if (isLoading) return <UserStatsSkeleton />;
   console.log(data);
 
   const UserStats = [

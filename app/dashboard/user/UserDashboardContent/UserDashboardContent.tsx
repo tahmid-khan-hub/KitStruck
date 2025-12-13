@@ -25,7 +25,7 @@ export default function UserDashboardContent({ user }: Props) {
           alt="User"
           width={80}
           height={80}
-          className="rounded-full mx-auto mb-4 object-cover"
+          className="rounded-full mx-auto mb-4 object-cover w-24 h-24"
         />
 
         <h2 className="text-xl font-bold">{user.name}</h2>

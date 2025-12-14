@@ -56,10 +56,14 @@ const Navbar = () => {
           {status === "loading" ? (
             <div className="h-8 w-9 bg-gray-200 rounded animate-pulse"></div>
           ) : session ? (
-            <MdLogout className="text-blue-600 hover:border hover:border-blue-600 hover:bg-blue-600 hover:text-white hover:rounded-full p-1 hover:p-2" onClick={() => signOut()} size={36}/>
+            <div className="relative group">
+              <MdLogout className="text-blue-600 hover:border hover:border-blue-600 hover:bg-blue-600 hover:text-white hover:rounded-full p-1 hover:p-2" onClick={() => signOut()} size={36}/>
+              <div className="absolute right-0 translate-y-3 hidden group-hover:block bg-black text-white text-sm py-1 px-2 rounded-md whitespace-nowrap shadow-lg">Sign Out</div>
+            </div>
             
           ) : (
-            <Link href="/sign-in"><MdLogin className="text-blue-600 hover:border hover:border-blue-600 hover:bg-blue-600 hover:text-white hover:rounded-full p-1 hover:p-2" size={36}/></Link>
+            <div className="relative group"><Link href="/sign-in"><MdLogin className="text-blue-600 hover:border hover:border-blue-600 hover:bg-blue-600 hover:text-white hover:rounded-full p-1 hover:p-2" size={36}/></Link>
+            <div className="absolute right-0 translate-y-3 hidden group-hover:block bg-black text-white text-sm py-1 px-2 rounded-md whitespace-nowrap shadow-lg">Sign In</div></div>
           )}
           {/* Mobile menu */}
           <div className="lg:hidden relative" ref={menuRef}>

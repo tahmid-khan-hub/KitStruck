@@ -9,6 +9,10 @@ const JerseyDetails = ({
   jersey: Jersey;
   available: number;
 }) => {
+
+  const hasOffer = typeof jersey.offer === "number";
+  const discountedPrice = hasOffer ? (jersey.price - (jersey.price * jersey.offer) / 100).toFixed(2) : null;
+
   return (
     <>
       <div className="space-y-4">
@@ -26,12 +30,23 @@ const JerseyDetails = ({
           </p>
         )}
 
-        <p className="font-semibold text-gray-600">
-          Price:{" "}
-          <span className="text-2xl font-bold text-blue-600">
-            ${jersey.price}
+        <div className="flex items-center gap-3">
+          {hasOffer && (
+            <span className="text-gray-400 text-2xl line-through">
+              ${jersey.price}
+            </span>
+          )}
+
+          <span className="text-gray-700">
+            Price: <span className="text-2xl font-bold text-blue-600">${hasOffer ? discountedPrice : jersey.price}</span>
           </span>
-        </p>
+
+          {hasOffer && (
+            <span className="text-sm font-semibold text-blue-600">
+              ({jersey.offer}% OFF)
+            </span>
+          )}
+        </div>
 
         {jersey.description && (
           <p className="text-gray-700 leading-relaxed">{jersey.description}</p>

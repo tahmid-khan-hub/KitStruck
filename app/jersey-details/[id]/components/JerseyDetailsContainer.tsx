@@ -1,5 +1,4 @@
 "use client";
-
 import { CartItem, Jersey } from "@/types/jersey";
 import Image from "next/image";
 import { FaShoppingCart } from "react-icons/fa";
@@ -10,6 +9,8 @@ import { useState, useEffect } from "react";
 import JerseyPurchaseModal from "./JerseyPurchaseModal";
 import JerseyDetailsSkeleton from "@/app/SkeletonLoading/JerseyDetailsSkeleton";
 import JerseyDetails from "./JerseyDetails";
+import { useSession } from "next-auth/react";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface Props {
   jersey: Jersey;
@@ -17,6 +18,8 @@ interface Props {
 
 export default function JerseyDetailsContainer({ jersey }: Props) {
   const { successToast, errorToast } = UseSweetAlert();
+  const { data: session } = useSession();
+  const queryClient = useQueryClient();
   const [openModal, setOpenModal] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -24,22 +27,46 @@ export default function JerseyDetailsContainer({ jersey }: Props) {
 
   const available = jersey?.stock - jersey?.sells_quantity;
 
-  const handleAddToCart = () => {
+  const handleAddToCart = async () => {
     try {
-      const existingCart: CartItem[] = JSON.parse(
-        localStorage.getItem("cart") || "[]"
-      );
+      // Authenticated user server cart
+      if (session) {
+        const res = await fetch("/api/cart/sync", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            jersey_id: jersey.jersey_id,
+            quantity: 1,
+          }),
+        });
 
-      const index = existingCart.findIndex(
-        (i) => i.jersey_id === jersey.jersey_id
-      );
-      if (index !== -1) existingCart[index].quantity += 1;
-      else existingCart.push({ ...jersey, quantity: 1 });
+        if (!res.ok) throw new Error("Failed to add to cart");
+        // React Query cart changed
+        queryClient.invalidateQueries({ queryKey: ["cart"] });
+      }
+      // LOCAL STORAGE CART
+      else {
+        const existingCart: CartItem[] = JSON.parse(
+          localStorage.getItem("cart") || "[]"
+        );
 
-      localStorage.setItem("cart", JSON.stringify(existingCart));
+        const index = existingCart.findIndex(
+          (i) => i.jersey_id === jersey.jersey_id
+        );
+
+        if (index !== -1) {
+          existingCart[index].quantity += 1;
+        } else {
+          existingCart.push({ ...jersey, quantity: 1 });
+        }
+
+        localStorage.setItem("cart", JSON.stringify(existingCart));
+        // notify other pages (CartPage)
+        window.dispatchEvent(new Event("cart-updated"));
+      }
       successToast("Item added to cart!");
     } catch (error) {
-      console.log(error);
+      console.error(error);
       errorToast("Failed to add item!");
     }
   };

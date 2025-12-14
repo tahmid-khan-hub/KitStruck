@@ -9,6 +9,7 @@ import UseSweetAlert from "@/app/hooks/UseSweetAlert";
 import { useState, useEffect } from "react";
 import JerseyPurchaseModal from "./JerseyPurchaseModal";
 import JerseyDetailsSkeleton from "@/app/SkeletonLoading/JerseyDetailsSkeleton";
+import JerseyDetails from "./JerseyDetails";
 
 interface Props {
   jersey: Jersey;
@@ -19,11 +20,7 @@ export default function JerseyDetailsContainer({ jersey }: Props) {
   const [openModal, setOpenModal] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (jersey) {
-      setLoading(false);
-    }
-  }, [jersey]);
+  useEffect(() => { if (jersey) setLoading(false); }, [jersey]);
 
   const available = jersey?.stock - jersey?.sells_quantity;
 
@@ -59,12 +56,7 @@ export default function JerseyDetailsContainer({ jersey }: Props) {
       </p>
 
       <AnimatePresence>
-        <motion.div
-          initial={{ opacity: 0, y: 60 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 60 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="bg-white p-4 rounded-lg w-full flex flex-col md:flex-row gap-8 border-2 border-gray-200 shadow-md"
+        <motion.div initial={{ opacity: 0, y: 60 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 60 }} transition={{ duration: 0.6, ease: "easeOut" }} className="bg-white p-4 rounded-lg w-full flex flex-col md:flex-row gap-8 border-2 border-gray-200 shadow-md"
         >
           {/* IMAGE */}
           <div className="w-full md:w-1/2">
@@ -81,31 +73,7 @@ export default function JerseyDetailsContainer({ jersey }: Props) {
 
           {/* DETAILS */}
           <div className="w-full md:w-1/2 flex flex-col justify-between">
-            <div className="space-y-4">
-              <h1 className="text-3xl font-bold">{jersey.name}</h1>
-              <p>{jersey.team}</p>
-              <p className="text-gray-600">Category: {jersey.category}</p>
-
-              {available > 0 ? (
-                <p className="w-[88px] border-2 p-1 bg-blue-600 text-white rounded-xl -ml-1">
-                  <span className="ml-1">Available</span>
-                </p>
-              ) : (
-                <p className="w-[120px] border-2 p-1 bg-gray-600 text-white rounded-xl -ml-1">
-                  <span className="ml-1">Not Available</span>
-                </p>
-              )}
-
-              <p className="font-semibold text-gray-600">
-                Price: <span className="text-2xl font-bold text-blue-600">${jersey.price}</span>
-              </p>
-
-              {jersey.description && (
-                <p className="text-gray-700 leading-relaxed">
-                  {jersey.description}
-                </p>
-              )}
-            </div>
+            <JerseyDetails jersey={jersey} available={available}/>
 
             {/* BUTTONS */}
             <div className="flex gap-4 pt-6 mt-6">

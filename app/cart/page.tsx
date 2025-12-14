@@ -6,31 +6,33 @@ import UseSweetAlert from "../hooks/UseSweetAlert";
 import CartList from "./components/CartList";
 import CartSkeleton from "./components/CartSkeleton";
 import EmptyCartLottie from "./components/EmptyCartLottie";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 const CartPage = () => {
     const {confirmDelete, errorToast, successToast} = UseSweetAlert();
-    const [loading, setLoading] = useState(true);
-    const [cart, setCart] = useState<CartItem[]>([]);
+    const queryClient = useQueryClient(); 
     const { data: session, status } = useSession();
+
+    // for local storage
+    const [guestCart, setGuestCart] = useState<CartItem[]>([]);
     useEffect(() => {
-        if (status === "loading") return; 
-        setLoading(true);
-        if(status === "unauthenticated"){
-          const storedCart = JSON.parse(localStorage.getItem("cart") || "[]");
-          setCart(storedCart);
-          setLoading(false);
-        } if(status === "authenticated") {
-          fetch("/api/cart", {
-            method: "GET",
-            headers: { "Content-Type": "application/json" },
-          })
-          .then(res => res.json())
-          .then(data => {
-            setCart(data)
-            setLoading(false);
-          })
-        }
-    },[session, status])
+      if(status === "unauthenticated"){
+        const storedCart = JSON.parse(localStorage.getItem("cart") || "[]");
+        setGuestCart(storedCart);
+      } 
+    },[status])
+
+    const {data: serverCart = [], isLoading} = useQuery<CartItem[]>({
+      queryKey: ["cart"],
+      queryFn: async () => {
+        const res = await fetch("/api/cart");
+        if (!res.ok) throw new Error("Failed to fetch cart");
+        return res.json();
+      },
+      enabled: status === "authenticated",
+    })
+
+    const cart = status === "authenticated" ? serverCart : guestCart;
 
     const handleRemove = async (id: number) => {
       const ok = await confirmDelete("Do you really want to remove this from the cart?");
@@ -49,10 +51,13 @@ const CartPage = () => {
             errorToast("Failed to delete item.");
             return;
           }
+          queryClient.invalidateQueries({ queryKey: ["cart"] });
+
         } else {
           localStorage.setItem("cart", JSON.stringify(updatedCart));
+          setGuestCart(updatedCart); 
         }
-        setCart(updatedCart);
+
         successToast("Item removed successfully!");
 
       } catch (error) {
@@ -66,7 +71,7 @@ const CartPage = () => {
         if (!currItem) return;
 
         const updatedCart = cart.map(item => item.jersey_id === id ?
-            {...item, quantity: item.quantity + 1} : item
+          {...item, quantity: item.quantity + 1} : item
         );
         if(session){
           await fetch("/api/cart", {
@@ -74,11 +79,12 @@ const CartPage = () => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ jersey_id: id, quantity: currItem.quantity + 1 })
           })
+          queryClient.invalidateQueries({ queryKey: ["cart"] });
         }
         else{
           localStorage.setItem("cart", JSON.stringify(updatedCart));
+          setGuestCart(updatedCart);
         }
-        setCart(updatedCart);
     }
 
     const handleDecrease = async (id: number) => {
@@ -94,15 +100,17 @@ const CartPage = () => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ jersey_id: id, quantity: currItem.quantity - 1 })
           })
+          queryClient.invalidateQueries({ queryKey: ["cart"] });
         }
         else{
           localStorage.setItem("cart", JSON.stringify(updatedCart));
+          setGuestCart(updatedCart);
         }
-        setCart(updatedCart);
     }
 
     const totalPrice = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
-    if (status === "loading" || loading) {
+    
+    if (status === "loading" || isLoading) {
       return <CartSkeleton />;
     }
 

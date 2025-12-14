@@ -1,77 +1,23 @@
 "use client";
-import { CartItem, Jersey } from "@/types/jersey";
+import { Jersey } from "@/types/jersey";
 import Image from "next/image";
-import { FaShoppingCart } from "react-icons/fa";
-import { FaMoneyBillWave } from "react-icons/fa6";
 import { motion, AnimatePresence } from "framer-motion";
-import UseSweetAlert from "@/app/hooks/UseSweetAlert";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import JerseyPurchaseModal from "./JerseyPurchaseModal";
 import JerseyDetailsSkeleton from "@/app/SkeletonLoading/JerseyDetailsSkeleton";
 import JerseyDetails from "./JerseyDetails";
-import { useSession } from "next-auth/react";
-import { useQueryClient } from "@tanstack/react-query";
+import JerseyDetailsButtons from "./JerseyDetailsButtons";
 
 interface Props {
   jersey: Jersey;
 }
 
 export default function JerseyDetailsContainer({ jersey }: Props) {
-  const { successToast, errorToast } = UseSweetAlert();
-  const { data: session } = useSession();
-  const queryClient = useQueryClient();
   const [openModal, setOpenModal] = useState(false);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => { if (jersey) setLoading(false); }, [jersey]);
 
   const available = jersey?.stock - jersey?.sells_quantity;
 
-  const handleAddToCart = async () => {
-    try {
-      // Authenticated user server cart
-      if (session) {
-        const res = await fetch("/api/cart/sync", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            jersey_id: jersey.jersey_id,
-            quantity: 1,
-          }),
-        });
-
-        if (!res.ok) throw new Error("Failed to add to cart");
-        // React Query cart changed
-        queryClient.invalidateQueries({ queryKey: ["cart"] });
-      }
-      // LOCAL STORAGE CART
-      else {
-        const existingCart: CartItem[] = JSON.parse(
-          localStorage.getItem("cart") || "[]"
-        );
-
-        const index = existingCart.findIndex(
-          (i) => i.jersey_id === jersey.jersey_id
-        );
-
-        if (index !== -1) {
-          existingCart[index].quantity += 1;
-        } else {
-          existingCart.push({ ...jersey, quantity: 1 });
-        }
-
-        localStorage.setItem("cart", JSON.stringify(existingCart));
-        // notify other pages (CartPage)
-        window.dispatchEvent(new Event("cart-updated"));
-      }
-      successToast("Item added to cart!");
-    } catch (error) {
-      console.error(error);
-      errorToast("Failed to add item!");
-    }
-  };
-
-  if (loading) return <JerseyDetailsSkeleton />;
+  if (!jersey) return <JerseyDetailsSkeleton />;
 
   return (
     <div className="py-5 mb-9">
@@ -104,33 +50,9 @@ export default function JerseyDetailsContainer({ jersey }: Props) {
 
             {/* BUTTONS */}
             <div className="flex gap-4 pt-6 mt-6">
-              {available ? <>
-              <button
-                onClick={() => setOpenModal(true)}
-                className="btns flex items-center w-full justify-center"
-              >
-                <FaMoneyBillWave size={20} className="mr-2.5" /> Buy Now
-              </button>
-              <button
-                onClick={handleAddToCart}
-                className="border-btn flex items-center w-full justify-center"
-              >
-                <FaShoppingCart size={20} className="mr-2.5" /> Cart
-              </button>
-              </> : <>
-              <button
-                className="bg-gray-400 text-white rounded-lg border border-gray-300 flex items-center w-full justify-center cursor-not-allowed "
-              >
-                <FaMoneyBillWave size={20} className="mr-2.5" /> Buy Now
-              </button>
-              <button
-                className="not-allowed-btn flex items-center w-full justify-center cursor-not-allowed"
-              >
-                <FaShoppingCart size={20} className="mr-2.5" /> Cart
-              </button>
-              </> 
-              }
+              <JerseyDetailsButtons available={available} jersey={jersey} onBuyNow={() => setOpenModal(true)} />
             </div>
+
           </div>
         </motion.div>
       </AnimatePresence>

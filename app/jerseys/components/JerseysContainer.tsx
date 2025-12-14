@@ -8,6 +8,7 @@ import Lottie from "react-lottie-player";
 import NoJerseyFound from "@/public/Not Found.json"
 import Link from "next/link";
 import JerseyCardSkeleton from "@/app/SkeletonLoading/JerseyCardSkeleton";
+import { GiSevenPointedStar } from "react-icons/gi";
 
 interface JerseysContainerProps {
   jerseys: Jersey[];
@@ -69,16 +70,24 @@ const JerseysContainer = ({jerseys, search, setSearch, sort,handleSortChange, pa
               key={jersey.jersey_id}
               className="p-3 border-2 border-gray-200 bg-white rounded-lg flex flex-col justify-between hover:shadow-lg"
             >
-              <Image
-                src={jersey.image_url}
-                alt={jersey.name}
-                width={200}
-                height={200}
-                className="object-cover rounded-md w-full h-[300px]"
-              />
+              <div className="relative w-full h-[340px]">
+                <Image
+                  src={jersey.image_url}
+                  alt={jersey.name}
+                  fill
+                  className="object-cover rounded-md w-full h-[340px]"
+                />
+                {/* OFFER BADGE */}
+                  {jersey.offer !== null && (
+                    <div className="absolute top-1.5 right-1.5 w-[70px] h-[70px] flex items-center justify-center">
+                    <GiSevenPointedStar className="text-blue-600 w-full h-full rounded-full p-1 mb-0.5" />
+                    <span className="absolute text-xs font-bold text-white ">{`-${jersey.offer}%`}</span>
+                    </div>
+                  )}
+              </div>
               <div className="mt-4 flex flex-col">
                 <h3 className="font-semibold text-lg mb-3">{jersey.name}</h3>
-                <div className="mt-8 flex items-center justify-between">
+                <div className="mt-3 flex items-center justify-between">
                   <p className="text-gray-800 font-semibold text-lg">
                     ${jersey.price}
                   </p>

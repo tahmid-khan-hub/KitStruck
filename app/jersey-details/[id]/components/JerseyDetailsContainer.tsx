@@ -7,6 +7,7 @@ import JerseyPurchaseModal from "./JerseyPurchaseModal";
 import JerseyDetailsSkeleton from "@/app/SkeletonLoading/JerseyDetailsSkeleton";
 import JerseyDetails from "./JerseyDetails";
 import JerseyDetailsButtons from "./JerseyDetailsButtons";
+import { GiSevenPointedStar } from "react-icons/gi";
 
 interface Props {
   jersey: Jersey;
@@ -41,6 +42,13 @@ export default function JerseyDetailsContainer({ jersey }: Props) {
                 className="object-cover"
                 sizes="100%"
               />
+              {/* OFFER BADGE */}
+                {jersey.offer !== null && (
+                  <div className="absolute top-1.5 right-1.5 w-[70px] h-[70px] flex items-center justify-center">
+                  <GiSevenPointedStar className="text-blue-600 w-full h-full rounded-full p-1 mb-0.5" />
+                  <span className="absolute text-xs font-bold text-white ">{`-${jersey.offer}%`}</span>
+                  </div>
+                )}
             </div>
           </div>
 

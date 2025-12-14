@@ -30,9 +30,9 @@ const NewArrivals = () => {
           New Arrivals
         </h2>
         <p className="text-center text-gray-600 mb-8">Be the first to wear our latest jerseys built for speed and comfort.</p>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {loading ? (
-            Array.from({ length: 3 }).map((_, i) => <CardSkeleton key={i} />)
+            Array.from({ length: 4 }).map((_, i) => <CardSkeleton key={i} />)
             ) : (
               data.map((jersey) => {
                 const jerseyImage =
@@ -59,6 +59,7 @@ const NewArrivals = () => {
                         height={200}
                         className="object-cover rounded-md w-full h-[350px]"
                       />
+                      <p className="mt-5 mb-3 text-[17px] font-semibold">{jersey.name}</p>
                     </motion.div>
                   </Link>
                 );

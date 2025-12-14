@@ -6,7 +6,7 @@ export async function GET() {
     const dbConnect = await pool.getConnection();
 
     const [rows] = await dbConnect.query(
-      `SELECT * FROM jersey_table WHERE category = "retro" ORDER BY sells_quantity DESC LIMIT 6`
+      `SELECT * FROM jersey_table WHERE category = "retro" ORDER BY sells_quantity DESC LIMIT 4`
     );
 
     dbConnect.release();

@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import CardSkeleton from "@/app/SkeletonLoading/CardSkeleton";
 import { isValidUrl } from "@/app/hooks/isValidUrl";
+import { GiSevenPointedStar } from "react-icons/gi";
 
 const NewArrivals = () => {
   const [loading, setLoading] = useState(true);
@@ -41,7 +42,6 @@ const NewArrivals = () => {
                   isValidUrl(jersey.image_url)
                     ? jersey.image_url
                     : "/default.png";
-
                 return (
                   <Link key={jersey.jersey_id} href={`/jersey-details/${jersey.jersey_id}`}>
                     <motion.div
@@ -52,13 +52,24 @@ const NewArrivals = () => {
                       transition={{ duration: 0.1 }}
                       className="p-3 border-2 border-gray-200 bg-base-200 rounded-lg flex flex-col justify-between hover:shadow-md transition"
                     >
-                      <Image
-                        src={jerseyImage}
-                        alt={jersey.name}
-                        width={200}
-                        height={200}
-                        className="object-cover rounded-md w-full h-[350px]"
-                      />
+                      <div className="relative w-full h-[350px]">
+                        <Image
+                          src={jerseyImage}
+                          alt={jersey.name}
+                          fill
+                          className="object-cover rounded-md"
+                          sizes="100%"
+                        />
+
+                        {/* OFFER BADGE */}
+                        {jersey.offer !== null && (
+                        <div className="absolute top-1.5 right-1.5 w-[61px] h-[61px] flex items-center justify-center">
+                          <GiSevenPointedStar className="text-blue-600 w-full h-full rounded-full p-1 mb-0.5" />
+                          <span className="absolute text-xs font-bold text-white ">{`-${jersey.offer}%`}</span>
+                        </div>
+                        )}
+                      </div>
+                      <span>{jersey.offer}</span>
                       <p className="mt-5 mb-3 text-[17px] font-semibold">{jersey.name}</p>
                     </motion.div>
                   </Link>

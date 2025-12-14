@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import CardSkeleton from "@/app/SkeletonLoading/CardSkeleton";
 import { isValidUrl } from "@/app/hooks/isValidUrl";
+import { GiSevenPointedStar } from "react-icons/gi";
 
 const TopSelling = () => {
   const [loading, setLoading] = useState(true);
@@ -55,14 +56,25 @@ const TopSelling = () => {
                       transition={{ duration: 0.1 }}
                       className="p-3 border-2 border-gray-200 bg-white rounded-lg flex flex-col justify-between hover:shadow-md transition"
                     >
-                      <Image
-                        src={imgSrc}
-                        alt={jersey.name}
-                        width={200}
-                        height={200}
-                        className="object-cover rounded-md w-full h-[350px]"
-                      />
-                      <p className="mt-5 mb-3 text-[17px] font-semibold">{jersey.name}</p>
+                      <div className="relative w-full h-[350px]">
+                        <Image
+                          src={imgSrc}
+                          alt={jersey.name}
+                          fill
+                          className="object-cover rounded-md"
+                          sizes="100%"
+                        />
+                        {/* OFFER BADGE */}
+                        {jersey.offer !== null && (
+                          <div className="absolute top-1.5 right-1.5 w-[61px] h-[61px] flex items-center justify-center">
+                            <GiSevenPointedStar className="text-blue-600 w-full h-full rounded-full p-1 mb-0.5" />
+                            <span className="absolute text-xs font-bold text-white ">{`-${jersey.offer}%`}</span>
+                          </div>
+                        )}
+                      </div>
+                      <p className="mt-5 mb-3 text-[17px] font-semibold">
+                        {jersey.name}
+                      </p>
                     </motion.div>
                   </Link>
                 );

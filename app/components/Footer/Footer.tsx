@@ -5,7 +5,7 @@ const Footer = () => {
   const links = (
     <>
       <li>
-        <Link href={"/About"} className="font-semibold hover:underline mr-6">
+        <Link href={"/about"} className="font-semibold hover:underline mr-6">
           {" "}
           About
         </Link>

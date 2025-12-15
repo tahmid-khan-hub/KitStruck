@@ -23,7 +23,7 @@ const Footer = () => {
         </Link>
       </li>
       <li>
-        <Link href={"/policy"} className="font-semibold hover:underline mr-6">
+        <Link href={"/privacy"} className="font-semibold hover:underline mr-6">
           {" "}
           Privacy & Policy
         </Link>

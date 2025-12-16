@@ -1,0 +1,28 @@
+"use client"
+import Lottie from "react-lottie-player";
+import notFoundAnimation from "@/public/404 Animation.json"
+import Link from "next/link";
+
+export default function NotFound() {
+  return (
+    <div className="min-h-screen flex flex-col items-center justify-center text-center px-4">
+      <Lottie
+        animationData={notFoundAnimation}
+        loop
+        className="w-80 h-80"
+      />
+
+      <h1 className="text-4xl font-bold mt-6">Page not found</h1>
+      <p className="text-gray-600 mt-2">
+        The page you’re looking for doesn’t exist.
+      </p>
+
+      <Link
+        href="/"
+        className="mt-8 btns"
+      >
+        Go back home
+      </Link>
+    </div>
+  );
+}

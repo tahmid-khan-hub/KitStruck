@@ -4,14 +4,15 @@ import LastOrdersSkeleton from "./LastOrdersSkeleton";
 import LastOrdersEmpty from "./LastOrdersEmpty";
 import Image from "next/image";
 import { PaymentRow } from "@/types/PaymentRow";
+import useAxiosSecure from "@/app/hooks/useAxiosSecure";
 
 export default function LastOrders() {
+  const axios = useAxiosSecure();
   const { data: orders = [], isLoading } = useQuery<PaymentRow[]>({
     queryKey: ["lastOrders"],
     queryFn: async () => {
-      const res = await fetch("/api/myOrders/lastOrders");
-      if (!res.ok) throw new Error("Failed");
-      const json = await res.json();
+      const res = await axios.get("/api/myOrders/lastOrders");
+      const json = await res.data;
       return json.data ?? [];
     },
   });

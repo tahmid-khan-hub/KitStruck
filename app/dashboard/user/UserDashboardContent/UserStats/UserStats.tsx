@@ -3,14 +3,15 @@ import { useQuery } from "@tanstack/react-query";
 import { FaTshirt } from "react-icons/fa";
 import { FaStar } from "react-icons/fa6";
 import UserStatsSkeleton from "./UserStatsSkeleton";
+import useAxiosSecure from "@/app/hooks/useAxiosSecure";
 
 export default function UserStats() {
+  const axios = useAxiosSecure();
   const { data, isLoading } = useQuery({
     queryKey: ["userStats"],
     queryFn: async () => {
-      const res = await fetch("/api/user-stats");
-      if (!res.ok) throw new Error("Failed");
-      return res.json();
+      const res = await axios.get("/api/user-stats");
+      return res.data;
     },
   });
 

@@ -7,15 +7,11 @@ import PaymentLottie from "@/public/Payment.json"
 import { useRouter } from "next/navigation";
 
 export default function CheckoutForm({
-  amount,
-  jerseyId,
-  clientSecret,
-  quantity,
+  order_id,
+  clientSecret
 }: {
-  amount: number;
-  jerseyId: number;
+  order_id: number;
   clientSecret: string;
-  quantity: number;
 }) {
   const router = useRouter();
   const { errorToast, successToast } = UseSweetAlert();
@@ -57,27 +53,25 @@ export default function CheckoutForm({
         method: "POST",
         body: JSON.stringify({
           payment_id: paymentIntent.id,
-          amount: amount,
-          jersey_id: jerseyId,
-          quantity: quantity,
+          order_id: order_id,
           status: paymentIntent.status,
         }),
       });
 
-      try {
-        if (jerseyId) {
-          // User paid for ONE ITEM → remove only that item
-          await fetch("/api/cart", {
-            method: "DELETE",
-            body: JSON.stringify({ jersey_id: jerseyId }),
-          });
-        } else {
-          // User paid from full cart → clear all
-          await fetch("/api/cart", { method: "DELETE" });
-        }
-      } catch (err) {
-        console.log("Cart clear error:", err);
-      }
+      // try {
+      //   if (jerseyId) {
+      //     // User paid for ONE ITEM → remove only that item
+      //     await fetch("/api/cart", {
+      //       method: "DELETE",
+      //       body: JSON.stringify({ jersey_id: jerseyId }),
+      //     });
+      //   } else {
+      //     // User paid from full cart → clear all
+      //     await fetch("/api/cart", { method: "DELETE" });
+      //   }
+      // } catch (err) {
+      //   console.log("Cart clear error:", err);
+      // }
       router.push("/dashboard/user/myOrders");
     }
     setLoading(false);
@@ -96,7 +90,7 @@ export default function CheckoutForm({
               disabled={!stripe || loading}
               className="btns mt-7 mb-3 px-6 py-3 w-full"
             >
-              {loading ? "Processing..." : `Pay $${amount}`}
+              {loading ? "Processing..." : `Pay Now`}
             </button>
           </div></div>
         </div>

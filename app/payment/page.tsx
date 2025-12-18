@@ -10,29 +10,26 @@ const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
 
 export default function PaymentPage() {
     const params = useSearchParams();
-    const amount = Number(params.get("amount")); 
-    const JerseyId = Number(params.get("jersey_id")); 
-    const Quantity = Number(params.get("qty"));
+    const order_id_params = params.get("order_id");
+    const order_id = Number(order_id_params)
     const [clientSecret, setClientSecret] = useState("");
     
     useEffect(()=>{
+        if(!order_id) return;
         fetch("/api/payment/payment-intent", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                amount, JerseyId, Quantity
-            }),
+            body: JSON.stringify({ order_id: Number(order_id) }),
         })
         .then((res) => res.json())
         .then((data) => setClientSecret(data.clientSecret));
-    },[amount, JerseyId, Quantity]);
+    },[order_id]);
 
     if (!clientSecret) return <PaymentSkeleton />;
 
     return(
         <Elements stripe={stripePromise} options={{clientSecret}}>
-            <CheckoutForm amount={amount} jerseyId={JerseyId} 
-            quantity={Quantity} clientSecret={clientSecret}></CheckoutForm>
+            <CheckoutForm order_id={order_id} clientSecret={clientSecret}></CheckoutForm>
         </Elements>
     )
 }

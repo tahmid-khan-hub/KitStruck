@@ -2,10 +2,11 @@
 import { useState } from "react";
 import { Jersey } from "@/types/jersey";
 import { motion, AnimatePresence } from "framer-motion";
-import Link from "next/link";
 import { useSession } from "next-auth/react";
 import JerseySizeSelector from "../JerseySizeSelector";
 import JerseyPurchaseLocation from "../JerseyPurchaseLocation";
+import UseSweetAlert from "@/app/hooks/UseSweetAlert";
+import { useRouter } from "next/navigation";
 
 interface Props {
   jersey: Jersey;
@@ -15,6 +16,8 @@ interface Props {
 }
 
 export default function JerseyPurchaseModal({ jersey, available, open, onClose }: Props) {
+  const {errorToast} = UseSweetAlert();
+  const router = useRouter();
   const { data: session } = useSession();
   const [qty, setQty] = useState(1);
   const [size, setSize] = useState("");
@@ -23,6 +26,40 @@ export default function JerseyPurchaseModal({ jersey, available, open, onClose }
   const increaseQty = () => { if (qty < available) setQty(qty + 1); };
   const decreaseQty = () => { if (qty > 1) setQty(qty - 1); };
   if (!open) return null;
+
+  const orderData = {
+    jersey_id: jersey.jersey_id,
+    size: size,
+    quantity: qty,
+    division: location.division,
+    address: location.address,
+    phone: location.phone,
+  };
+
+  const handleProceed = async () => {
+  if (!size) { errorToast("Please select jersey size"); return; }
+  if (!location.division || !location.address || !location.phone) {
+    errorToast("Please complete delivery address");
+    return;
+  }
+
+  try {
+    const res = await fetch("/api/orders/create-draft", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(orderData),
+    });
+
+    const data = await res.json();
+
+    if (!data.order_id) { errorToast("Order creation failed"); return; }
+
+    router.push(`/payment?order_id=${data.order_id}`);
+  } catch (err) {
+    console.error(err);
+    errorToast("Something went wrong");
+  }
+};
 
   return (
     <AnimatePresence>
@@ -89,15 +126,11 @@ export default function JerseyPurchaseModal({ jersey, available, open, onClose }
             >
               Cancel
             </button>
-
-            <Link
-              href={`/payment?amount=${jersey.price * qty}&jersey_id=${jersey.jersey_id}&qty=${qty}`}
-            >
-              <button className="btns px-4 py-2 rounded-lg">
-                Proceed
-              </button>
-            </Link>
-          </div> : <div>
+            <button onClick={handleProceed} className="btns px-4 py-2 rounded-lg">
+              Proceed
+            </button>
+          </div> : 
+          <div>
             <p className="mt-9 mb-8 text-gray-500">Buy option is currently not opened for admins. Thank You.</p>
           <div className="flex justify-end"><button
               onClick={onClose}

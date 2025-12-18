@@ -69,7 +69,6 @@ const NewArrivals = () => {
                         </div>
                         )}
                       </div>
-                      <span>{jersey.offer}</span>
                       <p className="mt-5 mb-3 text-[17px] font-semibold">{jersey.name}</p>
                     </motion.div>
                   </Link>

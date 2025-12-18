@@ -8,6 +8,8 @@ import JerseyDetailsSkeleton from "@/app/SkeletonLoading/JerseyDetailsSkeleton";
 import JerseyDetails from "./JerseyDetails";
 import JerseyDetailsButtons from "./JerseyDetailsButtons";
 import { GiSevenPointedStar } from "react-icons/gi";
+import { useSession } from "next-auth/react";
+import JerseyLoginModal from "./JerseyLoginModal";
 
 interface Props {
   jersey: Jersey;
@@ -15,6 +17,7 @@ interface Props {
 
 export default function JerseyDetailsContainer({ jersey }: Props) {
   const [openModal, setOpenModal] = useState(false);
+  const {data: session} = useSession();
 
   const available = jersey?.stock - jersey?.sells_quantity;
 
@@ -65,12 +68,19 @@ export default function JerseyDetailsContainer({ jersey }: Props) {
         </motion.div>
       </AnimatePresence>
 
-      <JerseyPurchaseModal
+      {session ? <JerseyPurchaseModal
         jersey={jersey}
         available={available}
         open={openModal}
         onClose={() => setOpenModal(false)}
-      />
+      /> : <JerseyLoginModal open={openModal} onClose={() => setOpenModal(false)} />}
+
+      {/* <JerseyPurchaseModal
+        jersey={jersey}
+        available={available}
+        open={openModal}
+        onClose={() => setOpenModal(false)}
+      /> */}
     </div>
   );
 }

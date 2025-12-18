@@ -1,6 +1,7 @@
 "use client";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import { usePathname, useSearchParams } from "next/navigation";
 
 interface Props {
   open: boolean;
@@ -8,6 +9,10 @@ interface Props {
 }
 
 export default function JerseyLoginModal({ open, onClose }: Props) {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const callbackUrl = pathname + (searchParams.toString() ? `?${searchParams}` : "");
   return (
     <AnimatePresence>
       {open && (
@@ -28,12 +33,13 @@ export default function JerseyLoginModal({ open, onClose }: Props) {
             <div>
               <h3 className="text-center text-xl font-semibold mb-11">Sign in to continue your purchase</h3>
               <div className="flex justify-end">
-                <Link href={"/sign-in"}><button
-                  onClick={onClose}
-                  className="btns px-4 py-2 mr-4 rounded-lg"
-                >
-                  Sign In
-                </button></Link>
+                <Link href={`/sign-in?callbackUrl=${encodeURIComponent(callbackUrl)}`}>
+                  <button
+                    onClick={onClose}
+                    className="btns px-4 py-2 mr-4 rounded-lg"
+                  >
+                    Sign In
+                  </button></Link>
                 <button
                   onClick={onClose}
                   className="border-btn px-4 py-2 rounded-lg"

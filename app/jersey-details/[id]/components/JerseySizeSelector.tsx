@@ -1,11 +1,14 @@
 "use client";
-import { useState } from "react";
 import Menu from "@/app/hooks/Menu";
 import { FaChevronDown } from "react-icons/fa6";
 
-const JerseySizeSelector = () => {
+interface Props {
+  size: string;
+  setSize: (value: string) => void;
+}
+
+const JerseySizeSelector = ({ size, setSize }: Props) => {
   const { isOpen, setIsOpen, menuRef } = Menu();
-  const [size, setSize] = useState("default");
 
   const SizeOptions = [
     { value: "default", label: "Select Size" },
@@ -15,36 +18,29 @@ const JerseySizeSelector = () => {
     { value: "XXL", label: "XXL Size" },
   ];
 
-  const currentLabel =
-    SizeOptions.find((opt) => opt.value === size)?.label || "Select Size";
-
-  const handleSizeChange = (value: string) => {
-    setSize(value);
-    setIsOpen(false);
-  };
+  const currentLabel = SizeOptions.find((opt) => opt.value === size)?.label || "Select Size";
 
   return (
     <div className="relative w-full md:w-64" ref={menuRef}>
-      {/* Dropdown Button */}
       <button
         type="button"
         onClick={() => setIsOpen((prev) => !prev)}
-        className="w-full flex items-center justify-between px-4 py-2 bg-white border border-gray-300 rounded-lg shadow-sm text-gray-700 hover:bg-gray-50 transition"
+        className="w-full flex items-center justify-between px-4 py-2 bg-white border border-gray-300 rounded-lg"
       >
         <span>{currentLabel}</span>
-        <FaChevronDown className={`transition-transform ${isOpen ? "rotate-180" : ""}`} />
+        <FaChevronDown />
       </button>
 
-      {/* Dropdown List */}
       {isOpen && (
-        <ul className="absolute mt-2 right-0 w-full bg-white rounded-lg shadow-lg border border-gray-200 z-50 overflow-hidden">
+        <ul className="absolute mt-2 w-full bg-white border rounded-lg shadow-lg z-50">
           {SizeOptions.map((opt) => (
             <li
               key={opt.value}
-              onClick={() => handleSizeChange(opt.value)}
-              className={`px-4 py-2 text-sm cursor-pointer hover:bg-gray-100 ${
-                size === opt.value ? "bg-gray-100 font-medium" : ""
-              }`}
+              onClick={() => {
+                setSize(opt.value);
+                setIsOpen(false);
+              }}
+              className="px-4 py-2 cursor-pointer hover:bg-gray-100"
             >
               {opt.label}
             </li>

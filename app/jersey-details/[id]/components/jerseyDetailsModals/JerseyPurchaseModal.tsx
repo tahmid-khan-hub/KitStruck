@@ -17,15 +17,11 @@ interface Props {
 export default function JerseyPurchaseModal({ jersey, available, open, onClose }: Props) {
   const { data: session } = useSession();
   const [qty, setQty] = useState(1);
+  const [size, setSize] = useState("");
+  const [location, setLocation] = useState({ division: "", address: "", phone: ""});
 
-  const increaseQty = () => {
-    if (qty < available) setQty(qty + 1);
-  };
-
-  const decreaseQty = () => {
-    if (qty > 1) setQty(qty - 1);
-  };
-
+  const increaseQty = () => { if (qty < available) setQty(qty + 1); };
+  const decreaseQty = () => { if (qty > 1) setQty(qty - 1); };
   if (!open) return null;
 
   return (
@@ -54,10 +50,10 @@ export default function JerseyPurchaseModal({ jersey, available, open, onClose }
           </div>
 
           {/* select jersey size */}
-          <div><JerseySizeSelector /></div>
+          <div><JerseySizeSelector size={size} setSize={setSize}/></div>
 
           {/* add location */}
-          <div><JerseyPurchaseLocation /></div>
+          <div><JerseyPurchaseLocation location={location} setLocation={setLocation}/></div>
 
           {/* Quantity Selector */}
           <div className="flex items-center justify-between mb-6 mt-9">

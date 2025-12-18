@@ -1,81 +1,87 @@
 "use client";
-import { useState } from "react";
 import Menu from "@/app/hooks/Menu";
 import { FaChevronDown } from "react-icons/fa6";
 
-const JerseyPurchaseLocation = () => {
+interface Props {
+  location: {
+    division: string;
+    address: string;
+    phone: string;
+  };
+  setLocation: React.Dispatch<
+    React.SetStateAction<{
+      division: string;
+      address: string;
+      phone: string;
+    }>
+  >;
+}
+
+const JerseyPurchaseLocation = ({ location, setLocation }: Props) => {
   const { isOpen, setIsOpen, menuRef } = Menu();
-  const [division, setDivision] = useState("default");
 
   const DivisionOptions = [
-    { value: "default", label: "Select Division" },
-    { value: "Dhaka", label: "Dhaka" },
-    { value: "Chattogram", label: "Chattogram" },
-    { value: "Rajshahi", label: "Rajshahi" },
-    { value: "Khulna", label: "Khulna" },
-    { value: "Barishal", label: "Barishal" },
-    { value: "Sylhet", label: "Sylhet" },
-    { value: "Rangpur", label: "Rangpur" },
-    { value: "Mymensingh", label: "Mymensingh" },
+    "Dhaka",
+    "Chattogram",
+    "Rajshahi",
+    "Khulna",
+    "Barishal",
+    "Sylhet",
+    "Rangpur",
+    "Mymensingh",
   ];
-
-  const currentLabel =
-    DivisionOptions.find((opt) => opt.value === division)?.label ||
-    "Select Division";
 
   return (
     <div className="space-y-4">
       <h3 className="mt-4 font-semibold">Delivery Address</h3>
 
-      {/* Division Dropdown (custom) */}
-      <div className="relative w-full" ref={menuRef}>
+      {/* Division */}
+      <div className="relative" ref={menuRef}>
         <button
           type="button"
-          onClick={() => setIsOpen((prev) => !prev)}
-          className="w-full flex items-center justify-between px-4 py-2 bg-white border border-gray-300 rounded-lg shadow-sm text-gray-700 hover:bg-gray-50 transition"
+          onClick={() => setIsOpen(!isOpen)}
+          className="w-full flex justify-between px-4 py-2 border border-gray-300 rounded-lg"
         >
-          <span>{currentLabel}</span>
-          <FaChevronDown
-            className={`transition-transform ${isOpen ? "rotate-180" : ""}`}
-          />
+          <span>{location.division || "Select Division"}</span>
+          <FaChevronDown />
         </button>
 
         {isOpen && (
-          <ul className="absolute mt-2 w-full bg-white rounded-lg shadow-lg border border-gray-200 z-50 overflow-hidden">
-            {DivisionOptions.map((opt) => (
+          <ul className="absolute mt-2 w-full bg-white border rounded-lg shadow-lg z-50">
+            {DivisionOptions.map((div) => (
               <li
-                key={opt.value}
+                key={div}
                 onClick={() => {
-                  setDivision(opt.value);
+                  setLocation((prev) => ({ ...prev, division: div }));
                   setIsOpen(false);
                 }}
-                className={`px-4 py-2 text-sm cursor-pointer hover:bg-gray-100 ${
-                  division === opt.value
-                    ? "bg-gray-100 font-medium"
-                    : ""
-                }`}
+                className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
               >
-                {opt.label}
+                {div}
               </li>
             ))}
           </ul>
         )}
       </div>
 
-      {/* Full Address */}
+      {/* Address */}
       <input
-        placeholder="House no, Road no, Landmark etc."
-        required
-        className="w-full border border-gray-300 rounded-lg px-4 py-2"
+        value={location.address}
+        onChange={(e) =>
+          setLocation((prev) => ({ ...prev, address: e.target.value }))
+        }
+        placeholder="House no, Road no, Landmark"
+        className="w-full border border-gray-300 px-4 py-2 rounded-lg"
       />
 
       {/* Phone */}
       <input
-        type="tel"
-        pattern="^01[3-9]\d{8}$"
+        value={location.phone}
+        onChange={(e) =>
+          setLocation((prev) => ({ ...prev, phone: e.target.value }))
+        }
         placeholder="Phone number"
-        required
-        className="w-full border border-gray-300 rounded-lg px-4 py-2"
+        className="w-full border border-gray-300 px-4 py-2 rounded-lg"
       />
     </div>
   );

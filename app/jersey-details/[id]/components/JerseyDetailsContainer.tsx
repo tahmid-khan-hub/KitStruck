@@ -3,13 +3,13 @@ import { Jersey } from "@/types/jersey";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import JerseyPurchaseModal from "./JerseyPurchaseModal";
+import JerseyPurchaseModal from "./jerseyDetailsModals/JerseyPurchaseModal";
 import JerseyDetailsSkeleton from "@/app/SkeletonLoading/JerseyDetailsSkeleton";
 import JerseyDetails from "./JerseyDetails";
 import JerseyDetailsButtons from "./JerseyDetailsButtons";
 import { GiSevenPointedStar } from "react-icons/gi";
 import { useSession } from "next-auth/react";
-import JerseyLoginModal from "./JerseyLoginModal";
+import JerseyLoginModal from "./jerseyDetailsModals/JerseyLoginModal";
 
 interface Props {
   jersey: Jersey;
@@ -74,13 +74,7 @@ export default function JerseyDetailsContainer({ jersey }: Props) {
         open={openModal}
         onClose={() => setOpenModal(false)}
       /> : <JerseyLoginModal open={openModal} onClose={() => setOpenModal(false)} />}
-
-      {/* <JerseyPurchaseModal
-        jersey={jersey}
-        available={available}
-        open={openModal}
-        onClose={() => setOpenModal(false)}
-      /> */}
+      
     </div>
   );
 }

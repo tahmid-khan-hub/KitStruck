@@ -4,8 +4,8 @@ import { Jersey } from "@/types/jersey";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
-import JerseySizeSelector from "./JerseySizeSelector";
-import JerseyPurchaseLocation from "./JerseyPurchaseLocation";
+import JerseySizeSelector from "../JerseySizeSelector";
+import JerseyPurchaseLocation from "../JerseyPurchaseLocation";
 
 interface Props {
   jersey: Jersey;

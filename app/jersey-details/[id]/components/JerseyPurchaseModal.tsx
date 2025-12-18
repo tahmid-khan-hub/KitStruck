@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import JerseySizeSelector from "./JerseySizeSelector";
+import JerseyPurchaseLocation from "./JerseyPurchaseLocation";
 
 interface Props {
   jersey: Jersey;
@@ -36,7 +37,7 @@ export default function JerseyPurchaseModal({ jersey, available, open, onClose }
         exit={{ opacity: 0 }}
       >
         <motion.div
-          className="bg-white rounded-lg p-6 w-[95%] max-w-lg shadow-xl"
+          className="bg-white rounded-lg p-6 w-[95%] max-w-lg shadow-xl max-h-[90vh] overflow-y-auto"
           initial={{ scale: 0.8 }}
           animate={{ scale: 1 }}
           exit={{ scale: 0.8 }}
@@ -53,9 +54,10 @@ export default function JerseyPurchaseModal({ jersey, available, open, onClose }
           </div>
 
           {/* select jersey size */}
-          <div>
-            <JerseySizeSelector />
-          </div>
+          <div><JerseySizeSelector /></div>
+
+          {/* add location */}
+          <div><JerseyPurchaseLocation /></div>
 
           {/* Quantity Selector */}
           <div className="flex items-center justify-between mb-6 mt-9">

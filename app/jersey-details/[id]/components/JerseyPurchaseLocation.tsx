@@ -62,34 +62,9 @@ const JerseyPurchaseLocation = () => {
         )}
       </div>
 
-      {/* District */}
-      <input
-        type="text"
-        placeholder="District / Zila"
-        required
-        className="w-full border border-gray-300 rounded-lg px-4 py-2"
-      />
-
-      {/* City / Upazila */}
-      <input
-        type="text"
-        placeholder="City / Upazila"
-        required
-        className="w-full border border-gray-300 rounded-lg px-4 py-2"
-      />
-
-      {/* Area / Village */}
-      <input
-        type="text"
-        placeholder="Area / Village"
-        required
-        className="w-full border border-gray-300 rounded-lg px-4 py-2"
-      />
-
       {/* Full Address */}
-      <textarea
-        placeholder="House no, Road no, Landmark, etc."
-        rows={3}
+      <input
+        placeholder="House no, Road no, Landmark etc."
         required
         className="w-full border border-gray-300 rounded-lg px-4 py-2"
       />

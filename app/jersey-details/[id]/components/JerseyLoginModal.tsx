@@ -1,5 +1,6 @@
 "use client";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 
 interface Props {
   open: boolean;
@@ -24,13 +25,22 @@ export default function JerseyLoginModal({ open, onClose }: Props) {
             exit={{ scale: 0.8 }}
             onClick={(e) => e.stopPropagation()} 
           >
-            <div className="flex justify-end">
-              <button
-                onClick={onClose}
-                className="border-btn px-4 py-2 rounded-lg"
-              >
-                Cancel
-              </button>
+            <div>
+              <h3 className="text-center text-xl font-semibold mb-11">Sign in to continue your purchase</h3>
+              <div className="flex justify-end">
+                <Link href={"/sign-in"}><button
+                  onClick={onClose}
+                  className="btns px-4 py-2 mr-4 rounded-lg"
+                >
+                  Sign In
+                </button></Link>
+                <button
+                  onClick={onClose}
+                  className="border-btn px-4 py-2 rounded-lg"
+                >
+                  Cancel
+                </button>
+              </div>
             </div>
           </motion.div>
         </motion.div>

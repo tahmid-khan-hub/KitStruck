@@ -4,6 +4,7 @@ import { Jersey } from "@/types/jersey";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
+import JerseySizeSelector from "./JerseySizeSelector";
 
 interface Props {
   jersey: Jersey;
@@ -49,6 +50,11 @@ export default function JerseyPurchaseModal({ jersey, available, open, onClose }
             <p><strong>Team:</strong> {jersey.team}</p>
             <p><strong>Category:</strong> {jersey.category}</p>
             <p><strong>Price:</strong> ${jersey.price}</p>
+          </div>
+
+          {/* select jersey size */}
+          <div>
+            <JerseySizeSelector />
           </div>
 
           {/* Quantity Selector */}

@@ -18,6 +18,8 @@ export interface ordersRow extends RowDataPacket {
     status: string;
     created_at: string;
     quantity: number;
+    size: string;
+    address: string,
 
     jersey_id: number;
     name: string;

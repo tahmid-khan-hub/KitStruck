@@ -47,7 +47,6 @@ export default function OrderRow({ item }: { item: orders }) {
       <td className="font-semibold">
         {item?.jerseyData?.name}
         <br />
-        <span className="text-sm text-gray-500">{item?.jerseyData?.team}</span>
       </td>
 
       <td>${item.total_amount}</td>
@@ -68,6 +67,9 @@ export default function OrderRow({ item }: { item: orders }) {
       </td> */}
 
       <td>{new Date(item.created_at).toLocaleDateString()}</td>
+
+      <td>{item.size}</td>
+      <td>{item.address}</td>
 
       {session?.user?.role === "admin" && <td onClick={handleProceed} className="capitalize">
         <span className="px-2 py-1.5 rounded text-white font-semibold bg-blue-600 hover:bg-blue-700 text-xs">Proceed</span>

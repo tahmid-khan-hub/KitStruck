@@ -14,6 +14,8 @@ export default function OrdersTable({ Myorders }: { Myorders: orders[] }) {
             <th>Amount</th>
             <th>Quantity</th>
             <th>Order Date</th>
+            <th>Size</th>
+            <th>Location</th>
             {session?.user?.role === 'admin' && <th>Action</th>}
           </tr>
         </thead>

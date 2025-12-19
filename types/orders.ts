@@ -8,5 +8,7 @@ export interface orders {
     created_at: string;
     jersey_id: number;
     quantity: number;
+    size: string;
+    address: string,
     jerseyData?: Jersey;
 }

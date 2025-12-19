@@ -32,7 +32,7 @@ export async function GET(req: Request) {
     const [rawRows] = await dbConnect.query<ordersRow[]>(
       `SELECT
         o.payment_intent_id, o.total_amount, o.status, o.created_at,
-        o.quantity, 
+        o.quantity, o.size, o.address,
         j.jersey_id, j.name, j.team, j.image_url, 
         j.category, j.price
         FROM orders o JOIN jersey_table j
@@ -47,6 +47,8 @@ export async function GET(req: Request) {
       status: row.status,
       created_at: row.created_at,
       quantity: row.quantity,
+      size: row.size,
+      address: row.address,
 
       jerseyData: {
         jersey_id: row.jersey_id,

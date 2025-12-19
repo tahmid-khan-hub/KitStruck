@@ -11,7 +11,7 @@ export default function OrderRow({ item }: { item: orders }) {
     if (!confirmed) return; 
 
     try {
-      const res = await fetch(`/api/admin/manage-orders/${item.payment_id}`, {
+      const res = await fetch(`/api/admin/manage-orders/${item.payment_intent_id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -50,10 +50,10 @@ export default function OrderRow({ item }: { item: orders }) {
         <span className="text-sm text-gray-500">{item?.jerseyData?.team}</span>
       </td>
 
-      <td>${item.amount}</td>
+      <td>${item.total_amount}</td>
       <td>{item.quantity}</td>
 
-      <td className="capitalize">
+      {/* <td className="capitalize">
         <span
           className={`px-2 py-1 rounded text-white text-xs ${
             item.order_status === "delivered"
@@ -65,9 +65,9 @@ export default function OrderRow({ item }: { item: orders }) {
         >
           {item.order_status}
         </span>
-      </td>
+      </td> */}
 
-      <td>{new Date(item.payment_at).toLocaleDateString()}</td>
+      <td>{new Date(item.created_at).toLocaleDateString()}</td>
 
       {session?.user?.role === "admin" && <td onClick={handleProceed} className="capitalize">
         <span className="px-2 py-1.5 rounded text-white font-semibold bg-blue-600 hover:bg-blue-700 text-xs">Proceed</span>

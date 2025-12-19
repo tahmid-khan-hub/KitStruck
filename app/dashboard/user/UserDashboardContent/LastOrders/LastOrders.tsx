@@ -3,12 +3,12 @@ import { useQuery } from "@tanstack/react-query";
 import LastOrdersSkeleton from "./LastOrdersSkeleton";
 import LastOrdersEmpty from "./LastOrdersEmpty";
 import Image from "next/image";
-import { PaymentRow } from "@/types/PaymentRow";
 import useAxiosSecure from "@/app/hooks/useAxiosSecure";
+import { ordersRow } from "@/types/ordersType";
 
 export default function LastOrders() {
   const axios = useAxiosSecure();
-  const { data: orders = [], isLoading } = useQuery<PaymentRow[]>({
+  const { data: orders = [], isLoading } = useQuery<ordersRow[]>({
     queryKey: ["lastOrders"],
     queryFn: async () => {
       const res = await axios.get("/api/myOrders/lastOrders");
@@ -25,7 +25,7 @@ export default function LastOrders() {
       <div className="space-y-4">
         {orders.map((order) => (
           <div
-            key={order.payment_id}
+            key={order.payment_intent_id}
             className="flex items-center gap-4 border-b border-b-gray-300 pb-4"
           >
             <Image
@@ -41,13 +41,13 @@ export default function LastOrders() {
               <p className="text-sm text-gray-600">
                 Amount:{" "}
                 <span className="text-blue-600 font-semibold">
-                  ${order.amount}
+                  ${order.total_amount}
                 </span>
               </p>
               <p className="text-sm text-gray-600">
                 Order Date:{" "}
                 <span className="text-gray-500">
-                  {new Date(order.payment_at).toLocaleDateString()}
+                  {new Date(order.created_at).toLocaleDateString()}
                 </span>
               </p>
             </div>

@@ -13,7 +13,6 @@ export default function OrdersTable({ Myorders }: { Myorders: orders[] }) {
             <th>Jersey</th>
             <th>Amount</th>
             <th>Quantity</th>
-            <th>Status</th>
             <th>Order Date</th>
             {session?.user?.role === 'admin' && <th>Action</th>}
           </tr>
@@ -21,7 +20,7 @@ export default function OrdersTable({ Myorders }: { Myorders: orders[] }) {
 
         <tbody>
           {Myorders.map((item) => (
-            <OrderRow key={item.payment_id} item={item} />
+            <OrderRow key={item.payment_intent_id} item={item} />
           ))}
         </tbody>
       </table>

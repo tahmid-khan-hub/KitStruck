@@ -36,7 +36,7 @@ export async function POST(req: Request) {
        VALUES (?, ?, ?, ?, ?)`, [ session.user.id, order_id, payment_id, order.total_amount, status ] );
 
     // Update order status
-    await dbConnect.query( `UPDATE orders SET order_status = 'paid' WHERE order_id = ?`, [order_id]);
+    await dbConnect.query( `UPDATE orders SET status = 'paid' WHERE order_id = ?`, [order_id]);
 
     // Update jersey sells_quantity
     await dbConnect.query( `UPDATE jersey_table SET sells_quantity = sells_quantity + ? WHERE jersey_id = ?`, [order.quantity, order.jersey_id]);

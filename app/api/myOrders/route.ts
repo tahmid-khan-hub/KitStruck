@@ -3,7 +3,7 @@ import pool from "@/lib/mysql";
 import { RowDataPacket } from "mysql2";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
-import { PaymentRow } from "@/types/PaymentRow";
+import { ordersRow } from "@/types/ordersType";
 interface CountRow extends RowDataPacket {
   total: number;
 }
@@ -29,28 +29,24 @@ export async function GET(req: Request) {
 
     const total = countRows[0]?.total ?? 0;
 
-    const [rawRows] = await dbConnect.query<PaymentRow[]>(
+    const [rawRows] = await dbConnect.query<ordersRow[]>(
       `SELECT
-        p.payment_id, p.amount, p.status, p.payment_at,
-        p.quantity, p.order_status, 
+        o.payment_intent_id, o.total_amount, o.status, o.created_at,
+        o.quantity, 
         j.jersey_id, j.name, j.team, j.image_url, 
         j.category, j.price
-      FROM payments p
-      JOIN jersey_table j
-        ON p.jersey_id = j.jersey_id
-      WHERE p.user_id = ?
-      ORDER BY p.payment_at DESC
-      LIMIT ? OFFSET ?`,
-      [session.user.id, limit, offset]
-    );
+        FROM orders o JOIN jersey_table j
+        ON o.jersey_id = j.jersey_id
+        WHERE o.user_id = ?
+        ORDER BY o.created_at DESC
+        LIMIT ? OFFSET ?`, [session.user.id, limit, offset] );
 
     const formatted = rawRows.map((row) => ({
-      payment_id: row.payment_id,
-      amount: row.amount,
+      payment_intent_id: row.payment_intent_id,
+      total_amount: row.total_amount,
       status: row.status,
-      payment_at: row.payment_at,
+      created_at: row.created_at,
       quantity: row.quantity,
-      order_status: row.order_status,
 
       jerseyData: {
         jersey_id: row.jersey_id,
@@ -62,13 +58,7 @@ export async function GET(req: Request) {
       },
     }));
 
-    return NextResponse.json({
-      data: formatted,
-      page,
-      limit,
-      total,
-      totalPages: Math.ceil(total / limit),
-    });
+    return NextResponse.json({ data: formatted, page, limit, total, totalPages: Math.ceil(total / limit), });
   } catch (error) {
     console.error(error);
     return NextResponse.json({ error }, { status: 500 });

@@ -11,3 +11,18 @@ export interface ordersType extends RowDataPacket {
     phone: string,
     total_amount: number;
 }
+
+export interface ordersRow extends RowDataPacket {
+    payment_intent_id: string;
+    total_amount: number;
+    status: string;
+    created_at: string;
+    quantity: number;
+
+    jersey_id: number;
+    name: string;
+    team: string;
+    image_url: string;
+    category: string;
+    price: number;
+}

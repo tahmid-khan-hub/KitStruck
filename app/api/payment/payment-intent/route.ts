@@ -28,7 +28,7 @@ export async function POST(req: Request) {
 
     try {
         const [rows] = await dbConnect.query<order[]>(
-            "SELECT total_amount, status FROM orders WHERE id = ? AND user_id = ?", [order_id, session.user.id]
+            "SELECT total_amount, status FROM orders WHERE order_id = ? AND user_id = ?", [order_id, session.user.id]
         );
 
         if (!rows.length || rows[0].status !== "draft") {
@@ -44,7 +44,7 @@ export async function POST(req: Request) {
             },
         });
 
-        await dbConnect.query( "UPDATE orders SET payment_intent_id = ? WHERE id = ?", [paymentIntent.id, order_id] );
+        await dbConnect.query( "UPDATE orders SET payment_intent_id = ? WHERE order_id = ?", [paymentIntent.id, order_id] );
         return NextResponse.json({ clientSecret: paymentIntent.client_secret, });
     } catch (error) {
         console.log(error);

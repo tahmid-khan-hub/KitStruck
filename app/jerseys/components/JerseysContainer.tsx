@@ -1,31 +1,23 @@
 "use client";
 import { Jersey } from "@/types/jersey";
 import Image from "next/image";
-import { FaArrowRightLong, FaGreaterThan, FaLessThan } from "react-icons/fa6";
+import { FaArrowRightLong } from "react-icons/fa6";
 import DropDown from "./dropDown";
 import { motion } from "framer-motion";
-import Lottie from "react-lottie-player";
-import NoJerseyFound from "@/public/Not Found.json"
 import Link from "next/link";
 import JerseyCardSkeleton from "@/app/SkeletonLoading/JerseyCardSkeleton";
 import { GiSevenPointedStar } from "react-icons/gi";
+import JerseyLottie from "./JerseyLottie";
+import JerseyPagination from "./JerseyPagination";
 
 interface JerseysContainerProps {
-  jerseys: Jersey[];
-  search: string;
-  setSearch: (value: string) => void;
-  sort: string;
-  handleSortChange: (value: string) => void;
-  page: number;
-  setPage: (value: number) => void;
-  totalPage: number;
-  loading: boolean;
+  jerseys: Jersey[]; search: string; setSearch: (value: string) => void; sort: string; handleSortChange: (value: string) => void; page: number; setPage: (value: number) => void; totalPage: number; loading: boolean;
 }
 const JerseysContainer = ({jerseys, search, setSearch, sort,handleSortChange, page, setPage, totalPage, loading
 }: JerseysContainerProps) => {
   if(loading){
     return (
-      <div className="max-w-[1350px] mx-auto px-4 md:px-3 "><div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div className="max-w-[1350px] mx-auto px-4 md:px-3 mt-28"><div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {Array.from({ length: 8 }).map((_, i) => (
           <JerseyCardSkeleton key={i} />
         ))}
@@ -49,17 +41,7 @@ const JerseysContainer = ({jerseys, search, setSearch, sort,handleSortChange, pa
 
       {/* Jerseys Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">{jerseys.length === 0
-        ? (
-          <div className="min-h-screen">
-            <Lottie
-                play
-                loop
-                animationData={NoJerseyFound}
-                className="w-[250px] max-w-md mx-auto"
-            />
-            <p className="text-center text-gray-500 -mt-5">No jerseys found.</p>
-          </div>
-        )
+        ? ( <JerseyLottie /> )
         : jerseys.map((jersey) => (
             <motion.div
               whileHover={{
@@ -70,11 +52,12 @@ const JerseysContainer = ({jerseys, search, setSearch, sort,handleSortChange, pa
               key={jersey.jersey_id}
               className="p-3 border-2 border-gray-200 bg-white rounded-lg flex flex-col justify-between hover:shadow-lg"
             >
-              <div className="relative w-full h-[340px]">
+              <div className="relative w-full ">
                 <Image
                   src={jersey.image_url}
                   alt={jersey.name}
-                  fill
+                  height={300}
+                  width={300}
                   className="object-cover rounded-md w-full h-[340px]"
                 />
                 {/* OFFER BADGE */}
@@ -100,28 +83,9 @@ const JerseysContainer = ({jerseys, search, setSearch, sort,handleSortChange, pa
           ))}
         </div>
       
-
       {/* Pagination */}
       {jerseys.length > 0 && <div className="flex justify-center items-center gap-4 mt-20 mb-6">
-        <button
-          disabled={page === 1}
-          onClick={() => setPage(page - 1)}
-          className="px-3 py-3 bg-gray-200 text-black rounded-md disabled:opacity-50 hover:bg-blue-600 hover:text-white transition"
-        >
-        <FaLessThan size={20}/>
-        </button>
-
-        <span className="text-gray-600 font-medium">
-          Page {page} of {totalPage}
-        </span>
-
-        <button
-          disabled={page === totalPage}
-          onClick={() => setPage(page + 1)}
-          className="px-3 py-3 bg-gray-200 text-black rounded-md disabled:opacity-50 hover:bg-blue-600 hover:text-white transition"
-        >
-          <FaGreaterThan size={20}/>
-        </button>
+        <JerseyPagination page={page} setPage={setPage} totalPage={totalPage} />
       </div>}
   </div>;
 };

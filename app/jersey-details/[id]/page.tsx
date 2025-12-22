@@ -1,5 +1,5 @@
 import { Jersey } from "@/types/jersey";
-import JerseyDetailsContainer from "./components/JerseyDetailsContainer";
+import JerseyDetailsContainer from "./components/JerseyDetails/JerseyDetailsContainer";
 import Lottie from "react-lottie-player";
 import noMyOrders from "@/public/No Item Found.json"
 

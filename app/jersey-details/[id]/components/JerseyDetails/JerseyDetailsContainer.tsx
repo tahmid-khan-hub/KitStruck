@@ -3,13 +3,13 @@ import { Jersey } from "@/types/jersey";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import JerseyPurchaseModal from "./jerseyDetailsModals/JerseyPurchaseModal";
+import JerseyPurchaseModal from "../jerseyDetailsModals/JerseyPurchaseModal";
 import JerseyDetailsSkeleton from "@/app/SkeletonLoading/JerseyDetailsSkeleton";
 import JerseyDetails from "./JerseyDetails";
 import JerseyDetailsButtons from "./JerseyDetailsButtons";
 import { GiSevenPointedStar } from "react-icons/gi";
 import { useSession } from "next-auth/react";
-import JerseyLoginModal from "./jerseyDetailsModals/JerseyLoginModal";
+import JerseyLoginModal from "../jerseyDetailsModals/JerseyLoginModal";
 
 interface Props {
   jersey: Jersey;

@@ -1,5 +1,6 @@
 "use client";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 
@@ -31,7 +32,17 @@ export default function JerseyLoginModal({ open, onClose }: Props) {
             onClick={(e) => e.stopPropagation()} 
           >
             <div>
-              <h3 className="text-center text-xl font-semibold mb-11">Sign in to continue your purchase</h3>
+              <h3 className="text-center text-[22px] font-semibold">Sign in to continue your purchase</h3>
+              <p className="text-center text-gray-600 mt-4 mb-11"> Sign in to complete your purchase and get your favorite jersey delivered to you</p>
+              {/* image */}
+              <div className="flex justify-center mb-10">
+                <Image 
+                  src={"/Sign In image.png"}
+                  width={250}
+                  height={250}
+                  alt="Sign in image"
+                />
+              </div>
               <div className="flex justify-end">
                 <Link href={`/sign-in?callbackUrl=${encodeURIComponent(callbackUrl)}`}>
                   <button

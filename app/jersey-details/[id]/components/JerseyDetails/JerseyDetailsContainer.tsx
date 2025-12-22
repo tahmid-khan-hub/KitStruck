@@ -8,8 +8,10 @@ import JerseyDetailsSkeleton from "@/app/SkeletonLoading/JerseyDetailsSkeleton";
 import JerseyDetails from "./JerseyDetails";
 import JerseyDetailsButtons from "./JerseyDetailsButtons";
 import { GiSevenPointedStar } from "react-icons/gi";
+import { FiArrowLeft } from "react-icons/fi";
 import { useSession } from "next-auth/react";
 import JerseyLoginModal from "../jerseyDetailsModals/JerseyLoginModal";
+import { useRouter } from "next/navigation";
 
 interface Props {
   jersey: Jersey;
@@ -18,6 +20,7 @@ interface Props {
 export default function JerseyDetailsContainer({ jersey }: Props) {
   const [openModal, setOpenModal] = useState(false);
   const {data: session} = useSession();
+  const router = useRouter();
 
   const available = jersey?.stock - jersey?.sells_quantity;
 
@@ -25,6 +28,11 @@ export default function JerseyDetailsContainer({ jersey }: Props) {
 
   return (
     <div className="py-5 mb-9">
+      {/* back button */}
+      <button className="border-btn flex items-center gap-2 mb-11 -mt-11" onClick={() => router.back()} >
+        <FiArrowLeft className="text-lg" size={21}/>
+        
+      </button>
       <h1 className="text-center font-bold text-3xl mb-4">
         Jersey Details
       </h1>

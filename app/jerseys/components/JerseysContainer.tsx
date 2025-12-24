@@ -24,7 +24,7 @@ const JerseysContainer = ({jerseys, search, setSearch, sort,handleSortChange, pa
           placeholder="Search jerseys..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full md:w-1/2 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+          className="w-full md:w-1/2 px-4 py-2 bg-white hover:bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
         />
         <DropDown sort={sort} handleSortChange={handleSortChange} />
       </div>

@@ -18,7 +18,7 @@ const JerseyPagination = ({page, setPage, totalPage}: props) => {
         <FaLessThan size={20} />
       </button>
 
-      <span className="text-gray-600 font-medium">
+      <span className="text-gray-600 px-3 font-medium">
         Page {page} of {totalPage}
       </span>
 

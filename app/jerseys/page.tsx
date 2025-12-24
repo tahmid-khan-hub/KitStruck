@@ -2,47 +2,52 @@
 import { Jersey } from "@/types/jersey";
 import { useEffect, useState } from "react";
 import JerseysContainer from "./components/JerseysContainer";
+import { useQuery } from "@tanstack/react-query";
+
+const limit = 8;
 
 const JerseysPage = () => {
-  const [loading, setLoading] = useState(true);
-  const [jerseys, setJerseys] = useState<Jersey[]>([]);
   const [search, setSearch] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
   const [page, setPage] = useState(1);
-  const [totalPage, setTotalPage] = useState(1);
   const [sort, setSort] = useState("default");
-  const limit = 8;
 
+   /* Debounce search */
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true); // start loading
-      try {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(search);
+      setPage(1);  // reset page on new search
+    }, 400);
+
+    return () => clearTimeout(timer);
+  }, [search]);
+
+  const {data, isLoading} = useQuery({
+    queryKey: ["jerseys", debouncedSearch, sort, page],
+    queryFn: async () => {
       const params = new URLSearchParams({
-        page: String(page),
+        page: String(page), 
         limit: String(limit),
-        search,
+        search: debouncedSearch, 
         sort,
       });
 
       const res = await fetch(`/api/jerseys?${params}`);
-      const jerseyData = await res.json();
+      if (!res.ok) throw new Error("Failed to fetch jerseys");
 
-      setJerseys(jerseyData.data || []);
-      setTotalPage(jerseyData.pagination?.totalPages || 1);
-      } catch (err) {
-        console.error("Fetch error:", err);
-        setJerseys([]);
-        setTotalPage(1);
-      } finally {
-        setLoading(false); // stop loading
-      }
-    };
-    fetchData();
-  }, [sort, search, page]);
+      return res.json();
+    },
+    enabled: debouncedSearch === search,
+  })
+
+  const jerseys: Jersey[] = data?.data || [];
+  const totalPage: number = data?.pagination?.totalPages || 1;
 
   const handleSortChange = (value: string) => {
     setSort(value);
     setPage(1);
   };
+  
   return (
     <div className="min-h-screen">
       <h1 className="text-center text-3xl font-semibold mb-3 mt-12">Jerseys</h1>
@@ -56,7 +61,7 @@ const JerseysPage = () => {
         page={page}
         setPage={setPage}
         totalPage={totalPage}
-        loading={loading} 
+        loading={isLoading} 
       />
     </div>
   );

@@ -1,25 +1,26 @@
 "use client";
 import Image from "next/image";
-import { FaMinus, FaPlus, FaTrash } from "react-icons/fa6";
+import { FaTrash } from "react-icons/fa6";
 import { CartItem } from "@/types/jersey";
 import { PiShoppingCartSimpleFill } from "react-icons/pi";
-import Link from "next/link";
+import { useState } from "react";
+import JerseyPurchaseModal from "@/app/jersey-details/[id]/components/jerseyDetailsModals/JerseyPurchaseModal";
+import JerseyLoginModal from "@/app/jersey-details/[id]/components/jerseyDetailsModals/JerseyLoginModal";
+import { useSession } from "next-auth/react";
 
 interface Props {
   item: CartItem;
-  handleIncrease: (id: number) => void;
-  handleDecrease: (id: number) => void;
   handleRemove: (id: number) => void;
 }
 
-export default function CartList({
-  item,
-  handleIncrease,
-  handleDecrease,
-  handleRemove,
-}: Props) {
+export default function CartList({ item, handleRemove,}: Props) {
+  const [openModal, setOpenModal] = useState(false);
+  const available = item?.stock - item?.sells_quantity;
+  console.log(available, item.sells_quantity, item?.stock);
+  const {data: session} = useSession();
+
   return (
-    <div className="overflow-x-auto">
+  <div className="overflow-x-auto">
   <div className="min-w-[750px]"> 
     <div
       key={item.jersey_id}
@@ -38,41 +39,13 @@ export default function CartList({
       {/* item details */}
       <div className="flex-1">
         <h2 className="text-xl font-semibold">{item.name}</h2>
-
-        <div className="flex items-center gap-2 mt-2">
-          <button
-            onClick={() => item.quantity > 1 && handleDecrease(item.jersey_id)}
-            disabled={item.quantity === 1}
-            className={`px-2 py-1 rounded border 
-              ${item.quantity === 1 
-                ? "bg-gray-200 text-gray-400 border-gray-300 cursor-not-allowed" 
-                : "bg-white hover:bg-blue-500 hover:text-white text-blue-500 border-blue-500"
-              }`}
-          >
-            <FaMinus />
-          </button>
-
-          <span className="px-2">{item.quantity}</span>
-
-          <button
-            onClick={() => handleIncrease(item.jersey_id)}
-            className="bg-white hover:bg-blue-500 hover:text-white text-blue-500 border border-blue-500 px-2 py-1 rounded"
-          >
-            <FaPlus />
-          </button>
-        </div>
-
-        <p className="font-bold text-lg mt-2">
-          Price: ${item.price * item.quantity}
-        </p>
+        <p className="font-bold text-lg mt-2">Price: ${item.price * item.quantity}</p>
       </div>
 
       {/* Buy button */}
-      <Link href={`/payment?amount=${item.price * item.quantity}&jersey_id=${item.jersey_id}&qty=${item.quantity}`}>
-        <button className="bg-blue-600 text-xl text-white px-4 py-2 rounded-lg hover:bg-blue-700">
-          <PiShoppingCartSimpleFill />
-        </button>
-      </Link>
+      <button onClick={() => setOpenModal(true)} className="bg-blue-600 text-xl text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+        <PiShoppingCartSimpleFill />
+      </button>
 
       {/* Delete button */}
       <button
@@ -81,9 +54,10 @@ export default function CartList({
       >
         <FaTrash />
       </button>
-
     </div>
   </div>
+  {session ? <JerseyPurchaseModal jersey={item} available={available} open={openModal} onClose={() => setOpenModal(false)} /> : 
+  <JerseyLoginModal open={openModal} onClose={() => setOpenModal(false)} />}
 </div>
   );
 }

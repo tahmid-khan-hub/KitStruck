@@ -3,8 +3,8 @@ import { useState } from "react";
 import { Jersey } from "@/types/jersey";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSession } from "next-auth/react";
-import JerseySizeSelector from "../JerseySizeSelector";
-import JerseyPurchaseLocation from "../JerseyPurchaseLocation";
+import JerseySizeSelector from "./JerseySizeSelector";
+import JerseyPurchaseLocation from "./JerseyPurchaseLocation";
 import UseSweetAlert from "@/app/hooks/UseSweetAlert";
 import { useRouter } from "next/navigation";
 

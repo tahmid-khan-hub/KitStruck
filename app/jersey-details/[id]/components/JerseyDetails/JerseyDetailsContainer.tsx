@@ -3,14 +3,14 @@ import { Jersey } from "@/types/jersey";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import JerseyPurchaseModal from "../jerseyDetailsModals/JerseyPurchaseModal";
+import JerseyPurchaseModal from "@/app/jerseyDetailsModals/JerseyPurchaseModal";
 import JerseyDetailsSkeleton from "@/app/SkeletonLoading/JerseyDetailsSkeleton";
 import JerseyDetails from "./JerseyDetails";
 import JerseyDetailsButtons from "./JerseyDetailsButtons";
 import { GiSevenPointedStar } from "react-icons/gi";
 import { FiArrowLeft } from "react-icons/fi";
 import { useSession } from "next-auth/react";
-import JerseyLoginModal from "../jerseyDetailsModals/JerseyLoginModal";
+import JerseyLoginModal from "@/app/jerseyDetailsModals/JerseyLoginModal";
 import { useRouter } from "next/navigation";
 
 interface Props {

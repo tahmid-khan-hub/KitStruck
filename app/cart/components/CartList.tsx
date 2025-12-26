@@ -4,8 +4,8 @@ import { FaTrash } from "react-icons/fa6";
 import { CartItem } from "@/types/jersey";
 import { PiShoppingCartSimpleFill } from "react-icons/pi";
 import { useState } from "react";
-import JerseyPurchaseModal from "@/app/jersey-details/[id]/components/jerseyDetailsModals/JerseyPurchaseModal";
-import JerseyLoginModal from "@/app/jersey-details/[id]/components/jerseyDetailsModals/JerseyLoginModal";
+import JerseyPurchaseModal from "@/app/jerseyDetailsModals/JerseyPurchaseModal";
+import JerseyLoginModal from "@/app/jerseyDetailsModals/JerseyLoginModal"
 import { useSession } from "next-auth/react";
 
 interface Props {

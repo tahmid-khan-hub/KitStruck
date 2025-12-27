@@ -22,6 +22,28 @@ const CartPage = () => {
       } 
     },[status])
 
+    // set / merge localstorage data to db
+    useEffect(() => {
+      if (status === "authenticated") {
+        const storedCart = JSON.parse(localStorage.getItem("cart") || "[]");
+
+        if (storedCart.length > 0) {
+          fetch("/api/cart/sync-merge", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ items: storedCart }),
+          })
+            .then(res => {
+              if (res.ok) {
+                localStorage.removeItem("cart");
+                queryClient.invalidateQueries({ queryKey: ["cart"] });
+              }
+            })
+            .catch(console.error);
+        }
+      }
+    }, [status, queryClient]);
+
     const {data: serverCart = [], isLoading} = useQuery<CartItem[]>({
       queryKey: ["cart"],
       queryFn: async () => {

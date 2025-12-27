@@ -11,9 +11,9 @@ export async function POST(req: NextRequest) {
   }
 
   const userId = session.user.id;
-  const { jersey_id, quantity } = await req.json();
+  const { jersey_id, } = await req.json();
 
-  if (!jersey_id || !quantity) {
+  if (!jersey_id) {
     return NextResponse.json({ error: "Invalid payload" }, { status: 400 });
   }
 
@@ -22,11 +22,10 @@ export async function POST(req: NextRequest) {
   try {
     await dbConnect.query(
       `
-      INSERT INTO cart_table (user_id, jersey_id, quantity)
-      VALUES (?, ?, ?)
-      ON DUPLICATE KEY UPDATE quantity = quantity + ?
+      INSERT INTO cart_table (user_id, jersey_id)
+      VALUES (?, ?)
       `,
-      [userId, jersey_id, quantity, quantity]
+      [userId, jersey_id]
     );
 
     return NextResponse.json({ message: "Item added to cart" });

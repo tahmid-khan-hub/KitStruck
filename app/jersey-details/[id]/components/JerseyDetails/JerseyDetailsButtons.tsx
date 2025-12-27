@@ -21,7 +21,6 @@ export default function JerseyDetailsButtons({ available, jersey,onBuyNow, }: { 
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             jersey_id: jersey.jersey_id,
-            quantity: 1,
           }),
         });
 

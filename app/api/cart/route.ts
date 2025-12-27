@@ -10,7 +10,7 @@ export async function GET() {
     if(!session) return Response.json([]);
     try {
         const [rows] = await dbConnect.query(
-            `SELECT c.cart_id, c.quantity,
+            `SELECT c.cart_id,
             j.jersey_id, j.name, j.team, j.image_url, j.category, 
             j.price, j.description, j.stock, j.sells_quantity
             FROM cart_table c

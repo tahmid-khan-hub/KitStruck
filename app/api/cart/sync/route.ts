@@ -5,13 +5,13 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions);
+  const { jersey_id, guest_id } = await req.json();
 
-  if (!session) {
-    return NextResponse.json({ error: "Not logged in" }, { status: 401 });
+  if (!session && !guest_id) {
+    return NextResponse.json({ error: "Invalid user" }, { status: 401 });
   }
 
-  const userId = session.user.id;
-  const { jersey_id, } = await req.json();
+  const userId = session?.user?.id ?? null;
 
   if (!jersey_id) {
     return NextResponse.json({ error: "Invalid payload" }, { status: 400 });
@@ -22,10 +22,10 @@ export async function POST(req: NextRequest) {
   try {
     await dbConnect.query(
       `
-      INSERT INTO cart_table (user_id, jersey_id)
-      VALUES (?, ?)
+      INSERT INTO cart_table (user_id, jersey_id, guest_id)
+      VALUES (?, ?, ?)
       `,
-      [userId, jersey_id]
+      [userId, jersey_id, guest_id || null]
     );
 
     return NextResponse.json({ message: "Item added to cart" });

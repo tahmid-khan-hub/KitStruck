@@ -12,6 +12,17 @@ export default function JerseyDetailsButtons({ available, jersey,onBuyNow, }: { 
   const { data: session } = useSession();
   const queryClient = useQueryClient();
 
+  function getGuestId() {
+    let guestId = localStorage.getItem("guest_id");
+    if (!guestId) {
+      guestId = crypto.randomUUID();
+      localStorage.setItem("guest_id", guestId);
+    }
+    return guestId;
+  }
+
+  const guestId = getGuestId();
+
   const handleAddToCart = async () => {
     try {
       // Authenticated user server cart
@@ -21,6 +32,7 @@ export default function JerseyDetailsButtons({ available, jersey,onBuyNow, }: { 
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             jersey_id: jersey.jersey_id,
+            guest_id: guestId,
           }),
         });
 

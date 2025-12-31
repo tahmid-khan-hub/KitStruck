@@ -7,7 +7,7 @@ import { FaTshirt, FaUserCircle } from "react-icons/fa";
 import { FaRegChartBar } from "react-icons/fa6";
 import { IoAddCircle, IoLogOut } from "react-icons/io5";
 import { MdModeComment } from "react-icons/md";
-import { RiShoppingBag3Fill, RiShoppingBag4Fill } from "react-icons/ri";
+import { RiCustomerService2Fill, RiShoppingBag3Fill, RiShoppingBag4Fill } from "react-icons/ri";
 
 export default function DashboardSidebar() {
   const { data: session } = useSession();
@@ -46,6 +46,7 @@ export default function DashboardSidebar() {
             <li><ActiveLink href="/dashboard/user"><FaUserCircle size={20}/><span className="text-[16px] ml-1">Profile</span></ActiveLink></li>
             <li><ActiveLink href="/dashboard/user/myOrders"><RiShoppingBag3Fill size={20}/><span className="text-[16px] ml-1">My Orders</span></ActiveLink></li>
             <li><ActiveLink href="/dashboard/user/reviewPage"><MdModeComment size={20}/><span className=" text-[16px] ml-1">Review</span></ActiveLink></li>
+            <li><ActiveLink href="/dashboard/user/supportPage"><RiCustomerService2Fill size={20}/><span className=" text-[16px] ml-1">Support</span></ActiveLink></li>
             <li onClick={() => signOut()}><ActiveLink><IoLogOut size={20}/><span className=" text-[16px] ml-1">Sign Out</span></ActiveLink></li>
           </>
         )}

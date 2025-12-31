@@ -1,5 +1,6 @@
 "use client";
 
+import { getGuestId } from "@/app/hooks/getGuestId";
 import UseSweetAlert from "@/app/hooks/UseSweetAlert";
 import { CartItem, Jersey } from "@/types/jersey";
 import { useQueryClient } from "@tanstack/react-query";
@@ -11,18 +12,8 @@ export default function JerseyDetailsButtons({ available, jersey,onBuyNow, }: { 
   const { successToast, errorToast } = UseSweetAlert();
   const { data: session } = useSession();
   const queryClient = useQueryClient();
-
-  function getGuestId() {
-    let guestId = localStorage.getItem("guest_id");
-    if (!guestId) {
-      guestId = crypto.randomUUID();
-      localStorage.setItem("guest_id", guestId);
-    }
-    return guestId;
-  }
-
   const guestId = getGuestId();
-
+  
   const handleAddToCart = async () => {
     try {
       // Authenticated user server cart
@@ -32,7 +23,6 @@ export default function JerseyDetailsButtons({ available, jersey,onBuyNow, }: { 
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             jersey_id: jersey.jersey_id,
-            guest_id: guestId,
           }),
         });
 
@@ -59,6 +49,15 @@ export default function JerseyDetailsButtons({ available, jersey,onBuyNow, }: { 
         localStorage.setItem("cart", JSON.stringify(existingCart));
         // notify other pages (CartPage)
         window.dispatchEvent(new Event("cart-updated"));
+
+        // adding this local storage data to db without session id, using guest id
+        await fetch("/api/cart/sync", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            jersey_id: jersey.jersey_id, guest_id: guestId
+          }),
+        });
       }
       successToast("Item added to cart!");
     } catch (error) {

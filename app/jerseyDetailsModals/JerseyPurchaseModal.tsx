@@ -7,6 +7,7 @@ import JerseySizeSelector from "./JerseySizeSelector";
 import JerseyPurchaseLocation from "./JerseyPurchaseLocation";
 import UseSweetAlert from "@/app/hooks/UseSweetAlert";
 import { useRouter } from "next/navigation";
+import JerseyTotalPrice from "./JerseyTotalPrice";
 
 interface Props {
   jersey: Jersey;
@@ -119,6 +120,8 @@ export default function JerseyPurchaseModal({ jersey, available, open, onClose }
             </span>
           </div>
 
+          <JerseyTotalPrice price={jersey.price} quantity={qty}/>
+          
           {session?.user?.role === "user" ? <div className="flex justify-end gap-3">
             <button
               onClick={onClose}

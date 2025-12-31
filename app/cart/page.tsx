@@ -87,8 +87,6 @@ const CartPage = () => {
         errorToast("Something went wrong!");
       }
     };
-
-    const totalPrice = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
     
     if (status === "loading" || isLoading) { return <CartSkeleton />;}
     if (cart.length === 0) { return <EmptyCartLottie />; }
@@ -102,7 +100,6 @@ const CartPage = () => {
               key={item.jersey_id} item={item} handleRemove={handleRemove}
             />
           ))}
-           <div className="text-right mt-4 font-bold text-2xl">Total: ${totalPrice}</div>
         </div>
     </div>
     );

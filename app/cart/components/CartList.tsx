@@ -16,7 +16,6 @@ interface Props {
 export default function CartList({ item, handleRemove,}: Props) {
   const [openModal, setOpenModal] = useState(false);
   const available = item?.stock - item?.sells_quantity;
-  console.log(available, item.sells_quantity, item?.stock);
   const {data: session} = useSession();
 
   return (
@@ -39,7 +38,7 @@ export default function CartList({ item, handleRemove,}: Props) {
       {/* item details */}
       <div className="flex-1">
         <h2 className="text-xl font-semibold">{item.name}</h2>
-        <p className="font-bold text-lg mt-2">Price: ${item.price * item.quantity}</p>
+        <p className="font-bold text-lg mt-2">Price: ${item.price}</p>
       </div>
 
       {/* Buy button */}

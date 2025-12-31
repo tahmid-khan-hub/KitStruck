@@ -7,16 +7,13 @@ import CartList from "./components/CartList";
 import CartSkeleton from "./components/CartSkeleton";
 import EmptyCartLottie from "./components/EmptyCartLottie";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { getGuestId } from "../hooks/getGuestId";
 
 const CartPage = () => {
     const {confirmDelete, errorToast, successToast} = UseSweetAlert();
     const queryClient = useQueryClient(); 
     const { data: session, status } = useSession();
-    const guestId = getGuestId();
-
-    // for local storage
     const [guestCart, setGuestCart] = useState<CartItem[]>([]);
+    // for local storage
     useEffect(() => {
       if(status === "unauthenticated"){
         const storedCart = JSON.parse(localStorage.getItem("cart") || "[]");
@@ -26,26 +23,25 @@ const CartPage = () => {
 
     // set / merge localstorage data to db
     useEffect(() => {
-      if (status === "authenticated") {
+      if (status === "authenticated" && session?.user?.id) {
         const storedCart = JSON.parse(localStorage.getItem("cart") || "[]");
 
         if (storedCart.length > 0) {
           fetch("/api/cart/sync-merge", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ items: storedCart, guest_id: guestId }),
+            body: JSON.stringify({ items: storedCart }),
           })
             .then(res => {
               if (res.ok) {
                 localStorage.removeItem("cart");
-                localStorage.removeItem("guest_id")
                 queryClient.invalidateQueries({ queryKey: ["cart"] });
               }
             })
             .catch(console.error);
         }
       }
-    }, [status, queryClient, guestId]);
+    }, [status, session?.user?.id, queryClient])
 
     const {data: serverCart = [], isLoading} = useQuery<CartItem[]>({
       queryKey: ["cart"],

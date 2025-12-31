@@ -13,7 +13,7 @@ export default function CartSync() {
         fetch("/api/cart/sync", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ cartItems: localCart }),
+          body: JSON.stringify({ items: localCart }),
         }).then(() => {
           localStorage.removeItem("cart");
         });

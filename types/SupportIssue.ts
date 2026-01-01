@@ -5,4 +5,5 @@ export interface SupportIssue {
   issue_description: string;
   admin_reply: string | null;
   created_at: string;
+  user_gmail: string;
 }

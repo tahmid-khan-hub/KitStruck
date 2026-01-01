@@ -6,7 +6,7 @@ import { AiFillHome } from "react-icons/ai";
 import { FaTshirt, FaUserCircle } from "react-icons/fa";
 import { FaRegChartBar } from "react-icons/fa6";
 import { IoAddCircle, IoLogOut } from "react-icons/io5";
-import { MdModeComment } from "react-icons/md";
+import { MdContactSupport, MdModeComment } from "react-icons/md";
 import { RiCustomerService2Fill, RiShoppingBag3Fill, RiShoppingBag4Fill } from "react-icons/ri";
 
 export default function DashboardSidebar() {
@@ -37,6 +37,7 @@ export default function DashboardSidebar() {
             <li><ActiveLink href="/dashboard/admin/allJersey"><FaTshirt size={20}/><span className="text-[16px] ml-1 mt-0.5">All Jerseys</span></ActiveLink></li>
             <li><ActiveLink href="/dashboard/admin/addJersey"><IoAddCircle size={20}/><span className="text-[16px] ml-1">Add Jersey</span></ActiveLink></li>
             <li><ActiveLink href="/dashboard/admin/manageOrders"><RiShoppingBag4Fill size={20}/><span className="text-[16px] ml-1 mt-1">Manage Orders</span></ActiveLink></li>
+            <li><ActiveLink href="/dashboard/admin/supportAndIssues"><MdContactSupport size={20}/><span className="text-[16px] ml-1 ">Support & Issues</span></ActiveLink></li>
             <li onClick={() => signOut()}><ActiveLink><IoLogOut size={20}/><span className=" text-[16px] ml-1">Sign Out</span></ActiveLink></li>
           </>
         ) : (

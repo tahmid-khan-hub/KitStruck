@@ -4,6 +4,7 @@ import { SupportIssue } from "@/types/SupportIssue";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { FaMinus, FaPlus } from "react-icons/fa6";
+import { motion, AnimatePresence } from "framer-motion";
 
 const SupportPageHistory = () => {
   const axiosSecure = useAxiosSecure();
@@ -23,7 +24,7 @@ const SupportPageHistory = () => {
     );
   }
   return (
-    <div className="max-w-3xl mx-auto mt-10 space-y-4">
+    <div className="max-w-6xl mx-auto px-5 mt-10 space-y-4">
       {data.length === 0 && (
         <p className="text-gray-500 text-sm">
           No support issues submitted yet.
@@ -37,7 +38,7 @@ const SupportPageHistory = () => {
         return (
           <div
             key={item.issue_id}
-            className="border border-gray-200 rounded-lg bg-white"
+            className="border border-gray-200 rounded-lg bg-white overflow-hidden"
           >
             {/* Header */}
             <button
@@ -64,26 +65,35 @@ const SupportPageHistory = () => {
               )}
             </button>
 
-            {/* Body */}
-            {isOpen && (
-              <div className="px-4 pb-4 text-sm text-gray-700 space-y-2">
-                <p>
-                  <span className="font-medium">Your message:</span>{" "}
-                  {item.issue_description}
-                </p>
+            {/* Animated Body */}
+            <AnimatePresence initial={false}>
+              {isOpen && (
+                <motion.div
+                  key="content"
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.25, ease: "easeInOut" }}
+                  className="px-4 pb-4 text-sm text-gray-700 space-y-2 overflow-hidden"
+                >
+                  <p>
+                    <span className="font-medium">Your message:</span>{" "}
+                    {item.issue_description}
+                  </p>
 
-                <p>
-                  <span className="font-medium">Admin reply:</span>{" "}
-                  {hasReply ? (
-                    <span className="text-gray-800">{item.admin_reply}</span>
-                  ) : (
-                    <span className="italic text-gray-400">
-                      Admin has not replied yet.
-                    </span>
-                  )}
-                </p>
-              </div>
-            )}
+                  <p>
+                    <span className="font-medium">Admin reply:</span>{" "}
+                    {hasReply ? (
+                      <span className="text-gray-800">{item.admin_reply}</span>
+                    ) : (
+                      <span className="italic text-gray-400">
+                        Admin has not replied yet.
+                      </span>
+                    )}
+                  </p>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         );
       })}

@@ -25,7 +25,7 @@ const ReviewForm = () => {
     }
   }
   return (
-    <div className="px-20">
+    <div className="max-w-6xl mx-auto px-5">
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
           type="number"

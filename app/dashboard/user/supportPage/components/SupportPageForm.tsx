@@ -48,7 +48,7 @@ const SupportPageForm = ({ issue, setIssue }: SupportPageFormProps) => {
     mutate();
   };
   return (
-    <form onSubmit={handleSubmit} className="px-20 rounded mb-6">
+    <form onSubmit={handleSubmit} className="max-w-6xl mx-auto px-5 rounded mb-6">
       {issue && (
         <div className="mb-3 text-sm text-gray-600">
           Selected Issue: <span className="font-medium">{issue}</span>

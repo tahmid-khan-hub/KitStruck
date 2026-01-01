@@ -1,12 +1,14 @@
 "use client";
 import useAxiosSecure from "@/app/hooks/useAxiosSecure";
 import { SupportIssue } from "@/types/SupportIssue";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { FaMinus, FaPaperPlane, FaPlus } from "react-icons/fa6";
 import { motion, AnimatePresence } from "framer-motion";
+import UseSweetAlert from "@/app/hooks/UseSweetAlert";
 
 const AllSupportAndIssues = () => {
+  const { successToast, errorToast } = UseSweetAlert();
   const axiosSecure = useAxiosSecure();
   const queryClient = useQueryClient();
 
@@ -19,6 +21,23 @@ const AllSupportAndIssues = () => {
       const res = await axiosSecure.get("/api/admin/support");
       return res.data;
     },
+  });
+
+  const replyMutation = useMutation({
+    mutationFn: async ({ issue_id, reply }: { issue_id: number; reply: string }) => {
+      return axiosSecure.patch("/api/admin/support", {
+        issue_id,
+        admin_reply: reply,
+      });
+    },
+    onSuccess: () => {
+      successToast("Replied to the issue successfully!");
+      setReplyText("");
+      queryClient.invalidateQueries({ queryKey: ["all-support-and-issues"] });
+    },
+    onError: () => {
+      errorToast("Failed to reply!")
+    }
   });
 
   if (isLoading) {
@@ -86,8 +105,14 @@ const AllSupportAndIssues = () => {
                         className="flex-1 border border-gray-300 rounded-md px-3 py-2 text-sm"
                       />
                       <button
+                        onClick={() =>
+                            replyMutation.mutate({
+                                issue_id: item.issue_id,
+                                reply: replyText,
+                            })
+                        }
                         disabled={!replyText}
-                        className="p-2 bg-blue-500 rounded-md text-white disabled:opacity-50"
+                        className="p-2 bg-blue-600 hover:bg-blue-500 rounded-md text-white disabled:opacity-50"
                       >
                         <FaPaperPlane />
                       </button>

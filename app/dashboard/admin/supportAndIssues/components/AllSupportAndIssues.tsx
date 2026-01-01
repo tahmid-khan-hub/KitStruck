@@ -6,6 +6,8 @@ import { useState } from "react";
 import UseSweetAlert from "@/app/hooks/UseSweetAlert";
 import AllSupportAndIssuesContainer from "./AllSupportAndIssuesContainer";
 import AllSupportAndIssuesSkeleton from "./AllSupportAndIssuesSkeleton";
+import OrdersPagination from "@/app/dashboard/components/OrdersTable/OrdersPagination";
+import { PaginatedSupportIssues } from "@/types/PaginatedSupportIssues";
 
 const AllSupportAndIssues = () => {
   const { successToast, errorToast } = UseSweetAlert();
@@ -14,11 +16,12 @@ const AllSupportAndIssues = () => {
 
   const [openId, setOpenId] = useState<number | null>(null);
   const [replyText, setReplyText] = useState("");
+  const [page, setPage] = useState(1);
 
-  const { data = [], isLoading } = useQuery<SupportIssue[]>({
-    queryKey: ["all-support-and-issues"],
+  const { data , isLoading } = useQuery<PaginatedSupportIssues>({
+    queryKey: ["all-support-and-issues", page],
     queryFn: async () => {
-      const res = await axiosSecure.get("/api/admin/support");
+      const res = await axiosSecure.get(`/api/admin/support?page=${page}&limit=5`);
       return res.data;
     },
   });
@@ -46,10 +49,11 @@ const AllSupportAndIssues = () => {
   });
 
   if (isLoading) return <AllSupportAndIssuesSkeleton />
+  const issues = data?.data?? [];
 
   return (
     <div className="max-w-6xl mx-auto px-5 mt-10 space-y-4">
-      {data.map((item) => (
+      {issues.map((item: SupportIssue) => (
         <AllSupportAndIssuesContainer key={item.issue_id}
             item={item}
             openId={openId}
@@ -59,6 +63,12 @@ const AllSupportAndIssues = () => {
             replyMutation={replyMutation} 
         />
       ))}
+      {/* pagination */}
+      <OrdersPagination
+        page={page}
+        setPage={setPage}
+        totalPages={data?.totalPages ?? 1}
+      />
     </div>
   );
 };

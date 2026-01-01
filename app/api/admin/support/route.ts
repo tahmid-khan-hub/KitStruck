@@ -1,31 +1,38 @@
 import { authOptions } from "@/lib/authOptions";
 import pool from "@/lib/mysql";
+import { RowDataPacket } from "mysql2";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
-export async function GET() {
-    const session = await getServerSession(authOptions);
-    const dbConnect = await pool.getConnection();
-    if(!session?.user) return NextResponse.json({ success: false, message: "User not logged in" });
+interface totalRowsCount extends RowDataPacket { total: number }
 
-    try {
-        const [rows] = await dbConnect.query(`
-        SELECT *
-        FROM support_issues
-        ORDER BY 
-        CASE 
-            WHEN admin_reply IS NULL THEN 0 
-            ELSE 1 
-        END,
-        created_at DESC
-  `,
-            [session.user.id]
-        )
-        return NextResponse.json(rows);
-    } catch (error) {
+export async function GET(req: Request) { 
+    const dbConnect = await pool.getConnection(); 
+    const session = await getServerSession(authOptions); 
+    if(!session?.user) return NextResponse.json({ success: false, message: "User not logged in" });
+    
+    try { 
+        const { searchParams } = new URL(req.url);
+         const page = Number(searchParams.get("page") ?? 1); 
+         const limit = Number(searchParams.get("limit") ?? 5); 
+         const offset = (page - 1) * limit; 
+
+        const [countRows] = await dbConnect.query<totalRowsCount[]>(` SELECT COUNT(*) AS total FROM support_issues`);
+
+        const totalItems = countRows[0].total; 
+        const totalPages = Math.ceil(totalItems / limit);
+
+        const [rows] = await dbConnect.query(
+            `SELECT * FROM support_issues ORDER BY 
+            CASE WHEN admin_reply IS NULL THEN 0 ELSE 1 END, 
+            created_at DESC LIMIT ? OFFSET ? `,
+        [limit, offset] ); 
+            
+        return NextResponse.json({data: rows, page, totalPages, totalItems}); 
+    } catch (error) { 
         console.log(error);
-        return NextResponse.json({ success: false, message: "Server error" });
-    } finally {
+        return NextResponse.json({ success: false, message: "Server error" }); 
+    } finally { 
         dbConnect.release();
     }
 }

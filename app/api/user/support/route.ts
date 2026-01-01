@@ -11,9 +11,9 @@ export async function POST(req:Request) {
     const {issue_title, description} = await req.json();
     try {
         await dbConnect.query(`
-            INSERT INTO support_issues (user_id, issue_title, issue_description) VALUES
-            (?, ?, ?)`,
-            [session.user.id, issue_title, description]
+            INSERT INTO support_issues (user_id, issue_title, issue_description, user_gmail) VALUES
+            (?, ?, ?, ?)`,
+            [session.user.id, issue_title, description, session.user.email]
         )
         return NextResponse.json({ success: true, message: "Support issue created" })
     } catch (error) {

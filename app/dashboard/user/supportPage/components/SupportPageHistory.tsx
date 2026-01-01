@@ -5,6 +5,8 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { FaMinus, FaPlus } from "react-icons/fa6";
 import { motion, AnimatePresence } from "framer-motion";
+import SupportPageHistorySkeleton from "./SupportPageHistorySkeleton";
+import SupportPageHistoryEmpty from "./SupportPageHistoryEmpty";
 
 const SupportPageHistory = () => {
   const axiosSecure = useAxiosSecure();
@@ -18,18 +20,11 @@ const SupportPageHistory = () => {
     },
   });
 
-  if (isLoading) {
-    return (
-      <p className="text-center text-gray-500">Loading support history...</p>
-    );
-  }
+  if (isLoading) return <SupportPageHistorySkeleton /> ;
+  
   return (
-    <div className="max-w-6xl mx-auto px-5 mt-10 space-y-4">
-      {data.length === 0 && (
-        <p className="text-gray-500 text-sm">
-          No support issues submitted yet.
-        </p>
-      )}
+    <div className="max-w-6xl mx-auto px-5 my-10 space-y-4">
+      {data.length === 0 && ( <SupportPageHistoryEmpty /> )}
 
       {data.map((item) => {
         const isOpen = openId === item.issue_id;

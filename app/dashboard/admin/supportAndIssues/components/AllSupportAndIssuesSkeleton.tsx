@@ -17,7 +17,10 @@ const AllSupportAndIssuesSkeleton = () => {
                 <div className="h-3 w-28 bg-gray-300 rounded" />
 
                 {/* email */}
-                <div className="h-3 w-40 bg-gray-300 rounded" />
+                <div className="h-2 w-40 bg-gray-300 rounded" />
+
+                {/* date and time */}
+                <div className="h-2 w-40 bg-gray-300 rounded" />
               </div>
             </div>
 

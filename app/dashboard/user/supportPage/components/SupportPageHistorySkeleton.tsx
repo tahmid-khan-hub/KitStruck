@@ -13,8 +13,12 @@ const SupportPageHistorySkeleton = () => {
               {/* Dot */}
               <div className="h-2.5 w-2.5 rounded-full bg-gray-300" />
 
-              {/* Title */}
-              <div className="h-4 w-40 bg-gray-300 rounded" />
+              <div className="flex flex-col gap-2">
+                {/* Title */}
+                <div className="h-4 w-36 bg-gray-300 rounded" />
+                {/* date and time */}
+                <div className="h-3 w-40 bg-gray-300 rounded" />
+              </div>
             </div>
 
             {/* Icon */}

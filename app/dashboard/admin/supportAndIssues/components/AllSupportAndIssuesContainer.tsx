@@ -57,6 +57,10 @@ const AllSupportAndIssuesContainer: React.FC<AllSupportAndIssuesProps> = ({
           <div className="flex flex-col text-left">
             <span className="font-medium text-gray-800">{item.issue_title}</span>
             <span className="text-xs text-gray-500">{item.user_gmail}</span>
+            <span className="text-xs text-gray-500">{
+              new Intl.DateTimeFormat("en-GB", {
+              day: "2-digit", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit", hour12: true,
+            }).format(new Date(item.created_at))}</span>
           </div>
         </div>
 

@@ -27,7 +27,7 @@ const SupportPageDropDown: React.FC<DropDownProps> = ({
     options.find((o) => o.value === value)?.label || "Select Issue";
 
   return (
-    <div className="flex justify-end px-20">
+    <div className="flex justify-end px-12">
       <div className="relative w-full md:w-72 mb-5" ref={menuRef}>
         {/* Dropdown Button */}
         <button

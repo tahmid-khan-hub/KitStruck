@@ -28,7 +28,7 @@ const SupportPageForm = ({ issue, setIssue }: SupportPageFormProps) => {
     },
     onSuccess: () => {
       successToast("Issue submitted successfully!");
-      queryClient.invalidateQueries({ queryKey: ["support"] });
+      queryClient.invalidateQueries({ queryKey: ["support-history"] });
 
       setIssue("");
       setCustomIssue("");

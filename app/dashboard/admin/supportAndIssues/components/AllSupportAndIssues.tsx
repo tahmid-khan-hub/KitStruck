@@ -52,7 +52,7 @@ const AllSupportAndIssues = () => {
   const issues = data?.data?? [];
 
   return (
-    <div className="max-w-6xl mx-auto px-5 mt-10 space-y-4">
+    <div className="max-w-6xl mx-auto px-5 my-10 space-y-4 ">
       {issues.map((item: SupportIssue) => (
         <AllSupportAndIssuesContainer key={item.issue_id}
             item={item}

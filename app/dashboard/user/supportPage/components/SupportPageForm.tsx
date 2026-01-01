@@ -21,7 +21,7 @@ const SupportPageForm = ({ issue, setIssue }: SupportPageFormProps) => {
 
   const { mutate, isPending } = useMutation({
     mutationFn: async () => {
-      return axiosSecure.post("/api/support", {
+      return axiosSecure.post("/api/user/support", {
         issue_title: finalIssue,
         description: message,
       });
@@ -41,6 +41,10 @@ const SupportPageForm = ({ issue, setIssue }: SupportPageFormProps) => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!finalIssue) {
+      errorToast("Please select an issue");
+      return;
+    }
     mutate();
   };
   return (

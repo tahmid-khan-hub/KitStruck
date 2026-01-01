@@ -15,7 +15,7 @@ const DropDown: React.FC<DropDownProps> = ({ sort, handleSortChange }) => {
     { value: "price_asc", label: "Price: Low to High" },
     { value: "price_desc", label: "Price: High to Low" },
     { value: "popularity", label: "Most Popular" },
-    { value: "less_popularity", label: "Least Popular" },
+    { value: "less_popularity", label: "Less Popular" },
   ];
 
   const currentLabel =

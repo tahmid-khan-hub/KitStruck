@@ -22,7 +22,7 @@ export default function MyOrdersPage() {
         async function fetchOrders() {
         setLoading(true);
 
-        const res = await fetch(`/api/myOrders?page=${page}&limit=${LIMIT}`);
+        const res = await fetch(`/api/user/myOrders?page=${page}&limit=${LIMIT}`);
         const data = await res.json();
 
         if (!ignore) {

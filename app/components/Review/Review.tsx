@@ -11,7 +11,7 @@ const Review = () => {
   const [data, setData] = useState<ReviewInterface[]>([]);
 
   useEffect(() => {
-    fetch("/api/review", { cache: "no-store" })
+    fetch("/api/user/review", { cache: "no-store" })
       .then((res) => res.json())
       .then((data: ReviewInterface[]) => {
         setData(data);

@@ -11,7 +11,7 @@ export default function LastOrders() {
   const { data: orders = [], isLoading } = useQuery<ordersRow[]>({
     queryKey: ["lastOrders"],
     queryFn: async () => {
-      const res = await axios.get("/api/myOrders/lastOrders");
+      const res = await axios.get("/api/user/myOrders/lastOrders");
       const json = await res.data;
       return json.data ?? [];
     },

@@ -10,7 +10,7 @@ export default function UserStats() {
   const { data, isLoading } = useQuery({
     queryKey: ["userStats"],
     queryFn: async () => {
-      const res = await axios.get("/api/user-stats");
+      const res = await axios.get("/api/user/user-stats");
       return res.data;
     },
   });

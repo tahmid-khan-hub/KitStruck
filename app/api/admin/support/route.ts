@@ -10,7 +10,15 @@ export async function GET() {
 
     try {
         const [rows] = await dbConnect.query(`
-            SELECT * FROM support_issues ORDER BY created_at DESC`,
+        SELECT *
+        FROM support_issues
+        ORDER BY 
+        CASE 
+            WHEN admin_reply IS NULL THEN 0 
+            ELSE 1 
+        END,
+        created_at DESC
+  `,
             [session.user.id]
         )
         return NextResponse.json(rows);

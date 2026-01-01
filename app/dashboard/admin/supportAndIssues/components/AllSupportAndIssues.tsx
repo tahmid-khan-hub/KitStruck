@@ -3,9 +3,8 @@ import useAxiosSecure from "@/app/hooks/useAxiosSecure";
 import { SupportIssue } from "@/types/SupportIssue";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { FaMinus, FaPaperPlane, FaPlus } from "react-icons/fa6";
-import { motion, AnimatePresence } from "framer-motion";
 import UseSweetAlert from "@/app/hooks/UseSweetAlert";
+import AllSupportAndIssuesContainer from "./AllSupportAndIssuesContainer";
 
 const AllSupportAndIssues = () => {
   const { successToast, errorToast } = UseSweetAlert();
@@ -23,21 +22,26 @@ const AllSupportAndIssues = () => {
     },
   });
 
-  const replyMutation = useMutation({
-    mutationFn: async ({ issue_id, reply }: { issue_id: number; reply: string }) => {
-      return axiosSecure.patch("/api/admin/support", {
+  const replyMutation = useMutation<
+    { success: boolean; message: string }, // response
+    Error,
+    { issue_id: number; admin_reply: string } // variables
+    >({
+    mutationFn: async ({ issue_id, admin_reply }) => {
+        const res = await axiosSecure.patch("/api/admin/support", {
         issue_id,
-        admin_reply: reply,
-      });
+        admin_reply,
+        });
+        return res.data;
     },
     onSuccess: () => {
-      successToast("Replied to the issue successfully!");
-      setReplyText("");
-      queryClient.invalidateQueries({ queryKey: ["all-support-and-issues"] });
+        successToast("Replied to the issue successfully!");
+        setReplyText("");
+        queryClient.invalidateQueries({ queryKey: ["all-support-and-issues"] });
     },
     onError: () => {
-      errorToast("Failed to reply!")
-    }
+        errorToast("Failed to reply!");
+    },
   });
 
   if (isLoading) {
@@ -48,82 +52,16 @@ const AllSupportAndIssues = () => {
 
   return (
     <div className="max-w-6xl mx-auto px-5 mt-10 space-y-4">
-      {data.map((item) => {
-        const isOpen = openId === item.issue_id;
-        const hasReply = item.admin_reply !== null;
-
-        return (
-          <div
-            key={item.issue_id}
-            className="border border-gray-200 rounded-lg bg-white overflow-hidden"
-          >
-            {/* HEADER */}
-            <button
-              onClick={() => setOpenId(isOpen ? null : item.issue_id)}
-              className="w-full flex items-center justify-between px-4 py-3"
-            >
-              <div className="flex flex-col text-left">
-                <span className="font-medium text-gray-800">
-                  {item.issue_title}
-                </span>
-                <span className="text-xs text-gray-500">{item.user_gmail}</span>
-              </div>
-
-              {isOpen ? (
-                <FaMinus className="text-gray-600" />
-              ) : (
-                <FaPlus className="text-gray-600" />
-              )}
-            </button>
-
-            <AnimatePresence initial={false}>
-              {isOpen && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.25 }}
-                  className="px-4 pb-4 text-sm text-gray-700 space-y-4 overflow-hidden"
-                >
-                  <p>
-                    <span className="font-medium">User message:</span>{" "}
-                    {item.issue_description}
-                  </p>
-
-                  {/* ADMIN REPLY */}
-                  {hasReply ? (
-                    <p>
-                      <span className="font-medium">Admin reply:</span>{" "}
-                      {item.admin_reply}
-                    </p>
-                  ) : (
-                    <div className="flex items-center gap-2">
-                      <input
-                        value={replyText}
-                        onChange={(e) => setReplyText(e.target.value)}
-                        placeholder="Write reply..."
-                        className="flex-1 border border-gray-300 rounded-md px-3 py-2 text-sm"
-                      />
-                      <button
-                        onClick={() =>
-                            replyMutation.mutate({
-                                issue_id: item.issue_id,
-                                reply: replyText,
-                            })
-                        }
-                        disabled={!replyText}
-                        className="p-2 bg-blue-600 hover:bg-blue-500 rounded-md text-white disabled:opacity-50"
-                      >
-                        <FaPaperPlane />
-                      </button>
-                    </div>
-                  )}
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-        );
-      })}
+      {data.map((item) => (
+        <AllSupportAndIssuesContainer key={item.issue_id}
+            item={item}
+            openId={openId}
+            setOpenId={setOpenId}
+            replyText={replyText}
+            setReplyText={setReplyText}
+            replyMutation={replyMutation} 
+        />
+      ))}
     </div>
   );
 };

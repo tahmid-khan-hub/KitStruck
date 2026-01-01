@@ -5,6 +5,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import UseSweetAlert from "@/app/hooks/UseSweetAlert";
 import AllSupportAndIssuesContainer from "./AllSupportAndIssuesContainer";
+import AllSupportAndIssuesSkeleton from "./AllSupportAndIssuesSkeleton";
 
 const AllSupportAndIssues = () => {
   const { successToast, errorToast } = UseSweetAlert();
@@ -44,11 +45,7 @@ const AllSupportAndIssues = () => {
     },
   });
 
-  if (isLoading) {
-    return (
-      <p className="text-center text-gray-500">Loading support issues...</p>
-    );
-  }
+  if (isLoading) return <AllSupportAndIssuesSkeleton />
 
   return (
     <div className="max-w-6xl mx-auto px-5 mt-10 space-y-4">

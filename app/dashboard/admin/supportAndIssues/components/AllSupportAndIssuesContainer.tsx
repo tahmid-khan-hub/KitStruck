@@ -45,9 +45,19 @@ const AllSupportAndIssuesContainer: React.FC<AllSupportAndIssuesProps> = ({
         onClick={() => setOpenId(isOpen ? null : item.issue_id)}
         className="w-full flex items-center justify-between px-4 py-3"
       >
-        <div className="flex flex-col text-left">
-          <span className="font-medium text-gray-800">{item.issue_title}</span>
-          <span className="text-xs text-gray-500">{item.user_gmail}</span>
+        <div className="flex items-start">
+          {/* Status Dot */}
+          <div className="flex my-auto mr-3">
+            <span
+              className={`h-2.5 w-2.5 rounded-full ${
+                hasReply ? "bg-gray-500" : "bg-blue-500"
+              }`}
+            />
+          </div>
+          <div className="flex flex-col text-left">
+            <span className="font-medium text-gray-800">{item.issue_title}</span>
+            <span className="text-xs text-gray-500">{item.user_gmail}</span>
+          </div>
         </div>
 
         {isOpen ? (

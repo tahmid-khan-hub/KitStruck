@@ -23,3 +23,22 @@ export async function POST(req:Request) {
         dbConnect.release();
     }
 }
+
+export async function GET() {
+    const dbConnect = await pool.getConnection();
+    const session = await getServerSession(authOptions);
+    if(!session?.user) return NextResponse.json({ success: false, message: "User not logged in" });
+
+    try {
+        const [rows] = await dbConnect.query(`
+            SELECT * FROM support_issues WHERE user_id = ? ORDER BY created_at`,
+            [session.user.id]
+        )
+        return NextResponse.json(rows);
+    } catch (error) {
+        console.log(error);
+        return NextResponse.json({ success: false, message: "Server error" });
+    } finally {
+        dbConnect.release();
+    }
+}

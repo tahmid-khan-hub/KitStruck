@@ -63,7 +63,7 @@ export default function OrderRow({ item }: { item: orders }) {
 
       {/* payment method */}
       <td className="capitalize">
-        <span className="text-blue-500 font-semibold ml-10">{item.status}</span>
+        <span className="flex justify-start text-blue-500 font-semibold ">{item.status}</span>
       </td>
 
       {session?.user?.role === "admin" && 

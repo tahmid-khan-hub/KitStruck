@@ -23,9 +23,9 @@ export default function LastOrders() {
   return (
     <>
       <div className="space-y-4">
-        {orders.map((order) => (
+        {orders.map((order, i) => (
           <div
-            key={order.payment_intent_id}
+            key={i}
             className="flex items-center gap-4 border-b border-b-gray-300 pb-4"
           >
             <Image

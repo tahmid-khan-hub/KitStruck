@@ -20,7 +20,7 @@ export async function GET() {
     const dbConnect = await pool.getConnection();
 
     try {
-        const [ jerseyRows ] = await dbConnect.query<CountJerseysBought[]>(`SELECT COUNT(*) AS totalJerseys FROM payments WHERE user_id = ?`, [session?.user?.id]);
+        const [ jerseyRows ] = await dbConnect.query<CountJerseysBought[]>(`SELECT COUNT(*) AS totalJerseys FROM orders WHERE user_id = ?`, [session?.user?.id]);
 
         const [ userReviews ] = await dbConnect.query<CountReviews[]>(`SELECT COUNT(*) AS totalReviews FROM review WHERE user_id = ?`, [session?.user?.id]);
 

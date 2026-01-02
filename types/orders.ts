@@ -10,5 +10,6 @@ export interface orders {
     quantity: number;
     size: string;
     address: string,
+    delivery_status: string;
     jerseyData?: Jersey;
 }

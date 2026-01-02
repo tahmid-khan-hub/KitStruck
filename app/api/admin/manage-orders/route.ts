@@ -15,11 +15,11 @@ export async function GET(req: Request) {
     const dbConnect = await pool.getConnection();
  
     try {
-        const [countRows] = await dbConnect.query<CountRow[]>( `SELECT COUNT(*) AS total FROM payments`);
+        const [countRows] = await dbConnect.query<CountRow[]>( `SELECT COUNT(*) AS total FROM orders`);
 
         const total = countRows[0]?.total ?? 0;
         const [dataRows] = await dbConnect.query<ordersRow[]>(
-            `SELECT o.payment_intent_id, o.total_amount, o.status, o.created_at, o.quantity, o.size, o.address,
+            `SELECT o.payment_intent_id, o.total_amount, o.status, o.created_at, o.quantity, o.size, o.address, o.delivery_status, 
             j.jersey_id, j.name, j.team, j.image_url, j.category, j.price 
             FROM orders o JOIN jersey_table j 
             ON o.jersey_id = j.jersey_id
@@ -34,6 +34,7 @@ export async function GET(req: Request) {
             quantity: row.quantity,
             size: row.size,
             address: row.address,
+            delivery_status: row.delivery_status,
 
             jerseyData: {
                 jersey_id: row.jersey_id,

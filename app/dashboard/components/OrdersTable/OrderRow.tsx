@@ -17,7 +17,7 @@ export default function OrderRow({ item }: { item: orders }) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          order_status: "processing"
+          delivery_status: "processing"
         })
       })
 
@@ -52,28 +52,26 @@ export default function OrderRow({ item }: { item: orders }) {
       <td>${item.total_amount}</td>
       <td>{item.quantity}</td>
 
-      {/* <td className="capitalize">
-        <span
-          className={`px-2 py-1 rounded text-white text-xs ${
-            item.order_status === "delivered"
-              ? "bg-green-600"
-              : item.order_status === "processing"
-              ? "bg-blue-600"
-              : "bg-gray-500"
-          }`}
-        >
-          {item.order_status}
-        </span>
-      </td> */}
-
       <td>{new Date(item.created_at).toLocaleDateString()}</td>
 
       <td>{item.size}</td>
       <td>{item.address}</td>
 
-      {session?.user?.role === "admin" && <td onClick={handleProceed} className="capitalize">
-        <span className="px-2 py-1.5 rounded text-white font-semibold bg-blue-600 hover:bg-blue-700 text-xs">Proceed</span>
-        </td>}
+      {/* payment method */}
+      <td className="capitalize">
+        <span className="text-blue-500 font-semibold ml-10">{item.status}</span>
+      </td>
+
+      {session?.user?.role === "admin" && 
+      <>
+        <td className="capitalize">
+          <span className="text-blue-500 font-semibold ml-5.5">{item.delivery_status}</span>
+        </td>
+        <td onClick={handleProceed} className="capitalize">
+          <span className="px-2 py-1.5 rounded text-white font-semibold bg-blue-600 hover:bg-blue-700 text-xs hover: cursor-pointer">Proceed</span>
+        </td>
+      </>
+      }
     </tr>
   );
 }

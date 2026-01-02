@@ -8,6 +8,7 @@ import JerseyPurchaseLocation from "./JerseyPurchaseLocation";
 import UseSweetAlert from "@/app/hooks/UseSweetAlert";
 import { useRouter } from "next/navigation";
 import JerseyTotalPrice from "./JerseyTotalPrice";
+import JerseyPurchasePaymentMethod from "./JerseyPurchasePaymentMethod";
 
 interface Props {
   jersey: Jersey;
@@ -23,6 +24,7 @@ export default function JerseyPurchaseModal({ jersey, available, open, onClose }
   const [qty, setQty] = useState(1);
   const [size, setSize] = useState("");
   const [location, setLocation] = useState({ division: "", address: "", phone: ""});
+  const [paymentMethod, setPaymentMethod] = useState<"cod" | "card" | null>(null);
 
   const increaseQty = () => { if (qty < available) setQty(qty + 1); };
   const decreaseQty = () => { if (qty > 1) setQty(qty - 1); };
@@ -38,6 +40,10 @@ export default function JerseyPurchaseModal({ jersey, available, open, onClose }
   };
 
   const handleProceed = async () => {
+  if (!paymentMethod) { 
+    errorToast("Please select a payment method");  
+    return;
+  }
   if (!size) { errorToast("Please select jersey size"); return; }
   if (!location.division || !location.address || !location.phone) {
     errorToast("Please complete delivery address");
@@ -54,6 +60,12 @@ export default function JerseyPurchaseModal({ jersey, available, open, onClose }
     const data = await res.json();
 
     if (!data.order_id) { errorToast("Order creation failed"); return; }
+
+    // if user selects cash on delivery
+    if (paymentMethod === "cod") {
+      router.push("/dashboard/user/myOrders");
+      return;
+    }
 
     router.push(`/payment?order_id=${data.order_id}`);
   } catch (err) {
@@ -121,6 +133,8 @@ export default function JerseyPurchaseModal({ jersey, available, open, onClose }
           </div>
 
           <JerseyTotalPrice price={jersey.price} quantity={qty}/>
+          {/* payment method */}
+          <JerseyPurchasePaymentMethod method={paymentMethod} setMethod={setPaymentMethod} />
           
           {session?.user?.role === "user" ? <div className="flex justify-end gap-3">
             <button

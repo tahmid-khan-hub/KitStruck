@@ -23,8 +23,8 @@ export default function OrdersTable({ Myorders }: { Myorders: orders[] }) {
         </thead>
 
         <tbody>
-          {Myorders.map((item) => (
-            <OrderRow key={item.payment_intent_id} item={item} />
+          {Myorders.map((item, i) => (
+            <OrderRow key={i} item={item} />
           ))}
         </tbody>
       </table>

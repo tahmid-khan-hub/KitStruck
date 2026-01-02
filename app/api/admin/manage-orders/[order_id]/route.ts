@@ -13,8 +13,6 @@ export async function PATCH(req: Request, { params }: { params: { order_id: numb
     const body = await req.json();
     const { delivery_status } = body;
 
-    console.log(orderId);
-
     if(!orderId) return NextResponse.json({error: "Order id not found!" })
 
     if (!delivery_status) {

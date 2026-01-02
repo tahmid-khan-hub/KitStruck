@@ -57,21 +57,6 @@ export default function CheckoutForm({
           status: paymentIntent.status,
         }),
       });
-
-      // try {
-      //   if (jerseyId) {
-      //     // User paid for ONE ITEM → remove only that item
-      //     await fetch("/api/cart", {
-      //       method: "DELETE",
-      //       body: JSON.stringify({ jersey_id: jerseyId }),
-      //     });
-      //   } else {
-      //     // User paid from full cart → clear all
-      //     await fetch("/api/cart", { method: "DELETE" });
-      //   }
-      // } catch (err) {
-      //   console.log("Cart clear error:", err);
-      // }
       router.push("/dashboard/user/myOrders");
     }
     setLoading(false);

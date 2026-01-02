@@ -77,10 +77,13 @@ const JerseyPurchaseLocation = ({ location, setLocation }: Props) => {
       {/* Phone */}
       <input
         value={location.phone}
-        onChange={(e) =>
-          setLocation((prev) => ({ ...prev, phone: e.target.value }))
-        }
-        placeholder="Phone number"
+        onChange={(e) => {
+          const value = e.target.value;
+          // Allow only digits and optional + at start
+          if (!/^\+?\d*$/.test(value)) return;
+          setLocation((prev) => ({ ...prev, phone: value }));
+        }}
+        placeholder="BD Phone Number (01XXXXXXXXX)"
         className="w-full border border-gray-300 px-4 py-2 rounded-lg"
       />
     </div>

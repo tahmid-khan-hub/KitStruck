@@ -18,13 +18,14 @@ interface Props {
 }
 
 export default function JerseyPurchaseModal({ jersey, available, open, onClose }: Props) {
-  const {errorToast} = UseSweetAlert();
+  const {errorToast, successToast} = UseSweetAlert();
   const router = useRouter();
   const { data: session } = useSession();
   const [qty, setQty] = useState(1);
   const [size, setSize] = useState("");
   const [location, setLocation] = useState({ division: "", address: "", phone: ""});
   const [paymentMethod, setPaymentMethod] = useState<"cod" | "card" | null>(null);
+  const bdPhoneRegex = /^(?:\+880|880|0)1[3-9]\d{8}$/;
 
   const increaseQty = () => { if (qty < available) setQty(qty + 1); };
   const decreaseQty = () => { if (qty > 1) setQty(qty - 1); };
@@ -49,6 +50,10 @@ export default function JerseyPurchaseModal({ jersey, available, open, onClose }
     errorToast("Please complete delivery address");
     return;
   }
+  if (!bdPhoneRegex.test(location.phone)) {
+    errorToast("Please enter a valid Bangladeshi phone number");
+    return;
+  }
 
   try {
     const res = await fetch("/api/orders/create-draft", {
@@ -63,6 +68,7 @@ export default function JerseyPurchaseModal({ jersey, available, open, onClose }
 
     // if user selects cash on delivery
     if (paymentMethod === "cod") {
+      successToast("Your order has been placed successfully!")
       router.push("/dashboard/user/myOrders");
       return;
     }

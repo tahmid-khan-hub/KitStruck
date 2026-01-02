@@ -9,7 +9,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
 interface order extends RowDataPacket {
   total_amount: number;
-  status: "draft" | "paid" | "cancelled";
+  status: "Cash On Delivery" | "Paid";
 }
 
 interface RequestBody {
@@ -31,7 +31,7 @@ export async function POST(req: Request) {
             "SELECT total_amount, status FROM orders WHERE order_id = ? AND user_id = ?", [order_id, session.user.id]
         );
 
-        if (!rows.length || rows[0].status !== "draft") {
+        if (!rows.length) {
             return NextResponse.json({ error: "Invalid order" }, { status: 400 });
         }
 

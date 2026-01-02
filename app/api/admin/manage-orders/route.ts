@@ -1,6 +1,8 @@
+import { authOptions } from "@/lib/authOptions";
 import pool from "@/lib/mysql";
 import { ordersRow } from "@/types/ordersType";
 import { RowDataPacket } from "mysql2";
+import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
 interface CountRow extends RowDataPacket {
@@ -8,6 +10,9 @@ interface CountRow extends RowDataPacket {
 }
 
 export async function GET(req: Request) {
+    const session = await getServerSession(authOptions);
+    if(!session?.user) return NextResponse.json({error: "Invalid user"})
+
     const { searchParams } = new URL(req.url);
     const page = Number(searchParams.get("page")) || 1;
     const limit = Number(searchParams.get("limit")) || 5;
@@ -19,7 +24,7 @@ export async function GET(req: Request) {
 
         const total = countRows[0]?.total ?? 0;
         const [dataRows] = await dbConnect.query<ordersRow[]>(
-            `SELECT o.payment_intent_id, o.total_amount, o.status, o.created_at, o.quantity, o.size, o.address, o.delivery_status, 
+            `SELECT o.order_id, o.payment_intent_id, o.total_amount, o.status, o.created_at, o.quantity, o.size, o.address, o.delivery_status, 
             j.jersey_id, j.name, j.team, j.image_url, j.category, j.price 
             FROM orders o JOIN jersey_table j 
             ON o.jersey_id = j.jersey_id
@@ -27,6 +32,7 @@ export async function GET(req: Request) {
             LIMIT ? OFFSET ?`, [limit, offset])
 
         const formatted = dataRows.map((row) => ({
+            order_id: row.order_id,
             payment_intent_id: row.payment_intent_id,
             total_amount: row.total_amount,
             status: row.status,

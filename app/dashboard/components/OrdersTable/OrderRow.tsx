@@ -1,17 +1,21 @@
+"use client"
 import UseSweetAlert from "@/app/hooks/UseSweetAlert";
 import { orders } from "@/types/orders";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import { useState } from "react";
 
 export default function OrderRow({ item }: { item: orders }) {
   const { data: session } = useSession(); 
   const { confirmProceed, successToast, errorToast } = UseSweetAlert();
+  const [deliveryStatus, setDeliveryStatus] = useState(item.delivery_status);
   const handleProceed = async() => {
     const confirmed = await confirmProceed("Mark this order as processing?");
     if (!confirmed) return; 
 
     try {
-      const res = await fetch(`/api/admin/manage-orders/${item.payment_intent_id}`, {
+      const res = await fetch(`/api/admin/manage-orders/${item.order_id}`, {
+        cache: "no-store",
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -23,7 +27,7 @@ export default function OrderRow({ item }: { item: orders }) {
 
       if (res.ok) {
         successToast("Order moved to processing!")
-        setTimeout(() => location.reload(), 300);
+        setDeliveryStatus("processing");
       }
       else errorToast("Failed to update order");
       
@@ -65,7 +69,7 @@ export default function OrderRow({ item }: { item: orders }) {
       {session?.user?.role === "admin" && 
       <>
         <td className="capitalize">
-          <span className="text-blue-500 font-semibold ml-5.5">{item.delivery_status}</span>
+          <span className="text-blue-500 font-semibold ml-5.5">{deliveryStatus}</span>
         </td>
         <td onClick={handleProceed} className="capitalize">
           <span className="px-2 py-1.5 rounded text-white font-semibold bg-blue-600 hover:bg-blue-700 text-xs hover: cursor-pointer">Proceed</span>

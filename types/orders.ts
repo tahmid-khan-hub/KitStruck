@@ -3,6 +3,7 @@ import { Jersey } from "./jersey";
 export interface orders {
     payment_intent_id: string;
     user_id: string;
+    order_id: number;
     total_amount: number;
     status: string;
     created_at: string;

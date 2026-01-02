@@ -6,8 +6,8 @@ import { useState } from "react";
 import UseSweetAlert from "@/app/hooks/UseSweetAlert";
 import AllSupportAndIssuesContainer from "./AllSupportAndIssuesContainer";
 import AllSupportAndIssuesSkeleton from "./AllSupportAndIssuesSkeleton";
-import OrdersPagination from "@/app/dashboard/components/OrdersTable/OrdersPagination";
 import { PaginatedSupportIssues } from "@/types/PaginatedSupportIssues";
+import DashboardTablesPagination from "@/app/dashboard/components/DashboardTablesPagination/DashboardTablesPagination";
 
 const AllSupportAndIssues = () => {
   const { successToast, errorToast } = UseSweetAlert();
@@ -64,7 +64,7 @@ const AllSupportAndIssues = () => {
         />
       ))}
       {/* pagination */}
-      <OrdersPagination
+      <DashboardTablesPagination
         page={page}
         setPage={setPage}
         totalPages={data?.totalPages ?? 1}

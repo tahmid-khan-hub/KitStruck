@@ -23,7 +23,7 @@ export async function GET(req: Request) {
 
   try {
     const [countRows] = await dbConnect.query<CountRow[]>(
-      `SELECT COUNT(*) AS total FROM payments WHERE user_id = ?`,
+      `SELECT COUNT(*) AS total FROM orders WHERE user_id = ?`,
       [session.user.id]
     );
 

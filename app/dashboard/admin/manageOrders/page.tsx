@@ -5,7 +5,7 @@ import OrdersSkeleton from "../../components/OrdersTable/OrdersSkeleton";
 import Lottie from "react-lottie-player";
 import noOrders from "@/public/nodata.json"
 import OrdersTable from "../../components/OrdersTable/OrdersTable";
-import OrdersPagination from "../../components/OrdersTable/OrdersPagination";
+import DashboardTablesPagination from "../../components/DashboardTablesPagination/DashboardTablesPagination";
 
 const LIMIT = 5;
 
@@ -56,7 +56,7 @@ export default function ManageOrders() {
         <OrdersTable Myorders={orders} />
       )}
       {orders.length > 0 && (
-        <OrdersPagination
+        <DashboardTablesPagination
           page={page}
           setPage={setPage}
           totalPages={totalPages}

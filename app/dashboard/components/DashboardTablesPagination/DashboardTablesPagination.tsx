@@ -1,9 +1,14 @@
-"use client";
-const JerseysPagination = ({ page, setPage, totalPages,
-}: { page: number; setPage: (p: number) => void; totalPages: number;
-}) => {
+export default function DashboardTablesPagination({
+  page,
+  setPage,
+  totalPages,
+}: {
+  page: number;
+  setPage: (p: number) => void;
+  totalPages: number;
+}) {
   return (
-    <div className="flex justify-center gap-4 my-6">
+    <div className="flex justify-center gap-4 mt-6">
       <button
         disabled={page === 1}
         onClick={() => setPage(page - 1)}
@@ -25,6 +30,4 @@ const JerseysPagination = ({ page, setPage, totalPages,
       </button>
     </div>
   );
-};
-
-export default JerseysPagination;
+}

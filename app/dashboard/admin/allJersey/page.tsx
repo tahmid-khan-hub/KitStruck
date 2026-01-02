@@ -4,8 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 import Lottie from "react-lottie-player";
 import noJerseys from "@/public/No Jersey.json"
 import JerseysTable from "./components/JerseysTable";
-import JerseysPagination from "./components/JerseysPagination";
 import JerseysTableSkeleton from "./components/JerseysTableSkeleton";
+import DashboardTablesPagination from "../../components/DashboardTablesPagination/DashboardTablesPagination";
 
 const LIMIT = 10;
 
@@ -42,9 +42,9 @@ export default function AllJersey() {
                 </div>
             </> }
             {jerseys.length > 0 && 
-                <JerseysPagination page={page}
+                <div className="mb-10"><DashboardTablesPagination page={page}
                 setPage={setPage}
-                totalPages={totalPages} />
+                totalPages={totalPages} /></div>
             }
         </div>
     )

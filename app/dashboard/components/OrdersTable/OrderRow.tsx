@@ -66,16 +66,23 @@ export default function OrderRow({ item }: { item: orders }) {
         <span className="flex justify-start text-blue-500 font-semibold ">{item.status}</span>
       </td>
 
-      {session?.user?.role === "admin" && 
-      <>
-        <td className="capitalize">
-          <span className="text-blue-500 font-semibold ml-5.5">{deliveryStatus}</span>
+      <td className="capitalize">
+        <span className="text-blue-500 font-semibold ">{deliveryStatus}</span>
+      </td>
+
+      {session?.user?.role === "admin" && deliveryStatus === "pending" ? (
+        <td onClick={handleProceed}>
+          <span className="px-2 py-1.5 rounded text-white font-semibold bg-blue-600 hover:bg-blue-700 text-xs cursor-pointer">
+            Proceed
+          </span>
         </td>
-        <td onClick={handleProceed} className="capitalize">
-          <span className="px-2 py-1.5 rounded text-white font-semibold bg-blue-600 hover:bg-blue-700 text-xs hover: cursor-pointer">Proceed</span>
+      ) : (
+        <td>
+          <span className="px-2 py-1.5 rounded text-white font-semibold bg-gray-500 text-xs cursor-pointer">
+            Proceed
+          </span>
         </td>
-      </>
-      }
+      )}
     </tr>
   );
 }

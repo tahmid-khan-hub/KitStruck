@@ -17,7 +17,7 @@ export default function OrdersTable({ Myorders }: { Myorders: orders[] }) {
             <th>Size</th>
             <th>Location</th>
             <th>Payment Method</th>
-            {session?.user?.role === 'admin' && <th>Delivery Status</th>}
+            <th>Delivery Status</th>
             {session?.user?.role === 'admin' && <th>Action</th>}
           </tr>
         </thead>

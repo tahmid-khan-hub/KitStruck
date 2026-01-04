@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import AnimateOnView from "../hooks/AnimateOnView";
 
 export default function FaqPage() {
   const faqs = [
@@ -46,7 +47,7 @@ export default function FaqPage() {
       {/* Accordion */}
       <div className="space-y-4">
         {faqs.map((faq, index) => (
-          <div
+          <AnimateOnView key={index} direction="up" delay={index * 0.08}><div
             key={index}
             className="border border-gray-300 rounded-xl overflow-hidden bg-white shadow-md"
           >
@@ -82,7 +83,7 @@ export default function FaqPage() {
                 </motion.div>
               )}
             </AnimatePresence>
-          </div>
+          </div></AnimateOnView>
         ))}
       </div>
     </div>

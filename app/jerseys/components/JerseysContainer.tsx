@@ -9,6 +9,7 @@ import JerseyCardSkeleton from "@/app/SkeletonLoading/JerseyCardSkeleton";
 import { GiSevenPointedStar } from "react-icons/gi";
 import JerseyLottie from "./JerseyLottie";
 import JerseyPagination from "./JerseyPagination";
+import AnimateOnView from "@/app/hooks/AnimateOnView";
 
 interface JerseysContainerProps {
   jerseys: Jersey[]; search: string; setSearch: (value: string) => void; sort: string; handleSortChange: (value: string) => void; page: number; setPage: (value: number) => void; totalPage: number; loading: boolean;
@@ -38,8 +39,8 @@ const JerseysContainer = ({jerseys, search, setSearch, sort,handleSortChange, pa
         </div>
       ) : jerseys.length === 0 ? (<JerseyLottie />) : (
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full">
-          {jerseys.map((jersey) => (
-            <motion.div key={jersey.jersey_id}
+          {jerseys.map((jersey, i) => (
+            <AnimateOnView key={i} direction="scale" delay={i * 0.08}><motion.div key={jersey.jersey_id}
               whileHover={{ scale: 1.02, boxShadow: "0px 0px 20px rgba(0, 123, 255, 0.7)", }} transition={{ duration: 0.2 }}
               className="p-3 border-2 border-gray-200 bg-white rounded-lg flex flex-col justify-between"
             >
@@ -79,7 +80,7 @@ const JerseysContainer = ({jerseys, search, setSearch, sort,handleSortChange, pa
                   </Link>
                 </div>
               </div>
-            </motion.div>
+            </motion.div></AnimateOnView>
           ))}
         </div>
       )}

@@ -1,6 +1,7 @@
 "use client";
 import Lottie from "react-lottie-player";
 import AboutLottie from "@/public/about.json";
+import { motion } from "framer-motion";
 import Link from "next/link";
 
 const AboutPage = () => {
@@ -19,9 +20,11 @@ const AboutPage = () => {
 
       {/* Right: Text Content */}
       <div className="w-full lg:w-1/2">
-        <h2 className="text-3xl text-center md:text-left font-bold mb-4">About Us</h2>
+        <motion.h2 initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }} 
+        className="text-3xl text-center md:text-left font-bold mb-4">About Us</motion.h2>
 
-        <p className="text-gray-700 leading-7 text-lg">
+        <motion.p initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }}
+         className="text-gray-700 leading-7 text-lg">
           Welcome to <a className="font-semibold text-xl">Kitstruck</a> the perfect place for football lovers to
           find their favourite jerseys at a reasonable price.  
           <br /><br />
@@ -30,12 +33,14 @@ const AboutPage = () => {
           <br /><br />
           Users can also manage their orders and share their feedback through a
           modern, clean and user-friendly dashboard interface.
-        </p>
-        <Link href="/jerseys">
-          <button className="btn bg-blue-600 text-white hover:bg-blue-700 px-8 mt-5 ">
-            See Collections
-          </button>
-        </Link>
+        </motion.p>
+        <motion.div initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }} >
+          <Link href="/jerseys">
+            <button className="btn bg-blue-600 text-white hover:bg-blue-700 px-8 mt-5 ">
+              See Collections
+            </button>
+          </Link>
+        </motion.div>
       </div>
 
     </div>

@@ -7,6 +7,7 @@ import Link from "next/link";
 import CardSkeleton from "@/app/SkeletonLoading/CardSkeleton";
 import { isValidUrl } from "@/app/hooks/isValidUrl";
 import { GiSevenPointedStar } from "react-icons/gi";
+import AnimateOnView from "@/app/hooks/AnimateOnView";
 
 const NewArrivals = () => {
   const [loading, setLoading] = useState(true);
@@ -35,7 +36,7 @@ const NewArrivals = () => {
           {loading ? (
             Array.from({ length: 4 }).map((_, i) => <CardSkeleton key={i} />)
             ) : (
-              data.map((jersey) => {
+              data.map((jersey, i) => {
                 const jerseyImage =
                   jersey.image_url &&
                   jersey.image_url.trim() !== "" &&
@@ -43,7 +44,7 @@ const NewArrivals = () => {
                     ? jersey.image_url
                     : "/default.png";
                 return (
-                  <Link key={jersey.jersey_id} href={`/jersey-details/${jersey.jersey_id}`}>
+                  <AnimateOnView key={jersey.jersey_id} direction="left" delay={i * 0.08}><Link key={jersey.jersey_id} href={`/jersey-details/${jersey.jersey_id}`}>
                     <motion.div
                       whileHover={{
                         scale: 1.02,
@@ -71,7 +72,7 @@ const NewArrivals = () => {
                       </div>
                       <p className="mt-5 mb-3 text-[17px] font-semibold">{jersey.name}</p>
                     </motion.div>
-                  </Link>
+                  </Link></AnimateOnView>
                 );
               })
             )}

@@ -7,6 +7,7 @@ import Link from "next/link";
 import CardSkeleton from "@/app/SkeletonLoading/CardSkeleton";
 import { isValidUrl } from "@/app/hooks/isValidUrl";
 import { GiSevenPointedStar } from "react-icons/gi";
+import AnimateOnView from "@/app/hooks/AnimateOnView";
 
 const Retro = () => {
   const [loading, setLoading] = useState(true);
@@ -37,7 +38,7 @@ const Retro = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {loading
             ? Array.from({ length: 4 }).map((_, i) => <CardSkeleton key={i} />)
-            : data.map((jersey) => {
+            : data.map((jersey, i) => {
                 const imgSrc =
                   jersey.image_url &&
                   jersey.image_url.trim() !== "" &&
@@ -46,7 +47,7 @@ const Retro = () => {
                     : "/default.png";
 
                 return (
-                  <Link
+                  <AnimateOnView key={jersey.jersey_id} direction="right" delay={i * 0.08}><Link
                     key={jersey.jersey_id}
                     href={`/jersey-details/${jersey.jersey_id}`}
                   >
@@ -78,7 +79,7 @@ const Retro = () => {
                         {jersey.name}
                       </p>
                     </motion.div>
-                  </Link>
+                  </Link></AnimateOnView>
                 );
               })}
         </div>

@@ -1,6 +1,7 @@
 "use client";
 import { FaMedal, FaLock, FaShippingFast, FaTshirt } from "react-icons/fa";
 import { motion } from "framer-motion";
+import AnimateOnView from "@/app/hooks/AnimateOnView";
 
 const WhyChooseUs = () => {
   const features = [
@@ -27,16 +28,16 @@ const WhyChooseUs = () => {
   ];
   return (
     <div>
-      <div className="my-24 max-w-[1350px] mx-auto">
+      <div className="my-24 mb-40 max-w-[1350px] mx-auto">
         <h2 className="text-3xl font-bold text-center mb-4">Why Choose Us?</h2>
         <p className="text-center text-gray-600 mb-10">
           We provide premium service and unmatched value to all our customers.
         </p>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {features.map((item, idx) => (
-            <motion.div
-              key={idx}
+          {features.map((item, i) => (
+            <AnimateOnView key={i} direction="scale" delay={i * 0.08}><motion.div
+              key={i}
               whileHover={{
               scale: 1.02, 
               boxShadow: "0px 0px 20px rgba(0, 123, 255, 0.7)",
@@ -52,7 +53,7 @@ const WhyChooseUs = () => {
                   <p className="text-gray-600">{item.desc}</p>
                 </div>
               </div>
-            </motion.div>
+            </motion.div></AnimateOnView>
           ))}
         </div>
       </div>

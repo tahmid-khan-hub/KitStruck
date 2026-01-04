@@ -8,10 +8,31 @@ import { FaRegChartBar } from "react-icons/fa6";
 import { IoAddCircle, IoLogOut } from "react-icons/io5";
 import { MdContactSupport, MdModeComment } from "react-icons/md";
 import { RiCustomerService2Fill, RiShoppingBag3Fill, RiShoppingBag4Fill } from "react-icons/ri";
+import { motion } from "framer-motion";
+import { sidebarContainer, sidebarItem } from "./SidebarAnimation";
 
 export default function DashboardSidebar() {
   const { data: session } = useSession();
   const role = session?.user?.role;
+
+  const AdminDashboardLinks = <>
+    <motion.li variants={sidebarItem}><ActiveLink href="/"><AiFillHome size={20}/><span className="mt-1 text-[16px] ml-1">Home</span></ActiveLink></motion.li>
+    <motion.li variants={sidebarItem}><ActiveLink href="/dashboard/admin"><FaRegChartBar size={20}/><span className="text-[16px] ml-1 mt-0.5">Overview</span></ActiveLink></motion.li>
+    <motion.li variants={sidebarItem}><ActiveLink href="/dashboard/admin/allJersey"><FaTshirt size={20}/><span className="text-[16px] ml-1 mt-0.5">All Jerseys</span></ActiveLink></motion.li>
+    <motion.li variants={sidebarItem}><ActiveLink href="/dashboard/admin/addJersey"><IoAddCircle size={20}/><span className="text-[16px] ml-1">Add Jersey</span></ActiveLink></motion.li>
+    <motion.li variants={sidebarItem}><ActiveLink href="/dashboard/admin/manageOrders"><RiShoppingBag4Fill size={20}/><span className="text-[16px] ml-1 mt-1">Manage Orders</span></ActiveLink></motion.li>
+    <motion.li variants={sidebarItem}><ActiveLink href="/dashboard/admin/supportAndIssues"><MdContactSupport size={20}/><span className="text-[16px] ml-1 ">Support & Issues</span></ActiveLink></motion.li>
+    <motion.li variants={sidebarItem} onClick={() => signOut()}><ActiveLink><IoLogOut size={20}/><span className=" text-[16px] ml-1">Sign Out</span></ActiveLink></motion.li>
+  </>;
+
+  const UserDashboardLinks = <>
+    <li><ActiveLink href="/"><AiFillHome size={20}/><span className="mt-1 text-[16px] ml-1">Home</span></ActiveLink></li>
+    <li><ActiveLink href="/dashboard/user"><FaUserCircle size={20}/><span className="text-[16px] ml-1">Profile</span></ActiveLink></li>
+    <li><ActiveLink href="/dashboard/user/myOrders"><RiShoppingBag3Fill size={20}/><span className="text-[16px] ml-1">My Orders</span></ActiveLink></li>
+    <li><ActiveLink href="/dashboard/user/reviewPage"><MdModeComment size={20}/><span className=" text-[16px] ml-1">Review</span></ActiveLink></li>
+    <li><ActiveLink href="/dashboard/user/supportPage"><RiCustomerService2Fill size={20}/><span className=" text-[16px] ml-1">Support</span></ActiveLink></li>
+    <li onClick={() => signOut()}><ActiveLink><IoLogOut size={20}/><span className=" text-[16px] ml-1">Sign Out</span></ActiveLink></li>
+  </>;
 
   return (
     <div
@@ -23,35 +44,15 @@ export default function DashboardSidebar() {
         aria-label="close sidebar"
         className="drawer-overlay"
       ></label>
-      <ul className="menu text-base-content bg-white min-h-full w-80 p-4">
+      <motion.ul variants={sidebarContainer} initial="hidden" animate="visible" 
+      className="menu text-base-content bg-white min-h-full w-80 p-4">
         {/* Logo */}
         <div className="flex items-center ml-2 mb-4">
           <Logo></Logo>
         </div>
-        {/* Links */}
-        {role === "admin" ? (
-        // admin dashboard links
-          <>
-            <li><ActiveLink href="/"><AiFillHome size={20}/><span className="mt-1 text-[16px] ml-1">Home</span></ActiveLink></li>
-            <li><ActiveLink href="/dashboard/admin"><FaRegChartBar size={20}/><span className="text-[16px] ml-1 mt-0.5">Overview</span></ActiveLink></li>
-            <li><ActiveLink href="/dashboard/admin/allJersey"><FaTshirt size={20}/><span className="text-[16px] ml-1 mt-0.5">All Jerseys</span></ActiveLink></li>
-            <li><ActiveLink href="/dashboard/admin/addJersey"><IoAddCircle size={20}/><span className="text-[16px] ml-1">Add Jersey</span></ActiveLink></li>
-            <li><ActiveLink href="/dashboard/admin/manageOrders"><RiShoppingBag4Fill size={20}/><span className="text-[16px] ml-1 mt-1">Manage Orders</span></ActiveLink></li>
-            <li><ActiveLink href="/dashboard/admin/supportAndIssues"><MdContactSupport size={20}/><span className="text-[16px] ml-1 ">Support & Issues</span></ActiveLink></li>
-            <li onClick={() => signOut()}><ActiveLink><IoLogOut size={20}/><span className=" text-[16px] ml-1">Sign Out</span></ActiveLink></li>
-          </>
-        ) : (
-        // user dashboard links
-          <>
-            <li><ActiveLink href="/"><AiFillHome size={20}/><span className="mt-1 text-[16px] ml-1">Home</span></ActiveLink></li>
-            <li><ActiveLink href="/dashboard/user"><FaUserCircle size={20}/><span className="text-[16px] ml-1">Profile</span></ActiveLink></li>
-            <li><ActiveLink href="/dashboard/user/myOrders"><RiShoppingBag3Fill size={20}/><span className="text-[16px] ml-1">My Orders</span></ActiveLink></li>
-            <li><ActiveLink href="/dashboard/user/reviewPage"><MdModeComment size={20}/><span className=" text-[16px] ml-1">Review</span></ActiveLink></li>
-            <li><ActiveLink href="/dashboard/user/supportPage"><RiCustomerService2Fill size={20}/><span className=" text-[16px] ml-1">Support</span></ActiveLink></li>
-            <li onClick={() => signOut()}><ActiveLink><IoLogOut size={20}/><span className=" text-[16px] ml-1">Sign Out</span></ActiveLink></li>
-          </>
-        )}
-      </ul>
+        {/* Dashboard Links */}
+        {role === "admin" ? AdminDashboardLinks : UserDashboardLinks}
+      </motion.ul>
     </div>
   );
 }

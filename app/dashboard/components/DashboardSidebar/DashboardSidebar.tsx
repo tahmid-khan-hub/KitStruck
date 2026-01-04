@@ -22,16 +22,25 @@ export default function DashboardSidebar() {
     <motion.li variants={sidebarItem}><ActiveLink href="/dashboard/admin/addJersey"><IoAddCircle size={20}/><span className="text-[16px] ml-1">Add Jersey</span></ActiveLink></motion.li>
     <motion.li variants={sidebarItem}><ActiveLink href="/dashboard/admin/manageOrders"><RiShoppingBag4Fill size={20}/><span className="text-[16px] ml-1 mt-1">Manage Orders</span></ActiveLink></motion.li>
     <motion.li variants={sidebarItem}><ActiveLink href="/dashboard/admin/supportAndIssues"><MdContactSupport size={20}/><span className="text-[16px] ml-1 ">Support & Issues</span></ActiveLink></motion.li>
-    <motion.li variants={sidebarItem} onClick={() => signOut()}><ActiveLink><IoLogOut size={20}/><span className=" text-[16px] ml-1">Sign Out</span></ActiveLink></motion.li>
+    <motion.li initial={{ opacity: 0, x: 50 }}
+    animate={{ opacity: 1, x: 0,
+      transition: { duration: 0.8, ease: [0.42, 0, 0.58, 1] },
+    }}
+    className="mt-1.5"
+    onClick={() => signOut()}><button><IoLogOut size={20}/><span className=" text-[16px] ml-1 font-semibold">Sign Out</span></button></motion.li>
   </>;
 
   const UserDashboardLinks = <>
-    <li><ActiveLink href="/"><AiFillHome size={20}/><span className="mt-1 text-[16px] ml-1">Home</span></ActiveLink></li>
-    <li><ActiveLink href="/dashboard/user"><FaUserCircle size={20}/><span className="text-[16px] ml-1">Profile</span></ActiveLink></li>
-    <li><ActiveLink href="/dashboard/user/myOrders"><RiShoppingBag3Fill size={20}/><span className="text-[16px] ml-1">My Orders</span></ActiveLink></li>
-    <li><ActiveLink href="/dashboard/user/reviewPage"><MdModeComment size={20}/><span className=" text-[16px] ml-1">Review</span></ActiveLink></li>
-    <li><ActiveLink href="/dashboard/user/supportPage"><RiCustomerService2Fill size={20}/><span className=" text-[16px] ml-1">Support</span></ActiveLink></li>
-    <li onClick={() => signOut()}><ActiveLink><IoLogOut size={20}/><span className=" text-[16px] ml-1">Sign Out</span></ActiveLink></li>
+    <motion.li variants={sidebarItem}><ActiveLink href="/"><AiFillHome size={20}/><span className="mt-1 text-[16px] ml-1">Home</span></ActiveLink></motion.li>
+    <motion.li variants={sidebarItem}><ActiveLink href="/dashboard/user"><FaUserCircle size={20}/><span className="text-[16px] ml-1">Profile</span></ActiveLink></motion.li>
+    <motion.li variants={sidebarItem}><ActiveLink href="/dashboard/user/myOrders"><RiShoppingBag3Fill size={20}/><span className="text-[16px] ml-1">My Orders</span></ActiveLink></motion.li>
+    <motion.li variants={sidebarItem}><ActiveLink href="/dashboard/user/reviewPage"><MdModeComment size={20}/><span className=" text-[16px] ml-1">Review</span></ActiveLink></motion.li>
+    <motion.li variants={sidebarItem}><ActiveLink href="/dashboard/user/supportPage"><RiCustomerService2Fill size={20}/><span className=" text-[16px] ml-1">Support</span></ActiveLink></motion.li>
+    <motion.li initial={{ opacity: 0, x: 50 }}
+    animate={{ opacity: 1, x: 0,
+      transition: { duration: 0.8, ease: [0.42, 0, 0.58, 1] },
+    }}
+    onClick={() => signOut()}><ActiveLink><IoLogOut size={20}/><span className=" text-[16px] ml-1 font-semibold">Sign Out</span></ActiveLink></motion.li>
   </>;
 
   return (

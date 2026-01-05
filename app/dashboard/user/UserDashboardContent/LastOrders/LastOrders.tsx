@@ -5,6 +5,7 @@ import LastOrdersEmpty from "./LastOrdersEmpty";
 import Image from "next/image";
 import useAxiosSecure from "@/app/hooks/useAxiosSecure";
 import { ordersRow } from "@/types/ordersType";
+import AnimateOnView from "@/app/hooks/AnimateOnView";
 
 export default function LastOrders() {
   const axios = useAxiosSecure();
@@ -24,7 +25,7 @@ export default function LastOrders() {
     <>
       <div className="space-y-4">
         {orders.map((order, i) => (
-          <div
+          <AnimateOnView  key={i} direction="scale" delay={i * 0.08}><div
             key={i}
             className="flex items-center gap-4 border-b border-b-gray-300 pb-4"
           >
@@ -51,7 +52,7 @@ export default function LastOrders() {
                 </span>
               </p>
             </div>
-          </div>
+          </div></AnimateOnView>
         ))}
       </div>
     </>

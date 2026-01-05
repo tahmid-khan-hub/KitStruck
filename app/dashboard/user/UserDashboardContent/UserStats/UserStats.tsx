@@ -4,6 +4,7 @@ import { FaTshirt } from "react-icons/fa";
 import { FaStar } from "react-icons/fa6";
 import UserStatsSkeleton from "./UserStatsSkeleton";
 import useAxiosSecure from "@/app/hooks/useAxiosSecure";
+import AnimateOnView from "@/app/hooks/AnimateOnView";
 
 export default function UserStats() {
   const axios = useAxiosSecure();
@@ -36,7 +37,7 @@ export default function UserStats() {
   return (
     <div className="max-w-xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-4 mt-16">
       {UserStats.map((stat, index) => (
-        <div
+        <AnimateOnView key={index} direction="scale" delay={index * 0.08}><div
           key={index}
           className="p-6 bg-white/60 backdrop-blur-md rounded-xl shadow flex items-center justify-between hover:shadow-lg hover:shadow-blue-300 transition-shadow duration-300"
         >
@@ -51,7 +52,7 @@ export default function UserStats() {
             <h2 className="text-xl font-semibold">{stat.title}</h2>
             <p className="text-3xl font-bold">{stat.value}</p>
           </div>
-        </div>
+        </div></AnimateOnView>
       ))}
     </div>
   );

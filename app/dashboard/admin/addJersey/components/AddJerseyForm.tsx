@@ -3,6 +3,7 @@
 import { FormEvent, useState } from "react";
 import UseSweetAlert from "@/app/hooks/UseSweetAlert";
 import FormFields from "./FormFields";
+import { motion } from "framer-motion";
 
 const AddJerseyForm = () => {
 
@@ -40,10 +41,11 @@ const AddJerseyForm = () => {
   };
   return (
     <div className="px-20">
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <motion.form initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} 
+        onSubmit={handleSubmit} className="space-y-4">
           <FormFields category={category} setCategory={setCategory} />
         <button className="w-full btns mt-7">Add Jersey</button>
-      </form>
+      </motion.form>
     </div>
   );
 };

@@ -2,6 +2,7 @@
 
 import Menu from "@/app/hooks/Menu";
 import { FaChevronDown } from "react-icons/fa6";
+import { motion } from "framer-motion";
 
 interface DropDownProps {
   value: string;
@@ -28,7 +29,7 @@ const SupportPageDropDown: React.FC<DropDownProps> = ({
 
   return (
     <div className="flex justify-end px-12">
-      <div className="relative w-full md:w-72 mb-5" ref={menuRef}>
+      <motion.div initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1 }} className="relative w-full md:w-72 mb-5" ref={menuRef}>
         {/* Dropdown Button */}
         <button
           type="button"
@@ -58,7 +59,7 @@ const SupportPageDropDown: React.FC<DropDownProps> = ({
             ))}
           </ul>
         )}
-      </div>
+      </motion.div>
     </div>
   );
 };

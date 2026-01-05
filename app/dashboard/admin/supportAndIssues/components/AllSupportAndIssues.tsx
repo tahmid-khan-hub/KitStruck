@@ -8,6 +8,7 @@ import AllSupportAndIssuesContainer from "./AllSupportAndIssuesContainer";
 import AllSupportAndIssuesSkeleton from "./AllSupportAndIssuesSkeleton";
 import { PaginatedSupportIssues } from "@/types/PaginatedSupportIssues";
 import DashboardTablesPagination from "@/app/dashboard/components/DashboardTablesPagination/DashboardTablesPagination";
+import AnimateOnView from "@/app/hooks/AnimateOnView";
 
 const AllSupportAndIssues = () => {
   const { successToast, errorToast } = UseSweetAlert();
@@ -53,15 +54,15 @@ const AllSupportAndIssues = () => {
 
   return (
     <div className="max-w-6xl mx-auto px-5 my-10 space-y-4 ">
-      {issues.map((item: SupportIssue) => (
-        <AllSupportAndIssuesContainer key={item.issue_id}
+      {issues.map((item: SupportIssue, i) => (
+        <AnimateOnView key={i} direction="up" delay={i * 0.08}><AllSupportAndIssuesContainer key={item.issue_id}
             item={item}
             openId={openId}
             setOpenId={setOpenId}
             replyText={replyText}
             setReplyText={setReplyText}
             replyMutation={replyMutation} 
-        />
+        /></AnimateOnView>
       ))}
       {/* pagination */}
       <DashboardTablesPagination

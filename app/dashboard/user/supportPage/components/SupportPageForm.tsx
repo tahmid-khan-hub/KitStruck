@@ -3,6 +3,7 @@ import { FormEvent, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import UseSweetAlert from "@/app/hooks/UseSweetAlert";
 import useAxiosSecure from "@/app/hooks/useAxiosSecure";
+import { motion } from "framer-motion";
 
 interface SupportPageFormProps {
   issue: string;
@@ -48,7 +49,7 @@ const SupportPageForm = ({ issue, setIssue }: SupportPageFormProps) => {
     mutate();
   };
   return (
-    <form onSubmit={handleSubmit} className="max-w-6xl mx-auto px-5 rounded mb-6">
+    <motion.form initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1.2 }} onSubmit={handleSubmit} className="max-w-6xl mx-auto px-5 rounded mb-6">
       {issue && (
         <div className="mb-3 text-sm text-gray-600">
           Selected Issue: <span className="font-medium">{issue}</span>
@@ -80,7 +81,7 @@ const SupportPageForm = ({ issue, setIssue }: SupportPageFormProps) => {
       >
         {isPending ? "Submitting..." : "Submit"}
       </button>
-    </form>
+    </motion.form>
   );
 };
 

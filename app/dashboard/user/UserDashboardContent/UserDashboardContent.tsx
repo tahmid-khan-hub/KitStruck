@@ -3,6 +3,7 @@ import { isValidUrl } from "@/app/hooks/isValidUrl";
 import Image from "next/image";
 import LastOrders from "./LastOrders/LastOrders";
 import UserStats from "./UserStats/UserStats";
+import { motion } from "framer-motion";
 
 interface Props {
   user: {
@@ -20,13 +21,13 @@ export default function UserDashboardContent({ user }: Props) {
     <div className="max-w-5xl mx-auto">
       {/* USER CARD */}
       <div className="p-6 mt-6 text-center">
-        <Image
+        <motion.div initial={{ opacity: 0, y: -50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}><Image
           src={profilePic}
           alt="User"
           width={80}
           height={80}
           className="rounded-full mx-auto mb-4 object-cover w-24 h-24"
-        />
+        /></motion.div>
 
         <h2 className="text-xl font-bold">{user.name}</h2>
         <p className="text-gray-600">{user.email}</p>

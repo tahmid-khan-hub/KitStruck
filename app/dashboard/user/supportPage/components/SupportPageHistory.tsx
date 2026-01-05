@@ -7,6 +7,7 @@ import { FaMinus, FaPlus } from "react-icons/fa6";
 import { motion, AnimatePresence } from "framer-motion";
 import SupportPageHistorySkeleton from "./SupportPageHistorySkeleton";
 import SupportPageHistoryEmpty from "./SupportPageHistoryEmpty";
+import AnimateOnView from "@/app/hooks/AnimateOnView";
 
 const SupportPageHistory = () => {
   const axiosSecure = useAxiosSecure();
@@ -26,11 +27,12 @@ const SupportPageHistory = () => {
     <div className="max-w-6xl mx-auto px-5 my-10 space-y-4">
       {data.length === 0 && ( <SupportPageHistoryEmpty /> )}
 
-      {data.map((item) => {
+      {data.map((item, i) => {
         const isOpen = openId === item.issue_id;
         const hasReply = item.admin_reply !== null;
 
         return (
+        <AnimateOnView key={i} direction="up" delay={i * 0.08}>
           <div
             key={item.issue_id}
             className="border border-gray-200 rounded-lg bg-white overflow-hidden"
@@ -98,6 +100,7 @@ const SupportPageHistory = () => {
               )}
             </AnimatePresence>
           </div>
+        </AnimateOnView>
         );
       })}
     </div>

@@ -1,6 +1,7 @@
 "use client";
 import UseSweetAlert from "@/app/hooks/UseSweetAlert";
 import { FormEvent } from "react";
+import { motion } from "framer-motion";
 
 const ReviewForm = () => {
   const {successToast, errorToast} = UseSweetAlert(); 
@@ -26,7 +27,7 @@ const ReviewForm = () => {
   }
   return (
     <div className="max-w-6xl mx-auto px-5">
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <motion.form initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} onSubmit={handleSubmit} className="space-y-4">
         <input
           type="number"
           name="rating"
@@ -45,7 +46,7 @@ const ReviewForm = () => {
         <button type="submit" className="btns w-full">
           Submit Review
         </button>
-      </form>
+      </motion.form>
     </div>
   );
 };

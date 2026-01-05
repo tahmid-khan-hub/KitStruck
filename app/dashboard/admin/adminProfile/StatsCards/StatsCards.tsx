@@ -3,6 +3,7 @@ import { FaUsers, FaTshirt, FaDollarSign, FaStar } from "react-icons/fa";
 import StatsSkeleton from "./StatsSkeleton";
 import useAxiosSecure from "@/app/hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
+import AnimateOnView from "@/app/hooks/AnimateOnView";
 
 export default function StatsCards() {
   const axiosSecure = useAxiosSecure();
@@ -48,7 +49,7 @@ export default function StatsCards() {
   return (
      <div className="max-w-5xl mx-auto mt-12 grid grid-cols-2 md:grid-cols-4 gap-6">
       {stats.map((stat, index) => (
-        <div
+        <AnimateOnView key={index} direction="scale" delay={index * 0.08}><div
           key={index}
           className="p-6 bg-white/60 backdrop-blur-md rounded-xl shadow flex items-center gap-4 hover:shadow-lg hover:shadow-blue-300 transition-shadow duration-300"
         >
@@ -62,7 +63,7 @@ export default function StatsCards() {
             </p>
             <h2 className="text-xl font-semibold">{stat.title}</h2>
           </div>
-        </div>
+        </div></AnimateOnView>
       ))}
     </div>
   );

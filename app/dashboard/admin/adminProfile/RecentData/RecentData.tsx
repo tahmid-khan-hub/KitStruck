@@ -3,6 +3,7 @@ import useAxiosSecure from "@/app/hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import RecentDataSkeleton from "./RecentDataSkeleton";
 import { DBUser } from "@/types/db";
+import AnimateOnView from "@/app/hooks/AnimateOnView";
 
 export default function RecentData() {
   const axiosSecure = useAxiosSecure();
@@ -23,13 +24,13 @@ export default function RecentData() {
 
       <div className="space-y-4 mb-9">
         {data?.map((user, i) => (
-          <div key={i} className="flex justify-between items-center p-3 bg-white/50 rounded-lg border border-gray-300 hover:bg-blue-100">
+          <AnimateOnView key={i} direction="up" delay={i * 0.08}><div key={i} className="flex justify-between items-center p-3 bg-white/50 rounded-lg border border-gray-300 hover:bg-blue-100">
             <div>
               <p className="font-semibold">{user.name}</p>
               <p className="text-sm text-gray-500">{user.email}</p>
             </div>
             <div className="border border-blue-500 rounded-xl bg-blue-500 hover:bg-blue-600 cursor-pointer"><span className="font-semibold text-xs px-2 text-white">NEW</span></div>
-          </div>
+          </div></AnimateOnView>
         ))}
       </div>
     </div>

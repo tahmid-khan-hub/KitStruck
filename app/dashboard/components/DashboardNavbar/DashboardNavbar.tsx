@@ -17,7 +17,7 @@ export default function DashboardNavbar() {
       : "/default_user.jpg";
 
   return (
-    <div className="navbar sticky top-0 z-50 bg-base-100 w-full">
+    <div className="navbar sticky top-0 z-50 bg-base-100 w-full border-b border-b-gray-200">
       <div className="flex-none lg:hidden">
         <label htmlFor="my-drawer-2" className="btn btn-square btn-ghost">
           <svg

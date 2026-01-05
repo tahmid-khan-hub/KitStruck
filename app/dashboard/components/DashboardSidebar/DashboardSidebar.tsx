@@ -46,7 +46,7 @@ export default function DashboardSidebar() {
   return (
     <div
       data-aos="fade-right"
-      className="drawer-side border-r border-r-gray-400"
+      className="drawer-side border-r border-r-gray-200"
     >
       <label
         htmlFor="my-drawer-2"

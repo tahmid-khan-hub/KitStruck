@@ -27,7 +27,7 @@ export default function LastOrders() {
         {orders.map((order, i) => (
           <AnimateOnView  key={i} direction="scale" delay={i * 0.08}><div
             key={i}
-            className="flex items-center gap-4 border-b border-b-gray-300 pb-4"
+            className="flex items-center gap-4 border-b border-b-gray-300 py-4 hover:bg-gray-100"
           >
             <Image
               src={order.image_url}

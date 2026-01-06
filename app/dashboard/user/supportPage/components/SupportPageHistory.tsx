@@ -35,7 +35,7 @@ const SupportPageHistory = () => {
         <AnimateOnView key={i} direction="up" delay={i * 0.08}>
           <div
             key={item.issue_id}
-            className="border border-gray-200 rounded-lg bg-white overflow-hidden"
+            className="border border-gray-200 rounded-lg bg-white overflow-hidden hover:bg-blue-100 transition-transform duration-300 hover:scale-101"
           >
             {/* Header */}
             <button

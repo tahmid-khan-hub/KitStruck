@@ -70,17 +70,20 @@ export default function OrderRow({ item }: { item: orders }) {
         <span className="text-blue-500 font-semibold ">{deliveryStatus}</span>
       </td>
 
-      {session?.user?.role === "admin" && deliveryStatus === "pending" ? (
-        <td onClick={handleProceed}>
-          <span className="px-2 py-1.5 rounded text-white font-semibold bg-blue-600 hover:bg-blue-700 text-xs cursor-pointer">
-            Proceed
-          </span>
-        </td>
-      ) : (
+      {session?.user?.role === "admin" && (
         <td>
-          <span className="px-2 py-1.5 rounded text-white font-semibold bg-gray-500 text-xs cursor-pointer">
-            Proceed
-          </span>
+          {deliveryStatus === "pending" ? (
+            <span
+              onClick={handleProceed}
+              className="px-2 py-1.5 rounded text-white font-semibold bg-blue-600 hover:bg-blue-700 text-xs cursor-pointer"
+            >
+              Proceed
+            </span>
+          ) : (
+            <span className="px-2 py-1.5 rounded text-white font-semibold bg-gray-500 text-xs cursor-not-allowed">
+              Proceed
+            </span>
+          )}
         </td>
       )}
     </tr>

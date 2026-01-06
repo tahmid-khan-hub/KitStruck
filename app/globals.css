@@ -22,7 +22,7 @@
 .btns:hover,
 .border-btn:hover,
 .small-btn:hover {
-  transform: scale(1.06);
+  transform: scale(1.02);
 }
 
 .btns:active,

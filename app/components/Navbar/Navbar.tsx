@@ -65,7 +65,7 @@ const Navbar = () => {
             </div>
             
           ) : (
-            <div className="relative group"><Link href="/sign-in"><MdLogin className="text-blue-600 hover:border hover:border-blue-600 hover:bg-blue-600 hover:text-white hover:rounded-full p-1 hover:p-2" size={36}/></Link>
+            <div className="relative group"><Link href="/sign-in"><MdLogin className="text-blue-600 hover:border hover:border-blue-600 hover:bg-blue-600 hover:text-white hover:rounded-full p-1 hover:p-2 transition-transform duration-200 hover:scale-110" size={36}/></Link>
             <div className="absolute right-0 translate-y-3 hidden group-hover:block bg-black text-white text-sm py-1 px-2 rounded-md whitespace-nowrap shadow-lg">Sign In</div></div>
           )}
           {/* Mobile menu */}

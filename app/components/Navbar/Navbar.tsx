@@ -14,30 +14,31 @@ const Navbar = () => {
 
   const links = (
     <>
-      <li>
+      <li className="transition-transform duration-200 hover:scale-110">
          <NavLink href="/">Home</NavLink>      
       </li>
-      <li>
+      <li className="transition-transform duration-200 hover:scale-110">
          <NavLink href="/jerseys">Jerseys</NavLink>      
       </li>
-      <li>
+      <li className="transition-transform duration-200 hover:scale-110">
          <NavLink href="/about">About</NavLink>      
       </li>
       {status === "loading" && (
         <div className="h-6 w-20 rounded bg-gray-200 animate-pulse"></div>
       )}
       {status === "authenticated" && (
-        <li>
+        <li className="transition-transform duration-200 hover:scale-110">
           <NavLink href="/dashboard">Dashboard</NavLink>
         </li>
       )}
     </>
   );
   return (
-    <div className="sticky top-0 z-10 bg-gray-50 text-white border-b border-b-gray-300">
+    <div className="sticky top-0 z-10 bg-gray-50 text-white">
       <div className="max-w-[1350px] mx-auto w-full flex items-center justify-between px-4 md:px-3 h-16">
         {/* Left side */}
-        <Logo></Logo>
+        <div className="inline-flex items-center justify-center p-2 
+        rounded-full transition-all duration-200 hover:scale-110"><Logo></Logo></div>
 
         {/* Center links */}
         <div className="hidden lg:flex flex-1 justify-center">
@@ -48,16 +49,18 @@ const Navbar = () => {
         <div className="flex items-center gap-4">
           {/* cart */}
           <Link
-            className="border border-transparent hover:border-blue-600 hover:bg-gray-100 rounded-full p-2 inline-flex items-center justify-center"
+            className=""
             href="/cart"
           >
-            <FaCartShopping size={23} className="text-black" />
+            <FaCartShopping size={23} className="text-black transition-transform duration-200
+          hover:text-blue-600 hover:scale-110" />
           </Link>
           {status === "loading" ? (
             <div className="h-8 w-9 bg-gray-200 rounded animate-pulse"></div>
           ) : session ? (
             <div className="relative group">
-              <MdLogout className="text-blue-600 hover:border hover:border-blue-600 hover:bg-blue-600 hover:text-white hover:rounded-full p-1 hover:p-2" onClick={() => signOut()} size={36}/>
+              <MdLogout className="text-blue-600 hover:border hover:border-blue-600 hover:bg-blue-600 hover:text-white hover:rounded-full p-1 hover:p-2
+              transition-transform duration-200 hover:scale-110" onClick={() => signOut()} size={36}/>
               <div className="absolute right-0 translate-y-3 hidden group-hover:block bg-black text-white text-sm py-1 px-2 rounded-md whitespace-nowrap shadow-lg">Sign Out</div>
             </div>
             

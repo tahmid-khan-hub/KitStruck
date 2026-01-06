@@ -43,7 +43,9 @@ const Banner = () => {
       </div>
 
       {/* Right Side */}
-      <div className="md:w-1/2 w-full ">
+      <motion.div initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }} className="md:w-1/2 w-full ">
         <Swiper
           modules={[Autoplay, Pagination]}
           spaceBetween={30}
@@ -66,7 +68,7 @@ const Banner = () => {
             </SwiperSlide>
           ))}
         </Swiper>
-      </div>
+      </motion.div>
     </section></section>;
 };
 

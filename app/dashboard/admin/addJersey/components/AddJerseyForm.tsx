@@ -44,7 +44,7 @@ const AddJerseyForm = () => {
       <motion.form initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} 
         onSubmit={handleSubmit} className="space-y-4">
           <FormFields category={category} setCategory={setCategory} />
-        <button className="w-full btns mt-7">Add Jersey</button>
+        <button className="w-full btns my-7">Add Jersey</button>
       </motion.form>
     </div>
   );

@@ -24,7 +24,7 @@ export default function RecentData() {
 
       <div className="space-y-4 mb-9">
         {data?.map((user, i) => (
-          <AnimateOnView key={i} direction="up" delay={i * 0.08}><div key={i} className="flex justify-between items-center p-3 bg-white/50 rounded-lg border border-gray-300 hover:bg-blue-100">
+          <AnimateOnView key={i} direction="up" delay={i * 0.08}><div key={i} className="flex justify-between items-center p-3 bg-white/50 rounded-lg border border-gray-300 hover:bg-blue-100 transition-transform duration-300 hover:scale-101">
             <div>
               <p className="font-semibold">{user.name}</p>
               <p className="text-sm text-gray-500">{user.email}</p>

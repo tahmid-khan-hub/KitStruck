@@ -37,7 +37,7 @@ export default function OrderRow({ item }: { item: orders }) {
     }
   }
   return (
-    <tr className="border-b border-b-gray-200">
+    <tr className="border-b border-b-gray-200 hover:bg-gray-100">
       <td>
         <Image
           src={item?.jerseyData?.image_url || "/default.png"}

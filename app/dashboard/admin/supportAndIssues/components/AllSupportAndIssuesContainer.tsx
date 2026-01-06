@@ -39,7 +39,7 @@ const AllSupportAndIssuesContainer: React.FC<AllSupportAndIssuesProps> = ({
   const hasReply = item.admin_reply !== null;
 
   return (
-    <div className="border border-gray-200 rounded-lg bg-white overflow-hidden">
+    <div className="border border-gray-200 rounded-lg bg-white overflow-hidden hover:bg-blue-100 transition-transform duration-300 hover:scale-101">
       {/* HEADER */}
       <button
         onClick={() => setOpenId(isOpen ? null : item.issue_id)}

@@ -46,7 +46,7 @@ const JerseysTableRow = ({ item }: { item: Jersey }) => {
   const jerseyImage = item?.image_url && item.image_url.trim() !== "" && isValidUrl(item.image_url) ? item.image_url : "/default.png";
   
   return (
-    <tr className="border-b border-b-gray-200">
+    <tr className="border-b border-b-gray-200 hover:bg-blue-100">
       <td>
         <Image
           src={jerseyImage}

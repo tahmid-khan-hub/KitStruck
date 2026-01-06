@@ -65,7 +65,7 @@ const JerseysContainer = ({jerseys, search, setSearch, sort,handleSortChange, pa
               </div>
 
               <div className="mt-4">
-                <h3 className="font-semibold text-lg mb-3">
+                <h3 className="font-semibold text-lg mb-3 line-clamp-2 min-h-14">
                   {jersey.name}
                 </h3>
 

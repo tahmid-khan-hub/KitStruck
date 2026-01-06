@@ -7,7 +7,7 @@ const WhyChooseUs = () => {
   const features = [
     {
       icon: <FaMedal size={38} className="text-blue-600 hover:text-blue-500" />,
-      title: "Premium Quality",
+      title: "Premium Quality Jerseys",
       desc: "Top-notch jerseys crafted with premium fabric and long-lasting print.",
     },
     {
@@ -17,7 +17,7 @@ const WhyChooseUs = () => {
     },
     {
       icon: <FaShippingFast size={38} className="text-blue-600 hover:text-blue-500" />,
-      title: "Fast Delivery",
+      title: "Fast Delivery Service",
       desc: "We ensure quick and reliable delivery to your doorstep nationwide.",
     },
     {
@@ -34,7 +34,7 @@ const WhyChooseUs = () => {
           We provide premium service and unmatched value to all our customers.
         </p>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 items-stretch">
           {features.map((item, i) => (
             <AnimateOnView key={i} direction="scale" delay={i * 0.08}><motion.div
               key={i}
@@ -43,13 +43,13 @@ const WhyChooseUs = () => {
               boxShadow: "0px 0px 20px rgba(0, 123, 255, 0.7)",
               }}
               transition={{ duration: 0.1 }}
-              className="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transition-all border border-gray-200"
+              className="bg-white p-6 rounded-2xl border border-gray-200 h-full flex flex-col"
             >
             <div className="mb-5 w-[63px] h-[63px] rounded-full bg-gray-50 border-2 border-gray-200 flex items-center justify-center">{item.icon}
             </div>
               <div className="flex items-start gap-4">
                 <div>
-                  <h3 className="text-xl font-semibold mb-1">{item.title}</h3>
+                  <h3 className="text-xl font-semibold mb-1 line-clamp-2 min-h-14">{item.title}</h3>
                   <p className="text-gray-600">{item.desc}</p>
                 </div>
               </div>

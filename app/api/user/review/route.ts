@@ -22,12 +22,12 @@ export async function GET() {
 export async function POST(req: Request) {
     const session = await getServerSession(authOptions);
     if (!session?.user) {
-        return { success: false, message: "User not logged in" };
+        return NextResponse.json({ success: false, message: "User not logged in" }, { status: 401 });
     }
     const user = session.user;
 
-    const { rating, review } =
-    await req.json();
+    const { rating, review } = await req.json();
+    console.log(rating, review);
 
     const dbConnect = await pool.getConnection();
     try {
@@ -38,9 +38,12 @@ export async function POST(req: Request) {
         (?, ?, ?, ?, ?, ?)`,
         [user.id, user.name, user.email, user.image, rating, review]
         );
+        return NextResponse.json(
+          { success: true, message: "Review submitted successfully" }, { status: 201 }
+        );
     } catch (error) {
         console.error("Review submission error:", error);
-        return { success: false, message: "Server error" };
+        return NextResponse.json({ success: false, message: "Server error" }, { status: 500 });
     } finally {
         dbConnect.release();
     }

@@ -1,48 +1,35 @@
 "use client"
-import { orders } from "@/types/orders";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Lottie from "react-lottie-player";
 import noMyOrders from "@/public/No Item Found.json"
 import Link from "next/link";
 import OrdersSkeleton from "../../components/OrdersTable/OrdersSkeleton";
 import OrdersTable from "../../components/OrdersTable/OrdersTable";
 import DashboardTablesPagination from "../../components/DashboardTablesPagination/DashboardTablesPagination";
+import useAxiosSecure from "@/app/hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 
 const LIMIT = 5;
 
 export default function MyOrdersPage() {
     const [page, setPage] = useState(1);
-    const [orders, setOrders] = useState<orders[]>([]);
-    const [totalPages, setTotalPages] = useState(1);
-    const [loading, setLoading] = useState(true);
+    const axiosSecure = useAxiosSecure();
     
-    useEffect(() => {
-        let ignore = false;
-
-        async function fetchOrders() {
-        setLoading(true);
-
-        const res = await fetch(`/api/user/myOrders?page=${page}&limit=${LIMIT}`);
-        const data = await res.json();
-
-        if (!ignore) {
-            setOrders(data.data ?? []);
-            setTotalPages(data.totalPages ?? 1);
-            setLoading(false);
+    const {data, isLoading} = useQuery({
+        queryKey: ['myOrders', page],
+        queryFn: async() => {
+            const res = await axiosSecure.get(`/api/user/myOrders?page=${page}&limit=${LIMIT}`)
+            return res.data;
         }
-        }
+    })
 
-        fetchOrders();
-
-        return () => {
-            ignore = true;
-        };
-    }, [page]);
+    const orders = data?.data ?? [];
+    const totalPages = data?.totalPages ?? 1;
 
      return (
         <div className="w-full p-6">
-            <h1 className="text-3xl text-center font-bold mb-6">My Orders</h1>
-            {loading ? (
+            <h1 className="text-3xl text-center font-bold mt-3 mb-11">My Orders</h1>
+            {isLoading ? (
                 <OrdersSkeleton rows={LIMIT} />
             ) : orders.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-10">

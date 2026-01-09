@@ -11,8 +11,8 @@ const StatsSkeleton = () => {
 
           {/* Value + Title lines */}
           <div className="flex flex-col gap-2 flex-1">
-            <div className="h-6 bg-gray-300 rounded w-3/4"></div>
-            <div className="h-4 bg-gray-300 rounded w-1/2"></div>
+            <div className="h-6 bg-gray-300 rounded w-16"></div>
+            <div className="h-5 bg-gray-300 rounded w-20"></div>
           </div>
         </div>
       ))}

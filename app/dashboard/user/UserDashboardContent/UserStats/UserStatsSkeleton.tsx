@@ -19,7 +19,7 @@ export default function UserStatsSkeleton() {
             {/* Title */}
             <div className="h-5 w-24 bg-gray-200 rounded"></div>
             {/* Value */}
-            <div className="h-8 w-12 bg-gray-300 rounded"></div>
+            <div className="h-7 w-8 ml-12 bg-gray-300 rounded"></div>
           </div>
         </div>
       ))}

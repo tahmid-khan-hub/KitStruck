@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 
 const ProfileSkeleton = () => (
-  <div className="w-9 h-9 rounded-full bg-gray-300 animate-pulse"></div>
+  <div className="w-11 h-11 rounded-full bg-gray-300 animate-pulse"></div>
 );
 
 export default function DashboardNavbar() {

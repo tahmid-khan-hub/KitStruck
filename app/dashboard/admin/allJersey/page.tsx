@@ -6,18 +6,20 @@ import noJerseys from "@/public/No Jersey.json"
 import JerseysTable from "./components/JerseysTable";
 import JerseysTableSkeleton from "./components/JerseysTableSkeleton";
 import DashboardTablesPagination from "../../components/DashboardTablesPagination/DashboardTablesPagination";
+import useAxiosSecure from "@/app/hooks/useAxiosSecure";
 
 const LIMIT = 10;
 
 export default function AllJersey() {
     const [page, setPage] = useState(1);
+    const axiosSecure = useAxiosSecure();
 
     const { data, isLoading } = useQuery({
         queryKey: ["allJersey", page],
         queryFn: async () => {
-            const res = await fetch(`/api/admin/allJersey?page=${page}&limit=${LIMIT}`)
-            if (!res.ok) throw new Error("Failed to fetch orders");
-            return res.json();
+            const res = await axiosSecure.get(`/api/admin/allJersey?page=${page}&limit=${LIMIT}`);
+            
+            return res.data;
         }
     })
 

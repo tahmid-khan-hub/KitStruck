@@ -6,26 +6,21 @@ import { FormEvent, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { jerseyPayload } from "@/types/jerseyPayload";
 import UseSweetAlert from "@/app/hooks/UseSweetAlert";
+import useAxiosSecure from "@/app/hooks/useAxiosSecure";
 
 export default function JerseyForm({ jerseyData }: { jerseyData: Jersey }) {
   const { successToast, errorToast } = UseSweetAlert();
   const [category, setCategory] = useState("");
+  const axiosSecure = useAxiosSecure();
 
   const {mutate, isPending} = useMutation({
     mutationFn: async(payload: jerseyPayload) => {
-        const res = await fetch("/api/admin/allJersey/jersey-form", {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-
-      if (!res.ok) throw new Error("Failed to update jersey");
-      return res.json();
+        const res = await axiosSecure.patch("/api/admin/allJersey/jersey-form", payload);
+        return res.data;
     },
     onSuccess: () => {
       successToast("Jersey data updated successfully");
     },
-
     onError: () => {
       errorToast("Failed to update jersey data");
     },
@@ -58,7 +53,7 @@ export default function JerseyForm({ jerseyData }: { jerseyData: Jersey }) {
     mutate(payload);
   }
   return (
-    <div className="px-20">
+    <div className="px-16">
       <form onSubmit={handleSubmit} className="space-y-4">
         <JerseyFormFields jerseyData={jerseyData} category={category} setCategory={setCategory} />
         <button type="submit" name="submitBtn" value="update" disabled={isPending} className="w-full btns my-7">{isPending ? "Updating..." : "Update"}</button>

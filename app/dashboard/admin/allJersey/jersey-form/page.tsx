@@ -3,20 +3,23 @@ import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
 import JerseyFormSkeleton from "./components/JerseyFormSkeleton";
 import JerseyForm from "./components/JerseyForm";
+import useAxiosSecure from "@/app/hooks/useAxiosSecure";
 
 export default function JerseyFormPage() {
     const searchParams = useSearchParams();
     const jerseyId = searchParams.get("jerseyId");
+    const axiosSecure = useAxiosSecure();
 
     const {data, isLoading} = useQuery({
         queryKey: ["jersey-form", jerseyId],
         queryFn: async () => {
-            const res = await fetch(`/api/admin/allJersey/jersey-form?jerseyId=${jerseyId}`)
-            if (!res.ok) throw new Error("Failed to fetch orders");
-            return res.json();
+            const res = await axiosSecure.get(`/api/admin/allJersey/jersey-form?jerseyId=${jerseyId}`);
+
+            return res.data;
         },
         enabled: !!jerseyId,
     })
+    
     if (isLoading) return <JerseyFormSkeleton />;
 
     return (

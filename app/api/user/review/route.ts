@@ -1,22 +1,19 @@
 import { authOptions } from "@/lib/authOptions";
-import pool from "@/lib/mysql";
+import pool from "@/lib/postgresql"
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  const dbConnect = await pool.getConnection();
   try {
-    const [rows] = await dbConnect.query("SELECT * FROM review ORDER BY created_at DESC ");
-    return NextResponse.json(rows);
+    const result = await pool.query("SELECT * FROM reviews ORDER BY created_at DESC ");
+    return NextResponse.json(result.rows);
   } catch (error) {
     console.error("Error fetching review", error);
     return NextResponse.json(
       { message: "Failed to fetch review" },
       { status: 500 }
     );
-  } finally {
-    dbConnect.release();
-  }
+  } 
 }
 
 export async function POST(req: Request) {
@@ -29,10 +26,9 @@ export async function POST(req: Request) {
     const { rating, review } = await req.json();
     console.log(rating, review);
 
-    const dbConnect = await pool.getConnection();
     try {
-        await dbConnect.query(
-        `INSERT INTO review 
+        await pool.query(
+        `INSERT INTO reviews
         (user_id, reviewer_name, reviewer_email, reviewer_image, rating, comment)
          VALUES
         (?, ?, ?, ?, ?, ?)`,
@@ -44,7 +40,5 @@ export async function POST(req: Request) {
     } catch (error) {
         console.error("Review submission error:", error);
         return NextResponse.json({ success: false, message: "Server error" }, { status: 500 });
-    } finally {
-        dbConnect.release();
-    }
+    } 
 }

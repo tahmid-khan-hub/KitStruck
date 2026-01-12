@@ -1,17 +1,14 @@
-import pool from "@/lib/mysql";
+import pool from "@/lib/postgresql";
 import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
-    const dbConnect = await pool.getConnection();
 
-    const [rows] = await dbConnect.query(
-      "SELECT * FROM jersey_table ORDER BY sells_quantity DESC LIMIT 4"
+    const result = await pool.query(
+      "SELECT * FROM jerseys ORDER BY sold_quantity DESC LIMIT $1", [4]
     );
 
-    dbConnect.release();
-
-    return NextResponse.json(rows);
+    return NextResponse.json(result.rows);
   } catch (error) {
     console.log(error);
     return NextResponse.json(

@@ -1,8 +1,7 @@
 import { authOptions } from "@/lib/authOptions";
-import pool from "@/lib/mysql";
+import pool from "@/lib/postgresql";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
-import { RowDataPacket, ResultSetHeader } from "mysql2";
 
 interface CartItem {
   jersey_id: number;
@@ -23,26 +22,24 @@ export async function POST(req: Request) {
   
   if (cartItems.length === 0) return NextResponse.json({ error: "Invalid payload" }, { status: 400 });
   
-  const dbConnect = await pool.getConnection();
-
   try {
     for (const item of cartItems) {
       if (!item.jersey_id) continue;
 
-      const [rows] = await dbConnect.query<RowDataPacket[]>(
+      const result = await pool.query(
         `
         SELECT cart_id
-        FROM cart_table
-        WHERE user_id = ? AND jersey_id = ?
+        FROM cart
+        WHERE user_id = $1 AND jersey_id = $2
         `,
         [session.user.id, item.jersey_id]
       );
 
-      if (rows.length === 0) {
-        await dbConnect.query<ResultSetHeader>(
+      if (result.rows.length === 0) {
+        await pool.query(
           `
-          INSERT INTO cart_table (user_id, jersey_id)
-          VALUES (?, ?)
+          INSERT INTO cart (user_id, jersey_id)
+          VALUES ($1, $2)
           `,
           [session.user.id, item.jersey_id]
         );
@@ -52,7 +49,5 @@ export async function POST(req: Request) {
   } catch (err) {
     console.error(err);
     return NextResponse.json({ error: "DB error" }, { status: 500 });
-  } finally {
-    dbConnect.release();
-  }
+  } 
 }

@@ -1,13 +1,11 @@
 import { authOptions } from "@/lib/authOptions";
-import pool from "@/lib/mysql";
-import { ResultSetHeader, RowDataPacket } from "mysql2";
+import pool from "@/lib/postgresql";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   const session = await getServerSession(authOptions);
   const { items} = await req.json();
-  const dbConnect = await pool.getConnection();
 
   if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
@@ -17,20 +15,20 @@ export async function POST(req: Request) {
     for (const item of items) {
       if (!item.jersey_id) continue;
 
-      const [rows] = await dbConnect.query<RowDataPacket[]>(
+      const result = await pool.query(
         `
         SELECT cart_id
-        FROM cart_table
-        WHERE user_id = ? AND jersey_id = ?
+        FROM cart
+        WHERE user_id = $1 AND jersey_id = $2
         `,
         [session.user.id, item.jersey_id]
       );
 
-      if (rows.length === 0) {
-        await dbConnect.query<ResultSetHeader>(
+      if (result.rows.length === 0) {
+        await pool.query(
           `
-          INSERT INTO cart_table (user_id, jersey_id)
-          VALUES (?, ?)
+          INSERT INTO cart (user_id, jersey_id)
+          VALUES ($1, $2)
           `,
           [session.user.id, item.jersey_id]
         );
@@ -40,7 +38,5 @@ export async function POST(req: Request) {
   } catch (err) {
     console.log(err);
     return NextResponse.json({ error: "Sync failed" }, { status: 500 });
-  } finally {
-    dbConnect.release();
-  }
+  } 
 }

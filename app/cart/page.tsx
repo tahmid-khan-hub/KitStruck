@@ -6,13 +6,15 @@ import UseSweetAlert from "../hooks/UseSweetAlert";
 import CartList from "./components/CartList";
 import CartSkeleton from "./components/CartSkeleton";
 import EmptyCartLottie from "./components/EmptyCartLottie";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const CartPage = () => {
     const {confirmDelete, errorToast, successToast} = UseSweetAlert();
     const queryClient = useQueryClient(); 
     const { data: session, status } = useSession();
     const [guestCart, setGuestCart] = useState<CartItem[]>([]);
+    const axiosSecure = useAxiosSecure();
     // for local storage
     useEffect(() => {
       if(status === "unauthenticated"){
@@ -46,49 +48,45 @@ const CartPage = () => {
     const {data: serverCart = [], isLoading} = useQuery<CartItem[]>({
       queryKey: ["cart"],
       queryFn: async () => {
-        const res = await fetch("/api/cart");
-        if (!res.ok) throw new Error("Failed to fetch cart");
-        return res.json();
+        const res = await axiosSecure.get("/api/cart");
+        return res.data;
       },
       enabled: status === "authenticated",
     })
 
     const cart = status === "authenticated" ? serverCart : guestCart;
 
+    const deleteCartItemMutation = useMutation({
+      mutationFn: async (jersey_id: number) => {
+        const res = await axiosSecure.delete("/api/cart", {
+          data: { jersey_id }, 
+        });
+        return res.data;
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ["cart"] });
+        successToast("Jersey item removed successfully!");
+      },
+      onError: () => {
+        errorToast("Failed to delete the jersey item.");
+      },
+    });
+
     const handleRemove = async (id: number) => {
       const ok = await confirmDelete("Do you really want to remove this from the cart?");
 
       if (!ok) return;
-      const updatedCart = cart.filter(i => i.jersey_id !== id);
 
-      try {
-        if (session) {
-          const res = await fetch("/api/cart", {
-            method: "DELETE",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ jersey_id: id })
-          });
-
-          if (!res.ok) {
-            errorToast("Failed to delete item.");
-            return;
-          }
-          queryClient.invalidateQueries({ queryKey: ["cart"] });
-
-        } else {
-          localStorage.setItem("cart", JSON.stringify(updatedCart));
-          setGuestCart(updatedCart); 
-        }
-
-        successToast("Item removed successfully!");
-
-      } catch (error) {
-        console.log(error);
-        errorToast("Something went wrong!");
+      if(status === "authenticated"){ deleteCartItemMutation.mutate(id); }
+      else {
+        const updatedCart = guestCart.filter(i => i.jersey_id !== id);
+        localStorage.setItem("cart", JSON.stringify(updatedCart));
+        setGuestCart(updatedCart);
+        successToast("Jersey item removed successfully!");
       }
     };
     
-    if (status === "loading" || isLoading) { return <CartSkeleton />;}
+    if (status === "loading" || isLoading || deleteCartItemMutation.isPending) { return <CartSkeleton />;}
     if (cart.length === 0) { return <EmptyCartLottie />; }
     
     return (

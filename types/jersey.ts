@@ -9,7 +9,7 @@ export interface Jersey extends RowDataPacket{
   image_url: string;
   description?: string; 
   created_at: string; 
-  sells_quantity: number;  
+  sold_quantity: number;  
   stock: number;
   offer: number;
 }

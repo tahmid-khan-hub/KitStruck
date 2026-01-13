@@ -29,7 +29,7 @@ export async function GET(req: Request) {
     );
 
     return NextResponse.json({
-      data: jerseyRows, page, limit, total, totalPages: Math.ceil(total / limit),
+      data: jerseyRows.rows, page, limit, total, totalPages: Math.ceil(total / limit),
     });
   } catch (error) {
     console.error(error);

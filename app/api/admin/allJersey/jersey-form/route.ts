@@ -67,7 +67,7 @@ export async function PATCH(req: Request) {
     }
 
     try {
-      await pool.query(`UPDATE jerseys SET name = $1, team = $2, price = $3, description = $4, image_url = $5, stock = $6, offer = $7, category = $8 WHERE jersey_id = $8 `,
+      await pool.query(`UPDATE jerseys SET name = $1, team = $2, price = $3, description = $4, image_url = $5, stock = $6, offer = $7, category = $8 WHERE jersey_id = $9 `,
         [ name, team, price, description, image_url, stock, offer, category, jersey_id, ] );
 
       return NextResponse.json({ message: "Jersey updated successfully" });

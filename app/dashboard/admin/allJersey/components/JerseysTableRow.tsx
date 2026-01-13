@@ -63,13 +63,13 @@ const JerseysTableRow = ({ item }: { item: Jersey }) => {
         <span className="text-sm text-gray-500">{item?.jerseyData?.team}</span>
       </td>
 
-      <td className="pl-7.5">${item?.price}</td>
-      <td className="pl-9">{item?.sells_quantity}</td>
+      <td className="text-left">${item?.price}</td>
+      <td className="pl-9">{item?.sold_quantity}</td>
       
       {/* action */}
       <td className="flex mt-3">
-        <Link href={`/dashboard/admin/allJersey/jersey-form?jerseyId=${item.jersey_id}`}><button className="group border border-gray-400 hover:bg-blue-600 hover:text-white p-2 rounded-full"><FaEdit className="ml-0.5 text-blue-600 group-hover:text-white transition" size={18}/></button></Link>
-        <button onClick={handleDelete} className="group border border-gray-400 hover:bg-blue-600 hover:text-white p-2 ml-3 rounded-full"><RiDeleteBin5Fill className=" text-blue-600 group-hover:text-white transition" size={18}/></button>
+        <Link href={`/dashboard/admin/allJersey/jersey-form?jerseyId=${item.jersey_id}`}><button className="group border border-blue-200 hover:bg-blue-600 hover:text-white p-2 rounded-full transition-all duration-200 hover:scale-110"><FaEdit className="ml-0.5 text-blue-600 group-hover:text-white transition" size={18}/></button></Link>
+        <button onClick={handleDelete} className="group border border-blue-200 hover:bg-blue-600 hover:text-white p-2 ml-3 rounded-full transition-all duration-200 hover:scale-110"><RiDeleteBin5Fill className=" text-blue-600 group-hover:text-white transition" size={18}/></button>
       </td>
     </tr>
   );

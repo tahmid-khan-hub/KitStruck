@@ -9,6 +9,7 @@ import AllSupportAndIssuesSkeleton from "./AllSupportAndIssuesSkeleton";
 import { PaginatedSupportIssues } from "@/types/PaginatedSupportIssues";
 import DashboardTablesPagination from "@/app/dashboard/components/DashboardTablesPagination/DashboardTablesPagination";
 import AnimateOnView from "@/app/hooks/AnimateOnView";
+import AllSupportAndIssuesLottie from "./AllSupportAndIssuesLottie";
 
 const AllSupportAndIssues = () => {
   const { successToast, errorToast } = UseSweetAlert();
@@ -51,6 +52,8 @@ const AllSupportAndIssues = () => {
 
   if (isLoading) return <AllSupportAndIssuesSkeleton />
   const issues = data?.data?? [];
+  
+  if(issues.length === 0) return <AllSupportAndIssuesLottie />;
 
   return (
     <div className="max-w-6xl mx-auto px-5 my-10 space-y-4 ">

@@ -22,7 +22,7 @@ export default function JerseyDetailsContainer({ jersey }: Props) {
   const {data: session} = useSession();
   const router = useRouter();
 
-  const available = jersey?.stock - jersey?.sells_quantity;
+  const available = jersey?.stock - jersey?.sold_quantity;
 
   if (!jersey) return <JerseyDetailsSkeleton />;
 

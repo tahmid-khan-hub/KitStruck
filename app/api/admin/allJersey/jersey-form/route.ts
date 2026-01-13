@@ -1,5 +1,5 @@
 import { authOptions } from "@/lib/authOptions";
-import pool from "@/lib/mysql";
+import pool from "@/lib/postgresql";
 import { Jersey } from "@/types/jersey";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
@@ -25,24 +25,23 @@ export async function GET(req: Request) {
       );
     }
 
-    const dbConnect = await pool.getConnection();
-
     try {
-      const [rows] = await dbConnect.query<Jersey[]>(
-        "SELECT * FROM jersey_table WHERE jersey_id = ?",
+      const result = await pool.query<Jersey>(
+        "SELECT * FROM jerseys WHERE jersey_id = $1",
         [jerseyId]
       );
 
-      if (!rows.length) {
+      if (!result.rows.length) {
         return NextResponse.json(
           { message: "Jersey not found" },
           { status: 404 }
         );
       }
 
-      return NextResponse.json(rows[0]);
-    } finally {
-      dbConnect.release();
+      return NextResponse.json(result.rows[0]);
+    } catch (error) {
+      console.error("Jersey not found!", error)
+      return NextResponse.json({message: "Jersey not found!"})
     }
 
   } catch (error) {
@@ -67,15 +66,14 @@ export async function PATCH(req: Request) {
     if (!jersey_id) { return NextResponse.json( { message: "Jersey ID is required" }, { status: 400 } );
     }
 
-    const dbConnect = await pool.getConnection();
-
     try {
-      await dbConnect.query(` UPDATE jersey_table SET name = ?, team = ?, price = ?, description = ?, image_url = ?, stock = ?, offer = ?, category = ? WHERE jersey_id = ? `,
+      await pool.query(`UPDATE jerseys SET name = $1, team = $2, price = $3, description = $4, image_url = $5, stock = $6, offer = $7, category = $8 WHERE jersey_id = $8 `,
         [ name, team, price, description, image_url, stock, offer, category, jersey_id, ] );
 
       return NextResponse.json({ message: "Jersey updated successfully" });
-    } finally {
-      dbConnect.release();
+    } catch (error) {
+      console.error("Jersey update failed!", error)
+      return NextResponse.json({message: "Jersey update failed!"})
     }
   } catch (error) {
     console.error("UPDATE JERSEY ERROR:", error);

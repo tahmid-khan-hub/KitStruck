@@ -1,20 +1,19 @@
 import { authOptions } from "@/lib/authOptions";
-import pool from "@/lib/mysql";
-import { RowDataPacket } from "mysql2";
+import pool from "@/lib/postgresql";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
-interface CountJerseys extends RowDataPacket {
-  totalJerseys: number;
+interface CountJerseys {
+  totalJerseys: string;
 }
-interface CountUsers extends RowDataPacket {
-  totalUsers: number;
+interface CountUsers {
+  totalUsers: string;
 }
-interface SumEarned extends RowDataPacket {
-    totalEarned: number;
+interface SumEarned {
+    totalEarned: string;
 }
-interface CountReviews extends RowDataPacket {
-    totalReviews: number;
+interface CountReviews {
+    totalReviews: string;
 }
 
 export async function GET() {
@@ -22,26 +21,23 @@ export async function GET() {
     if (!session || session.user.role !== "admin")
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-    const dbConnect = await pool.getConnection();
-
     try {
-        const [ jerseyRows ] = await dbConnect.query<CountJerseys[]>(`SELECT COUNT(*) AS totalJerseys FROM jersey_table`);
+        const jerseyRows = await pool.query<CountJerseys>(`SELECT COUNT(*) AS totalJerseys FROM jerseys`);
 
-        const [ userRows ] = await dbConnect.query<CountUsers[]>(`SELECT COUNT(*) AS totalUsers FROM users`);
+        const userRows = await pool.query<CountUsers>(`SELECT COUNT(*) AS totalUsers FROM users`);
 
-        const [ earnedRows ] = await dbConnect.query<SumEarned[]>(`SELECT SUM(amount) AS totalEarned FROM payments`);
+        const earnedRows = await pool.query<SumEarned>(`SELECT SUM(amount) AS totalEarned FROM payments`);
 
-        const [ userReviews ] = await dbConnect.query<CountReviews[]>(`SELECT COUNT(*) AS totalReviews FROM review`);
-
+        const userReviews = await pool.query<CountReviews>(`SELECT COUNT(*) AS totalReviews FROM reviews`);
 
         return NextResponse.json({
-            totalJerseys: jerseyRows[0].totalJerseys, totalUsers: userRows[0].totalUsers, totalEarned: earnedRows[0].totalEarned,
-            totalReviews: userReviews[0].totalReviews
+            totalJerseys: Number(jerseyRows.rows[0].totalJerseys ?? 0), 
+            totalUsers: Number(userRows.rows[0].totalUsers ?? 0), 
+            totalEarned: Number(earnedRows.rows[0].totalEarned ?? 0),
+            totalReviews: Number( userReviews.rows[0].totalReviews ?? 0)
         });
     } catch (error) {
         console.log(error);
         return NextResponse.json({ error: error }, { status: 500 });
-    } finally {
-        dbConnect.release();
-    }
+    } 
 }

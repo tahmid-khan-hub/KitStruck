@@ -1,9 +1,8 @@
-import pool from "@/lib/mysql";
+import pool from "@/lib/postgresql";
 import { Jersey } from "@/types/jersey";
-import { RowDataPacket } from "mysql2";
 import { NextResponse } from "next/server";
 
-interface CountRow extends RowDataPacket {
+interface CountRow {
   total: number;
 }
 
@@ -16,30 +15,26 @@ export async function GET(req: Request) {
     const sort = searchParams.get("sort") || "default";
     const offset = (page - 1) * limit;
 
-    const dbConnect = await pool.getConnection();
-
-    const [countRows] = await dbConnect.query<CountRow[] & RowDataPacket>(
-      "SELECT COUNT(*) as total FROM jersey_table"
+    const countRows = await pool.query<CountRow>(
+      "SELECT COUNT(*) as total FROM jerseys"
     );
 
-    const total = countRows[0]?.total || 0;
+    const total = countRows.rows[0]?.total || 0;
 
     // sort
     let orderBy = "";
     if(sort == "price_asc") orderBy = "ORDER BY price";
     if(sort == "price_desc") orderBy = "ORDER BY price DESC";
-    if(sort == "popularity") orderBy = "ORDER BY sells_quantity DESC";
-    if(sort == "less_popularity") orderBy = "ORDER BY sells_quantity";
+    if(sort == "popularity") orderBy = "ORDER BY sold_quantity DESC";
+    if(sort == "less_popularity") orderBy = "ORDER BY sold_quantity";
 
-    const [rows] = await dbConnect.query<Jersey[] & RowDataPacket>(
-      `SELECT * FROM jersey_table WHERE name LIKE ? ${orderBy} LIMIT ? OFFSET ?`,
+    const result = await pool.query<Jersey>(
+      `SELECT * FROM jerseys WHERE name LIKE $1 ${orderBy} LIMIT $2 OFFSET $3`,
       [`%${search}%`, limit, offset]
     );
 
-    dbConnect.release();
-
     return NextResponse.json({
-      data: rows,
+      data: result.rows,
       pagination: {
         page,
         limit,

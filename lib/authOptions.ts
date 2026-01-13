@@ -1,7 +1,6 @@
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
-import pool from "./mysql";
-import { RowDataPacket } from "mysql2";
+import pool from "./postgresql";
 import { NextAuthOptions, User } from "next-auth";
 import bcrypt from "bcryptjs";
 import { encode } from "next-auth/jwt";
@@ -10,6 +9,7 @@ interface DBUser {
   id: number;
   name: string;
   email: string;
+  password: string;
   photoURL: string | null;
   role: string;
 }
@@ -26,16 +26,14 @@ export const authOptions: NextAuthOptions = {
         if (!credentials?.email || !credentials?.password)
           throw new Error("Invalid credentials");
 
-        const dbConnect = await pool.getConnection();
-        const [rows] = await dbConnect.query<DBUser[] & RowDataPacket[]>(
-          "SELECT * FROM users WHERE email = ?",
+        const result = await pool.query<DBUser>(
+          "SELECT * FROM users WHERE email = $1",
           [credentials.email]
         );
-        dbConnect.release();
 
-        if (rows.length === 0) throw new Error("No user found");
+        if (result.rows.length === 0) throw new Error("No user found");
 
-        const user = rows[0];
+        const user = result.rows[0];
         const isPassword = await bcrypt.compare(credentials.password, user.password!);
         if (!isPassword) throw new Error("Incorrect password");
 
@@ -61,21 +59,17 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async signIn({ user }: { user: User }) {
       try {
-        const dbConnect = await pool.getConnection();
-
-        const [rows] = await dbConnect.query<DBUser[] & RowDataPacket[]>(
-          "SELECT * FROM users WHERE email = ?",
+        const result = await pool.query<DBUser>(
+          "SELECT * FROM users WHERE email = $1",
           [user?.email]
         );
 
-        if (rows.length === 0) {
-          await dbConnect.query(
-            "INSERT INTO users (name, email, photoURL, role) VALUES (?, ?, ?, ?)",
+        if (result.rows.length === 0) {
+          await pool.query(
+            "INSERT INTO users (name, email, photoURL, role) VALUES ($1, $2, $3, $4)",
             [user.name, user.email, user.image, "user"]
           );
         }
-
-        dbConnect.release();
         return true;
       } catch (error) {
         console.log(error);
@@ -84,20 +78,15 @@ export const authOptions: NextAuthOptions = {
     },
     async jwt({ token }) {
       if (token.email) {
-        const db = await pool.getConnection();
-        const [rows] = await db.query("SELECT id, role FROM users WHERE email = ?", [
-          token.email,
-        ]);
-        db.release();
+        const result = await pool.query("SELECT id, role FROM users WHERE email = $1", [ token.email,]);
 
-        const dbUser = rows as { id: number; role: string }[];
+        const dbUser = result.rows as { id: number; role: string }[];
 
         if (dbUser.length > 0) {
           token.userId = dbUser[0].id;   // Always use DB id
           token.role = dbUser[0].role;  
         }
       }
-
       return token;
     },
 

@@ -1,5 +1,5 @@
 "use server";
-import pool from "@/lib/mysql";
+import pool from "@/lib/postgresql";
 import bcrypt from "bcryptjs";
 
 export const signUpUsers = async (payload: {
@@ -11,24 +11,22 @@ export const signUpUsers = async (payload: {
   const { name, email, password, photoURL } = payload;
   if (!email || !password) return { success: false, message: "Invalid data" };
 
-  const db = await pool;
-
   // checking user exist or not
-  const [existingUser] = await db.execute(
-    "SELECT * FROM users WHERE email = ?",
+  const existingUser = await pool.query(
+    "SELECT * FROM users WHERE email = $1",
     [email]
   );
 
   // user exists
-  if ((existingUser as any[]).length > 0) {
+  if (existingUser.rows.length > 0) {
     return { success: false, message: "User already exists" };
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
   // new user
-  await db.execute(
-    "INSERT INTO users (name, email, password, photoURL) VALUES (?, ?, ?, ?)",
+  await pool.query(
+    "INSERT INTO users (name, email, password, photoURL) VALUES ($1, $2, $3, $4)",
     [name, email, hashedPassword, photoURL]
   );
 

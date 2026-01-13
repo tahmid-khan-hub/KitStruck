@@ -1,15 +1,14 @@
 import { authOptions } from "@/lib/authOptions";
-import pool from "@/lib/mysql";
-import { RowDataPacket } from "mysql2";
+import pool from "@/lib/postgresql";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
-interface CountJerseysBought extends RowDataPacket {
-    totalJerseys: number;
+interface CountJerseysBought {
+    totalJerseys: string;
 }
 
-interface CountReviews extends RowDataPacket {
-    totalReviews: number;
+interface CountReviews {
+    totalReviews: string;
 }
 
 export async function GET() {
@@ -17,22 +16,18 @@ export async function GET() {
     if (!session || session.user.role !== "user")
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-    const dbConnect = await pool.getConnection();
-
     try {
-        const [ jerseyRows ] = await dbConnect.query<CountJerseysBought[]>(`SELECT COUNT(*) AS totalJerseys FROM orders WHERE user_id = ?`, [session?.user?.id]);
+        const jerseyRows = await pool.query<CountJerseysBought>(`SELECT COUNT(*) AS totalJerseys FROM orders WHERE user_id = $1`, [session?.user?.id]);
 
-        const [ userReviews ] = await dbConnect.query<CountReviews[]>(`SELECT COUNT(*) AS totalReviews FROM review WHERE user_id = ?`, [session?.user?.id]);
+        const userReviews = await pool.query<CountReviews>(`SELECT COUNT(*) AS totalReviews FROM reviews WHERE user_id = $1`, [session?.user?.id]);
 
 
         return NextResponse.json({
-            totalJerseys: jerseyRows[0].totalJerseys,
-            totalReviews: userReviews[0].totalReviews
+            totalJerseys: Number(jerseyRows.rows[0]?.totalJerseys ?? 0),
+            totalReviews: Number(userReviews.rows[0]?.totalReviews ?? 0),
         });
     } catch (error) {
         console.log(error);
         return NextResponse.json({ error: error }, { status: 500 });
-    } finally {
-        dbConnect.release();
     }
 }

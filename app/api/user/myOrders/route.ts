@@ -1,10 +1,9 @@
 import { authOptions } from "@/lib/authOptions";
-import pool from "@/lib/mysql";
-import { RowDataPacket } from "mysql2";
+import pool from "@/lib/postgresql";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { ordersRow } from "@/types/ordersType";
-interface CountRow extends RowDataPacket {
+interface CountRow {
   total: number;
 }
 
@@ -15,41 +14,39 @@ export async function GET(req: Request) {
   const offset = (page - 1) * limit;
 
   const session = await getServerSession(authOptions);
-  const dbConnect = await pool.getConnection();
 
-  if (!session) {
-    return NextResponse.json([], { status: 200 });
-  }
+  if (!session) return NextResponse.json([], { status: 200 });
 
   try {
-    const [countRows] = await dbConnect.query<CountRow[]>(
-      `SELECT COUNT(*) AS total FROM orders WHERE user_id = ?`,
+    const countRows = await pool.query<CountRow>(
+      `SELECT COUNT(*) AS total FROM orders WHERE user_id = $1`,
       [session.user.id]
     );
 
-    const total = countRows[0]?.total ?? 0;
+    const total = countRows.rows[0]?.total ?? 0;
 
-    const [rawRows] = await dbConnect.query<ordersRow[]>(
+    const rawRows = await pool.query<ordersRow>(
       `SELECT
-        o.payment_intent_id, o.total_amount, o.status, o.created_at,
-        o.quantity, o.size, o.address, o.delivery_status,
+        o.payment_intent_id, o.total_amount, o.delivery_status, o.created_at, o.address
+        oi.quantity, oi.size,
         j.jersey_id, j.name, j.team, j.image_url, 
         j.category, j.price
-        FROM orders o JOIN jersey_table j
-        ON o.jersey_id = j.jersey_id
-        WHERE o.user_id = ?
+        FROM orders o JOIN order_items oi
+        ON oi.order_id = o.order_id
+        FROM order_items oi JOIN jersey_table j
+        ON oi.jersey_id = j.jersey_id
+        WHERE o.user_id = $1
         ORDER BY o.created_at DESC
-        LIMIT ? OFFSET ?`, [session.user.id, limit, offset] );
+        LIMIT $2 OFFSET $3`, [session.user.id, limit, offset] );
 
-    const formatted = rawRows.map((row) => ({
+    const formatted = rawRows.rows.map((row) => ({
       payment_intent_id: row.payment_intent_id,
       total_amount: row.total_amount,
-      status: row.status,
+      delivery_status: row.status,
       created_at: row.created_at,
       quantity: row.quantity,
       size: row.size,
       address: row.address,
-      delivery_status: row.delivery_status,
 
       jerseyData: {
         jersey_id: row.jersey_id,
@@ -65,7 +62,5 @@ export async function GET(req: Request) {
   } catch (error) {
     console.error(error);
     return NextResponse.json({ error }, { status: 500 });
-  } finally {
-    dbConnect.release();
-  }
+  } 
 }

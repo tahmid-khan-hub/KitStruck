@@ -1,40 +1,37 @@
 "use client"
+import useAxiosSecure from "@/app/hooks/useAxiosSecure";
 import UseSweetAlert from "@/app/hooks/UseSweetAlert";
 import { orders } from "@/types/orders";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import { useState } from "react";
 
 export default function OrderRow({ item }: { item: orders }) {
   const { data: session } = useSession(); 
   const { confirmProceed, successToast, errorToast } = UseSweetAlert();
-  const [deliveryStatus, setDeliveryStatus] = useState(item.delivery_status);
+  const queryClient = useQueryClient();
+  const axiosSecure = useAxiosSecure();
+
+  const {mutate: updateDeliveryStatus, isPending} = useMutation({
+    mutationFn: async () => {
+      return axiosSecure.patch(`/api/admin/manage-orders/${item.order_id}`, {
+        delivery_status: "processing"
+      });
+    },
+    onSuccess: () => {
+      successToast("Order moved to processing!");
+      queryClient.invalidateQueries({ queryKey: ["orders"] });
+    },
+    onError: () => {
+      errorToast("Failed to update order");
+    },
+  })
+
   const handleProceed = async() => {
     const confirmed = await confirmProceed("Mark this order as processing?");
     if (!confirmed) return; 
 
-    try {
-      const res = await fetch(`/api/admin/manage-orders/${item.order_id}`, {
-        cache: "no-store",
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          delivery_status: "processing"
-        })
-      })
-
-      if (res.ok) {
-        successToast("Order moved to processing!")
-        setDeliveryStatus("processing");
-      }
-      else errorToast("Failed to update order");
-      
-    } catch (error) {
-      console.error(error);
-      errorToast("Something went wrong");
-    }
+    updateDeliveryStatus();
   }
   return (
     <tr className="border-b border-b-gray-200 hover:bg-gray-100">
@@ -63,21 +60,25 @@ export default function OrderRow({ item }: { item: orders }) {
 
       {/* payment method */}
       <td className="capitalize">
-        <span className="flex justify-start text-blue-500 font-semibold ">{item.status}</span>
+        <span className="flex justify-start text-blue-500 font-semibold">
+          {item.payment_status
+            ?.replace(/_/g, " ")
+            .replace(/\b\w/g, (c) => c.toUpperCase())}
+        </span>
       </td>
 
       <td className="capitalize">
-        <span className="text-blue-500 font-semibold ">{deliveryStatus}</span>
+        <span className="text-blue-500 font-semibold ">{item.delivery_status}</span>
       </td>
 
       {session?.user?.role === "admin" && (
         <td>
-          {deliveryStatus === "pending" ? (
+          {item.delivery_status === "pending" ? (
             <span
               onClick={handleProceed}
               className="px-2 py-1.5 rounded text-white font-semibold bg-blue-600 hover:bg-blue-700 text-xs cursor-pointer"
             >
-              Proceed
+              {isPending ? "Updating": "Proceed"}
             </span>
           ) : (
             <span className="px-2 py-1.5 rounded text-white font-semibold bg-gray-500 text-xs cursor-not-allowed">

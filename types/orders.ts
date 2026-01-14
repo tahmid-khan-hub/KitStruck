@@ -5,7 +5,7 @@ export interface orders {
     user_id: string;
     order_id: number;
     total_amount: number;
-    status: string;
+    payment_status: string;
     created_at: string;
     jersey_id: number;
     quantity: number;

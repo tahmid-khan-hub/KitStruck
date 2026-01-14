@@ -19,30 +19,33 @@ export async function GET(req: Request) {
 
   try {
     const countRows = await pool.query<CountRow>(
-      `SELECT COUNT(*) AS total FROM orders WHERE user_id = $1`,
-      [session.user.id]
+      `SELECT COUNT(DISTINCT o.order_id) AS total
+      FROM orders o
+      JOIN order_items oi ON oi.order_id = o.order_id
+      WHERE o.user_id = $1`,
+      [Number(session.user.id)]
     );
 
     const total = countRows.rows[0]?.total ?? 0;
 
     const rawRows = await pool.query<ordersRow>(
       `SELECT
-        o.payment_intent_id, o.total_amount, o.delivery_status, o.created_at, o.address
+        o.payment_intent_id, o.total_amount, o.delivery_status, o.created_at, o.address, o.payment_status,
         oi.quantity, oi.size,
         j.jersey_id, j.name, j.team, j.image_url, 
         j.category, j.price
-        FROM orders o JOIN order_items oi
-        ON oi.order_id = o.order_id
-        FROM order_items oi JOIN jersey_table j
-        ON oi.jersey_id = j.jersey_id
+        FROM orders o 
+        JOIN order_items oi ON oi.order_id = o.order_id
+        JOIN jerseys j ON oi.jersey_id = j.jersey_id
         WHERE o.user_id = $1
         ORDER BY o.created_at DESC
-        LIMIT $2 OFFSET $3`, [session.user.id, limit, offset] );
+        LIMIT $2 OFFSET $3`, [Number(session.user.id), limit, offset] );
 
     const formatted = rawRows.rows.map((row) => ({
       payment_intent_id: row.payment_intent_id,
       total_amount: row.total_amount,
-      delivery_status: row.status,
+      delivery_status: row.delivery_status,
+      payment_status: row.payment_status,
       created_at: row.created_at,
       quantity: row.quantity,
       size: row.size,

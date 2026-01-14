@@ -12,7 +12,7 @@ export async function POST(req:Request) {
         await pool.query(`
             INSERT INTO support_issues (user_id, issue_title, issue_description) VALUES
             ($1, $2, $3)`,
-            [session.user.id, issue_title, description]
+            [Number(session.user.id), issue_title, description]
         )
         return NextResponse.json({ success: true, message: "Support issue created" })
     } catch (error) {
@@ -28,7 +28,7 @@ export async function GET() {
     try {
         const result = await pool.query(`
             SELECT * FROM support_issues WHERE user_id = $1 ORDER BY created_at`,
-            [session.user.id]
+            [Number(session.user.id)]
         )
         return NextResponse.json(result.rows);
     } catch (error) {

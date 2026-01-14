@@ -3,41 +3,56 @@ import pool from "@/lib/postgresql";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
-interface CountJerseys {
-  totalJerseys: string;
-}
-interface CountUsers {
-  totalUsers: string;
-}
-interface SumEarned {
-    totalEarned: string;
-}
-interface CountReviews {
-    totalReviews: string;
-}
-
 export async function GET() {
-    const session = await getServerSession(authOptions);
-    if (!session || session.user.role !== "admin")
-        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const session = await getServerSession(authOptions);
 
-    try {
-        const jerseyRows = await pool.query<CountJerseys>(`SELECT COUNT(*) AS totalJerseys FROM jerseys`);
+  if (!session || session.user.role !== "admin") {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
-        const userRows = await pool.query<CountUsers>(`SELECT COUNT(*) AS totalUsers FROM users`);
+  try {
+    const jerseyRows = await pool.query<{
+      totaljerseys: string;
+    }>(`
+      SELECT COALESCE(SUM(oi.quantity), 0) AS totaljerseys
+      FROM orders o
+      JOIN order_items oi ON oi.order_id = o.order_id
+    `);
 
-        const earnedRows = await pool.query<SumEarned>(`SELECT SUM(amount) AS totalEarned FROM payments`);
+    const userRows = await pool.query<{
+      totalusers: string;
+    }>(`
+      SELECT COUNT(*) AS totalusers FROM users
+    `);
 
-        const userReviews = await pool.query<CountReviews>(`SELECT COUNT(*) AS totalReviews FROM reviews`);
+    const earnedRows = await pool.query<{
+      totalearned: string;
+    }>(`
+      SELECT COALESCE(SUM(amount), 0) AS totalearned FROM payments
+    `);
 
-        return NextResponse.json({
-            totalJerseys: Number(jerseyRows.rows[0].totalJerseys ?? 0), 
-            totalUsers: Number(userRows.rows[0].totalUsers ?? 0), 
-            totalEarned: Number(earnedRows.rows[0].totalEarned ?? 0),
-            totalReviews: Number( userReviews.rows[0].totalReviews ?? 0)
-        });
-    } catch (error) {
-        console.log(error);
-        return NextResponse.json({ error: error }, { status: 500 });
-    } 
+    const reviewRows = await pool.query<{
+      totalreviews: string;
+    }>(`
+      SELECT COUNT(*) AS totalreviews FROM reviews
+    `);
+
+    const totalJerseys = Number(jerseyRows.rows[0].totaljerseys);
+    const totalUsers = Number(userRows.rows[0].totalusers);
+    const totalEarned = Number(earnedRows.rows[0].totalearned);
+    const totalReviews = Number(reviewRows.rows[0].totalreviews);
+
+    return NextResponse.json({
+      totalJerseys,
+      totalUsers,
+      totalEarned,
+      totalReviews,
+    });
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
+  }
 }

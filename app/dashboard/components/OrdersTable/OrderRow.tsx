@@ -20,7 +20,7 @@ export default function OrderRow({ item }: { item: orders }) {
     },
     onSuccess: () => {
       successToast("Order moved to processing!");
-      queryClient.invalidateQueries({ queryKey: ["orders"] });
+      queryClient.invalidateQueries({ queryKey: ["manage-orders"] });
     },
     onError: () => {
       errorToast("Failed to update order");

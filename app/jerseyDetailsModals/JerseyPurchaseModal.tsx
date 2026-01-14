@@ -29,6 +29,7 @@ export default function JerseyPurchaseModal({ jersey, available, open, onClose }
 
   const increaseQty = () => { if (qty < available) setQty(qty + 1); };
   const decreaseQty = () => { if (qty > 1) setQty(qty - 1); };
+  const finalPrice = jersey.offer != null ? jersey.price - (jersey.price * jersey.offer) / 100 : jersey.price;
   if (!open) return null;
 
   const orderData = {
@@ -102,7 +103,7 @@ export default function JerseyPurchaseModal({ jersey, available, open, onClose }
             <p><strong>Name:</strong> {jersey.name}</p>
             <p><strong>Team:</strong> {jersey.team}</p>
             <p><strong>Category:</strong> {jersey.category}</p>
-            <p><strong>Price:</strong> ${jersey.price}</p>
+            <p><strong>Price:</strong> ${finalPrice.toFixed(2)}</p>
           </div>
 
           {/* select jersey size */}

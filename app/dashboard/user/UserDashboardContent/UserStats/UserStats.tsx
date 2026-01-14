@@ -27,7 +27,7 @@ export default function UserStats() {
       color: "text-blue-500",
     },
     {
-      title: "Review",
+      title: "Reviews",
       value: data.totalReviews,
       icon: <FaStar size={29} />,
       color: "text-blue-500",

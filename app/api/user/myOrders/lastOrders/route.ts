@@ -14,13 +14,12 @@ export async function GET() {
             oi.size, oi.price,
             j.jersey_id, j.name, j.team, j.image_url, 
             j.category, j.price
-            FROM orders o JOIN order_items oi
-            ON oi.order_id = o.order_id
-            FROM order_items oi JOIN jersey_table j
-            ON oi.jersey_id = j.jersey_id
+            FROM orders o 
+            JOIN order_items oi ON oi.order_id = o.order_id
+            JOIN jerseys j ON oi.jersey_id = j.jersey_id
             WHERE o.user_id = $1
             ORDER BY o.created_at DESC
-            LIMIT 3`, [session.user.id] )
+            LIMIT 3`, [Number(session.user.id)] )
             
         return NextResponse.json({ success: true, data: result.rows });
         

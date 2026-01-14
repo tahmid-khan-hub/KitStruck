@@ -31,8 +31,8 @@ export async function POST(req: Request) {
         `INSERT INTO reviews
         (user_id, reviewer_name, reviewer_email, reviewer_image, rating, comment)
          VALUES
-        (?, ?, ?, ?, ?, ?)`,
-        [user.id, user.name, user.email, user.image, rating, review]
+        ($1, $2, $3, $4, $5, $6)`,
+        [Number(user.id), user.name, user.email, user.image, rating, review]
         );
         return NextResponse.json(
           { success: true, message: "Review submitted successfully" }, { status: 201 }

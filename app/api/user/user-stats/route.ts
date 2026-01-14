@@ -3,31 +3,50 @@ import pool from "@/lib/postgresql";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
-interface CountJerseysBought {
-    totalJerseys: string;
-}
-
-interface CountReviews {
-    totalReviews: string;
-}
-
 export async function GET() {
-    const session = await getServerSession(authOptions);
-    if (!session || session.user.role !== "user")
-        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const session = await getServerSession(authOptions);
 
-    try {
-        const jerseyRows = await pool.query<CountJerseysBought>(`SELECT COUNT(*) AS totalJerseys FROM orders WHERE user_id = $1`, [session?.user?.id]);
+  if (!session || session.user.role !== "user") {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
-        const userReviews = await pool.query<CountReviews>(`SELECT COUNT(*) AS totalReviews FROM reviews WHERE user_id = $1`, [session?.user?.id]);
+  try {
+    const jerseysResult = await pool.query<{
+      totaljerseys: string;
+    }>(
+      `
+      SELECT COALESCE(SUM(oi.quantity), 0) AS totaljerseys
+      FROM orders o
+      JOIN order_items oi ON oi.order_id = o.order_id
+      WHERE o.user_id = $1;
+      `,
+      [Number(session.user.id)]
+    );
 
+    // total reviews
+    const reviewsResult = await pool.query<{
+      totalreviews: string;
+    }>(
+      `
+      SELECT COUNT(*) AS totalreviews
+      FROM reviews
+      WHERE user_id = $1;
+      `,
+      [Number(session.user.id)]
+    );
 
-        return NextResponse.json({
-            totalJerseys: Number(jerseyRows.rows[0]?.totalJerseys ?? 0),
-            totalReviews: Number(userReviews.rows[0]?.totalReviews ?? 0),
-        });
-    } catch (error) {
-        console.log(error);
-        return NextResponse.json({ error: error }, { status: 500 });
-    }
+    const totalJerseys = Number(jerseysResult.rows[0].totaljerseys);
+    const totalReviews = Number(reviewsResult.rows[0].totalreviews);
+
+    return NextResponse.json({
+      totalJerseys,
+      totalReviews,
+    });
+  } catch (error) {
+    console.error("Stats API error:", error);
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
+  }
 }

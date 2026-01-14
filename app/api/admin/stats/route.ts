@@ -14,9 +14,7 @@ export async function GET() {
     const jerseyRows = await pool.query<{
       totaljerseys: string;
     }>(`
-      SELECT COALESCE(SUM(oi.quantity), 0) AS totaljerseys
-      FROM orders o
-      JOIN order_items oi ON oi.order_id = o.order_id
+      SELECT COUNT(*) AS totaljerseys FROM jerseys
     `);
 
     const userRows = await pool.query<{
@@ -28,7 +26,7 @@ export async function GET() {
     const earnedRows = await pool.query<{
       totalearned: string;
     }>(`
-      SELECT COALESCE(SUM(amount), 0) AS totalearned FROM payments
+      SELECT COALESCE(SUM(total_amount), 0) AS totalearned FROM orders
     `);
 
     const reviewRows = await pool.query<{

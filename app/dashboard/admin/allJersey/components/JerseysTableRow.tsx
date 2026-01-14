@@ -64,7 +64,7 @@ const JerseysTableRow = ({ item }: { item: Jersey }) => {
       </td>
 
       <td className="text-left">${item?.price}</td>
-      <td className="pl-9">{item?.sold_quantity}</td>
+      <td className="pl-6">{item?.stock}</td>
       
       {/* action */}
       <td className="flex mt-3">

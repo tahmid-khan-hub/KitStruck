@@ -14,6 +14,7 @@ export async function POST(req: Request) {
   if (!session?.user || session.user.role === "admin") return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   
   const { order_id, payment_id, status } = await req.json();
+  console.log(order_id, payment_id, status);
 
   try {
     const orders = await pool.query<OrderRowData>(
@@ -22,7 +23,7 @@ export async function POST(req: Request) {
        JOIN order_items oi 
        ON o.order_id = oi.order_id
        WHERE o.order_id = $1 AND o.user_id = $2`, 
-       [order_id, session.user.id]
+       [order_id, Number(session.user.id)]
     );
 
     if (!orders.rows.length) return NextResponse.json({ error: "Order not found" }, { status: 404 });
@@ -33,9 +34,9 @@ export async function POST(req: Request) {
     await pool.query(
       `INSERT INTO payments
        (user_id, order_id, payment_id, amount, status)
-       VALUES ($1, $2, $3, $4, $5)`, [ session.user.id, order_id, payment_id, totalAmount, status ] );
+       VALUES ($1, $2, $3, $4, $5)`, [ Number(session.user.id), order_id, payment_id, totalAmount, status ] );
 
-    // Update order  payment status
+    // Update order payment status
     await pool.query( `UPDATE orders SET payment_status = 'paid' WHERE order_id = $1`, [order_id]);
 
     // Update jersey sold quantities

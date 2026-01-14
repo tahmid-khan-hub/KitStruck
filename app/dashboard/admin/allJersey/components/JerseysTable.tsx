@@ -11,7 +11,7 @@ const JerseysTable = ({ jerseys }: { jerseys: Jersey[] }) => {
             <th>Image</th>
             <th>Jersey</th>
             <th>Amount</th>
-            <th>Quantity</th>
+            <th>Stock</th>
             <th>Action</th>
           </tr>
         </thead>

@@ -5,6 +5,14 @@ import UseSweetAlert from "../hooks/UseSweetAlert";
 import Lottie from "react-lottie-player";
 import PaymentLottie from "@/public/Payment.json"
 import { useRouter } from "next/navigation";
+import useAxiosSecure from "../hooks/useAxiosSecure";
+import { useMutation } from "@tanstack/react-query";
+
+interface SavePaymentPayload {
+  payment_id: string;
+  order_id: number;
+  status: string;
+}
 
 export default function CheckoutForm({
   order_id,
@@ -18,6 +26,19 @@ export default function CheckoutForm({
   const stripe = useStripe();
   const elements = useElements();
   const [loading, setLoading] = useState(false);
+
+  const axiosSecure = useAxiosSecure();
+
+  const {mutate: savePaymentMutation, isPending} = useMutation({
+    mutationFn: async (payload: SavePaymentPayload) => {
+      return axiosSecure.post("/api/payment/save-payment", payload )
+    },
+    onSuccess: () => {
+      successToast("Payment successful!");
+      router.push("/dashboard/user/myOrders");
+    },
+    onError: () => errorToast("Payment save failed"),
+  })
 
   const handlePayment = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,17 +68,11 @@ export default function CheckoutForm({
     }
 
     if (paymentIntent?.status === "succeeded") {
-      successToast("Payment successful!");
-
-      await fetch("/api/payment/save-payment", {
-        method: "POST",
-        body: JSON.stringify({
-          payment_id: paymentIntent.id,
-          order_id: order_id,
-          status: paymentIntent.status,
-        }),
+      savePaymentMutation({
+        payment_id: paymentIntent.id,
+        order_id,
+        status: paymentIntent.status,
       });
-      router.push("/dashboard/user/myOrders");
     }
     setLoading(false);
   };
@@ -75,7 +90,7 @@ export default function CheckoutForm({
               disabled={!stripe || loading}
               className="btns mt-7 mb-3 px-6 py-3 w-full"
             >
-              {loading ? "Processing..." : `Pay Now`}
+              {loading || isPending ? "Processing..." : `Pay Now`}
             </button>
           </div></div>
         </div>

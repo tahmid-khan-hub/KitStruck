@@ -9,6 +9,8 @@ import UseSweetAlert from "@/app/hooks/UseSweetAlert";
 import { useRouter } from "next/navigation";
 import JerseyTotalPrice from "./JerseyTotalPrice";
 import JerseyPurchasePaymentMethod from "./JerseyPurchasePaymentMethod";
+import { useMutation } from "@tanstack/react-query";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 interface Props {
   jersey: Jersey;
@@ -20,6 +22,7 @@ interface Props {
 export default function JerseyPurchaseModal({ jersey, available, open, onClose }: Props) {
   const {errorToast, successToast} = UseSweetAlert();
   const router = useRouter();
+  const axiosSecure = useAxiosSecure();
   const { data: session } = useSession();
   const [qty, setQty] = useState(1);
   const [size, setSize] = useState("");
@@ -32,12 +35,7 @@ export default function JerseyPurchaseModal({ jersey, available, open, onClose }
   const price = parseFloat(String(jersey.price));
   const offer = parseFloat(String(jersey.offer ?? 0));
 
-  const finalPrice =
-  offer > 0 ? price - (price * offer) / 100 : price;
-
-  console.log("p -> ",price, "o -> ",offer, "f -> ",finalPrice);
-
-  if (!open) return null;
+  const finalPrice = offer > 0 ? price - (price * offer) / 100 : price;
 
   const orderData = {
     jersey_id: jersey.jersey_id,
@@ -48,45 +46,47 @@ export default function JerseyPurchaseModal({ jersey, available, open, onClose }
     phone: location.phone,
   };
 
+  const createOrderMutation = useMutation({
+    mutationFn: async() => {
+      const res = await axiosSecure.post("/api/orders/create-draft", orderData);
+      return res.data;
+    },
+    onSuccess: (data) => {
+      if (!data?.order_id) {
+        errorToast("Order creation failed");
+        return;
+      }
+      if (paymentMethod === "cod") {
+        successToast("Your order has been placed successfully!");
+        router.push("/dashboard/user/myOrders");
+        return;
+      }
+      router.push(`/payment?order_id=${data.order_id}`);
+    },
+    onError: (err) => {
+      console.error(err);
+      errorToast("Something went wrong");
+    },
+  })
+
   const handleProceed = async () => {
-  if (!paymentMethod) { 
-    errorToast("Please select a payment method");  
-    return;
-  }
-  if (!size) { errorToast("Please select jersey size"); return; }
-  if (!location.division || !location.address || !location.phone) {
-    errorToast("Please complete delivery address");
-    return;
-  }
-  if (!bdPhoneRegex.test(location.phone)) {
-    errorToast("Please enter a valid Bangladeshi phone number");
-    return;
-  }
-
-  try {
-    const res = await fetch("/api/orders/create-draft", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(orderData),
-    });
-
-    const data = await res.json();
-
-    if (!data.order_id) { errorToast("Order creation failed"); return; }
-
-    // if user selects cash on delivery
-    if (paymentMethod === "cod") {
-      successToast("Your order has been placed successfully!")
-      router.push("/dashboard/user/myOrders");
+    if (!paymentMethod) { 
+      errorToast("Please select a payment method");  
       return;
     }
+    if (!size) { errorToast("Please select jersey size"); return; }
+    if (!location.division || !location.address || !location.phone) {
+      errorToast("Please complete delivery address");
+      return;
+    }
+    if (!bdPhoneRegex.test(location.phone)) {
+      errorToast("Please enter a valid Bangladeshi phone number");
+      return;
+    }
+    createOrderMutation.mutate();
+  };
 
-    router.push(`/payment?order_id=${data.order_id}`);
-  } catch (err) {
-    console.error(err);
-    errorToast("Something went wrong");
-  }
-};
+  if (!open) return null;
 
   return (
     <AnimatePresence>

@@ -15,9 +15,10 @@ interface Props {
 
 export default function CartList({ item, handleRemove,}: Props) {
   const [openModal, setOpenModal] = useState(false);
-  const available = item?.stock - item?.sells_quantity;
+  const available = item?.stock - item?.sold_quantity;
   const {data: session} = useSession();
-
+  const hasOffer = typeof item.offer === "number" && item.offer > 0;
+  const discountedPrice = hasOffer ? (item.price - (item.price * item.offer) / 100).toFixed(2) : item.price.toFixed(2);
   return (
   <div className="overflow-x-auto">
   <div className="min-w-[750px]"> 
@@ -38,7 +39,8 @@ export default function CartList({ item, handleRemove,}: Props) {
       {/* item details */}
       <div className="flex-1">
         <h2 className="text-xl font-semibold">{item.name}</h2>
-        <p className="font-bold text-lg mt-2">Price: ${item.price}</p>
+        <p className="font-bold text-lg mt-2">Price: <span className="line-through">${item.price}</span></p>
+        <span className="text-xl font-bold text-blue-600">${discountedPrice}</span>
       </div>
 
       {/* Buy button */}

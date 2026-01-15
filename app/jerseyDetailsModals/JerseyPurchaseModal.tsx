@@ -29,7 +29,14 @@ export default function JerseyPurchaseModal({ jersey, available, open, onClose }
 
   const increaseQty = () => { if (qty < available) setQty(qty + 1); };
   const decreaseQty = () => { if (qty > 1) setQty(qty - 1); };
-  const finalPrice = jersey.offer != null ? jersey.price - (jersey.price * jersey.offer) / 100 : jersey.price;
+  const price = parseFloat(String(jersey.price));
+  const offer = parseFloat(String(jersey.offer ?? 0));
+
+  const finalPrice =
+  offer > 0 ? price - (price * offer) / 100 : price;
+
+  console.log("p -> ",price, "o -> ",offer, "f -> ",finalPrice);
+
   if (!open) return null;
 
   const orderData = {
@@ -139,7 +146,7 @@ export default function JerseyPurchaseModal({ jersey, available, open, onClose }
             </span>
           </div>
 
-          <JerseyTotalPrice price={jersey.price} quantity={qty}/>
+          <JerseyTotalPrice price={finalPrice} quantity={qty}/>
           {/* payment method */}
           <JerseyPurchasePaymentMethod method={paymentMethod} setMethod={setPaymentMethod} />
           

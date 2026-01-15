@@ -11,7 +11,7 @@ export async function GET() {
         const result = await pool.query(
             `SELECT c.cart_id,
             j.jersey_id, j.name, j.team, j.image_url, j.category, 
-            j.price, j.description, j.stock, j.sold_quantity
+            j.price, j.description, j.stock, j.sold_quantity, j.offer
             FROM cart c
             JOIN jerseys j
             ON c.jersey_id = j.jersey_id

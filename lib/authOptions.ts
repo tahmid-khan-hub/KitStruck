@@ -3,7 +3,6 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import pool from "./postgresql";
 import { NextAuthOptions, User } from "next-auth";
 import bcrypt from "bcryptjs";
-import { encode } from "next-auth/jwt";
 
 interface DBUser {
   id: number;
@@ -98,10 +97,6 @@ export const authOptions: NextAuthOptions = {
       if (!session.user.image || session.user.image.trim() === "") {
         session.user.image = null;
       }
-      session.accessToken = await encode({
-        token,
-        secret: process.env.NEXTAUTH_SECRET!,
-      });
       return session;
     },
   },

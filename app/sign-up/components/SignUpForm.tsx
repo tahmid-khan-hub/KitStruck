@@ -92,6 +92,8 @@ const SignUpForm = ({ callbackUrl }: SignUpFormProps) => {
             {showPassword ? <FaEyeSlash /> : <FaEye />}
           </span>
         </div>
+        
+        <p className="text-sm text-gray-400 mb-6">Password must be at least 8 characters and include: 1 uppercase letter, 1 lowercase letter and 1 special character</p>
 
         <button type="submit" className="btns w-full mt-5">
           Sign up

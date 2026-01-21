@@ -3,13 +3,14 @@ import pool from "@/lib/postgresql";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
-export async function PATCH(req: Request, { params }: { params: { order_id: number  } }) {
+export async function PATCH(req: Request, { params }: { params: { order_id: string  } }) {
 
     const session = await getServerSession(authOptions);
     if(!session?.user) return NextResponse.json({error: "Invalid user"})
 
-    const paramsId = await params
-    const orderId = paramsId.order_id;
+    const orderId = Number(params.order_id);
+    if (Number.isNaN(orderId)) return NextResponse.json({ error: "Invalid order id" }, { status: 400 });
+  
     const body = await req.json();
     const { delivery_status } = body;
 

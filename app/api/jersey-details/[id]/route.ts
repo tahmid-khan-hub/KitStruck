@@ -3,11 +3,13 @@ import { NextResponse } from "next/server";
 
 export async function GET(
   req: Request,
-   { params }: { params: { id: string } }
+   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const p  = await params;
-    const jerseyID = p.id;
+    const {id}  = await params;
+    const jerseyID = Number(id);
+
+    if (Number.isNaN(jerseyID)) return NextResponse.json({ error: "Invalid jersey id" }, { status: 400 });
 
     const result = await pool.query(
       "SELECT * FROM jerseys WHERE jersey_id = $1",

@@ -47,7 +47,7 @@ export default function StatsCards() {
   ];
 
   return (
-     <div className="max-w-5xl mx-auto mt-12 grid grid-cols-2 md:grid-cols-4 gap-6">
+     <div className="max-w-5xl mx-auto mt-12 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
       {stats.map((stat, index) => (
         <AnimateOnView key={index} direction="scale" delay={index * 0.08}><div
           key={index}

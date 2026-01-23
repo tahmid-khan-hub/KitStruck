@@ -56,8 +56,8 @@ const AllSupportAndIssues = () => {
   if(issues.length === 0) return <AllSupportAndIssuesLottie />;
 
   return (
-    <div className="max-w-6xl mx-auto px-5 my-10 space-y-4 ">
-      {issues.map((item: SupportIssue, i) => (
+    <div className="max-w-6xl mx-auto px-5 my-10 min-h-125 flex flex-col ">
+      <div className="space-y-4">{issues.map((item: SupportIssue, i) => (
         <AnimateOnView key={i} direction="up" delay={i * 0.08}><AllSupportAndIssuesContainer key={item.issue_id}
             item={item}
             openId={openId}
@@ -66,13 +66,13 @@ const AllSupportAndIssues = () => {
             setReplyText={setReplyText}
             replyMutation={replyMutation} 
         /></AnimateOnView>
-      ))}
+      ))}</div>
       {/* pagination */}
-      <DashboardTablesPagination
+      <div className="mt-auto"><DashboardTablesPagination
         page={page}
         setPage={setPage}
         totalPages={data?.totalPages ?? 1}
-      />
+      /></div>
     </div>
   );
 };

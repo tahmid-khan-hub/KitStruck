@@ -5,7 +5,7 @@ import OrderRow from "./OrderRow";
 export default function OrdersTable({ Myorders }: { Myorders: orders[] }) {
   const { data: session } = useSession(); 
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto min-h-125 flex flex-col justify-between">
       <table className="table w-full border border-gray-200">
         <thead className="bg-gray-100">
           <tr>

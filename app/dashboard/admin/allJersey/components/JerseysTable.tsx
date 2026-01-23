@@ -4,7 +4,7 @@ import JerseysTableRow from "./JerseysTableRow";
 
 const JerseysTable = ({ jerseys }: { jerseys: Jersey[] }) => {
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto min-h-215 flex flex-col justify-between">
       <table className="table w-full border border-gray-200">
         <thead className="bg-gray-100">
           <tr>

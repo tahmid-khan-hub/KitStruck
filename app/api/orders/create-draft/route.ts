@@ -11,7 +11,7 @@ export async function POST(req: Request) {
   const session = await getServerSession(authOptions);
   if (!session?.user) return NextResponse.json({ error:"Unauthorized" }, { status: 401 });
 
-  const { jersey_id, size, quantity, division, address, phone } = await req.json();
+  const { jersey_id, size, quantity, division, address, phone, offer } = await req.json();
 
   try {
     const result = await pool.query<jerseyPrice>(
@@ -21,7 +21,9 @@ export async function POST(req: Request) {
 
     if (!result.rows.length) return NextResponse.json({ error: "Invalid jersey" }, { status: 400 });
     
-    const totalAmount = result.rows[0].price * quantity;
+    const jerseyPrice = result.rows[0].price;
+    const totalAmount = offer > 0 ? jerseyPrice - (jerseyPrice * Number(offer)) / 100 : jerseyPrice;
+    // const totalAmount = result.rows[0].price * quantity;
 
     const orderResult = await pool.query(
         `INSERT INTO orders

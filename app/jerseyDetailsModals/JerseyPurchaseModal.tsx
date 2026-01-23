@@ -44,6 +44,7 @@ export default function JerseyPurchaseModal({ jersey, available, open, onClose }
     division: location.division,
     address: location.address,
     phone: location.phone,
+    offer: offer,
   };
 
   const createOrderMutation = useMutation({

@@ -17,8 +17,10 @@ export default function CartList({ item, handleRemove,}: Props) {
   const [openModal, setOpenModal] = useState(false);
   const available = item?.stock - item?.sold_quantity;
   const {data: session} = useSession();
-  const hasOffer = typeof item.offer === "number" && item.offer > 0;
-  const discountedPrice = hasOffer ? (item.price - (item.price * item.offer) / 100).toFixed(2) : item.price.toFixed(2);
+
+  const price = Number(item.price);
+  const offer = Number(item.offer ?? 0);
+  const discountedPrice = offer > 0 ? (price - (price * offer) / 100).toFixed(2) : price.toFixed(2);
   return (
   <div className="overflow-x-auto">
   <div className="min-w-[750px]"> 

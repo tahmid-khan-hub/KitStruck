@@ -68,8 +68,9 @@ const SignUpForm = ({ callbackUrl }: SignUpFormProps) => {
           type="text"
           name="photo"
           placeholder="Enter your PhotoURL"
-          className="input input-bordered w-full mb-6"
+          className="input input-bordered w-full "
         />
+        <p className="text-sm text-gray-400 mb-6 -mt-2">(Photo is optional)</p>
         <input
           type="email"
           name="email"

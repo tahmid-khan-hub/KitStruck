@@ -19,9 +19,9 @@ async function getJersey(id: string): Promise<Jersey | null> {
   }
 }
 
-export default async function JerseyDetailsPage({params}: { params: Promise<{ id: string }>; }) {
+export default async function JerseyDetailsPage({params}: { params: Promise<{ id: string }>;
+}) {
   const { id } = await params; 
-  console.log(id);
 
   const jersey: Jersey | null = await getJersey(id);
 

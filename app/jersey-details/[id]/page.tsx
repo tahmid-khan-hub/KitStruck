@@ -1,7 +1,6 @@
 import { Jersey } from "@/types/jersey";
 import JerseyDetailsContainer from "./components/JerseyDetails/JerseyDetailsContainer";
-import Lottie from "react-lottie-player";
-import noMyOrders from "@/public/No Item Found.json"
+import JerseyDetailsLottie from "./components/JerseyDetails/JerseyDetailsLottie";
 
 async function getJersey(id: string): Promise<Jersey | null> {
   try {
@@ -27,16 +26,7 @@ export default async function JerseyDetailsPage(props: {
 
   const jersey: Jersey | null = await getJersey(id);
 
-  if (!jersey) {
-    return <div className="flex flex-col items-center justify-center py-10">
-      <Lottie
-        animationData={noMyOrders}
-        loop={true}
-        className="w-64 h-64"
-      />
-      <p className="text-gray-500 text-lg mt-4">Jersey not found</p>
-    </div>;
-  }
+  if (!jersey) return <JerseyDetailsLottie />
 
   return (
     <div className="max-w-[1350px] mx-auto px-4 md:px-3 p-8 py-12 min-h-screen">

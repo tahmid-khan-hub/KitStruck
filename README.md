@@ -1,23 +1,23 @@
 # KitStruck
 
 ### Project Overview
-**KitStruck** is an e-commerce platform where users can browse and purchase authentic jerseys of their favorite teams. They can buy their favorite jerseys via COD or Stripe, enjoying a secure payment system and a smooth, seamless shopping experience.
+**KitStruck** is an e-commerce platform where users can browse and purchase authentic jerseys of their favorite teams. They can buy their favorite jerseys via Cash on Delivery (COD) or Stripe, enjoying a secure payment system and a smooth, seamless shopping experience.
 
 ---
 
 ### Key Features
 **User Features**
-🛒 Browse jerseys and purchase with Cash on Delivery (COD) or Stripe.
-⭐ Give reviews for purchased jerseys.
-💬 Submit issues or support requests to admins.
-📊 View all orders in a clean, intuitive dashboard.
+- 🛒 Browse jerseys and purchase with Cash on Delivery (COD) or Stripe.
+- ⭐ Give reviews for purchased jerseys.
+- 💬 Submit issues or support requests to admins.
+- 📊 View all orders in a clean, intuitive dashboard.
 
 **Admin Features**
-📈 View overall stats: total jerseys, users, earned revenue, reviews and recent user activity.
-📊 Access graph-based analytics for performance tracking.
-✅ Manage orders: update delivery status and process user requests.
-🎽 Manage jerseys: add, update or remove products easily.
-🛠 Monitor user activity and reviews to maintain quality and engagement.
+- 📈 View overall stats: total jerseys, users, earned revenue, reviews and recent user activity.
+- 📊 Access graph-based analytics for performance tracking.
+- ✅ Manage orders: update delivery status and process user requests.
+- 🎽 Manage jerseys: add, update or remove products easily.
+- 🛠 Monitor user activity and reviews to maintain quality and engagement.
 
 ---
 
@@ -63,6 +63,17 @@ NEXTAUTH_SECRET=
 DATABASE_URL=
 ```
 
+---
+
+### Future improvements
+1. **Order Tracking System**
+- Allow users to track order status in real time (Processing → Shipped → Out for Delivery → Delivered) with timeline updates.
+
+2. **Map Integration for Delivery Address**
+- Integrate Google Maps / Mapbox during checkout so users can pin their exact delivery location for more accurate shipping.
+
+3. **Real-Time Customer Support Chat**
+- Replace the current request-based support system with a real-time chat experience.
 
 ---
 
@@ -327,5 +338,9 @@ DATABASE_URL=
 ├── middleware.ts
 ├── README.md
 └── package.json
+```
 
+---
 
+### 🔗 Live Link
+- 🌐 [Live Site](https://kit-struck.vercel.app)

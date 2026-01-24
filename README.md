@@ -5,6 +5,22 @@
 
 ---
 
+### Key Features
+**User Features**
+🛒 Browse jerseys and purchase with Cash on Delivery (COD) or Stripe.
+⭐ Give reviews for purchased jerseys.
+💬 Submit issues or support requests to admins.
+📊 View all orders in a clean, intuitive dashboard.
+
+**Admin Features**
+📈 View overall stats: total jerseys, users, earned revenue, reviews and recent user activity.
+📊 Access graph-based analytics for performance tracking.
+✅ Manage orders: update delivery status and process user requests.
+🎽 Manage jerseys: add, update or remove products easily.
+🛠 Monitor user activity and reviews to maintain quality and engagement.
+
+---
+
 ### Tech Stack & Dependencies
 - **Next.js 16** – Fast and SEO-friendly React framework
 - **React 19** – Scalable frontend for dynamic UI
@@ -20,9 +36,6 @@
 - **React Fast Marquee** – Smooth scrolling banners or promotions
 - **Swiper & React Slick** – Carousel sliders for featured jerseys
 - **bcryptjs & jsonwebtoken** – Secure password hashing and JWT-based authentication
-
----
-
 
 ---
 

@@ -39,6 +39,33 @@
 
 ---
 
+### How to run locally
+
+1. **Clone the repository & install dependencies**
+```bash
+git clone https://github.com/tahmid-khan-hub/kit-struck.git
+cd kit-struck
+
+npm install
+npm run dev
+```
+
+2. **Set up project**
+**Environment Variables**
+Create `.env.local` and set the keys
+```bash
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=
+STRIPE_SECRET_KEY=
+NEXT_PUBLIC_BASE_URL=
+GOOGLE_CLIENT_SECRET=
+GOOGLE_CLIENT_ID=
+NEXTAUTH_SECRET=
+DATABASE_URL=
+```
+
+
+---
+
 ### Folder Structure
 ```bash
 ├── public/

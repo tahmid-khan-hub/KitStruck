@@ -43,7 +43,7 @@
 
 1. **Clone the repository & install dependencies**
 ```bash
-git clone https://github.com/tahmid-khan-hub/kit-struck.git
+git clone https://github.com/tahmid-khan-hub/KitStruck.git
 cd kit-struck
 
 npm install

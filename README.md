@@ -24,3 +24,265 @@
 ---
 
 
+---
+
+### Folder Structure
+├── public
+    ├── logo.png
+    ├── banner2.jpg
+    ├── default.png
+    ├── banner1.jpeg
+    ├── banner3.avif
+    ├── forbidden.png
+    ├── Navbar-logo.png
+    ├── default_user.jpg
+    └── Sign In image.png
+├── postcss.config.mjs
+├── app
+    ├── hooks
+    │   ├── isValidUrl.ts
+    │   ├── useAxiosSecure.ts
+    │   ├── Logo.tsx
+    │   ├── NavLink.tsx
+    │   ├── ActiveLink.tsx
+    │   ├── Menu.tsx
+    │   ├── AnimateOnView.tsx
+    │   └── UseSweetAlert.tsx
+    ├── api
+    │   ├── auth
+    │   │   └── [...nextauth]
+    │   │   │   └── route.ts
+    │   ├── kitsTruck
+    │   │   ├── topSelling
+    │   │   │   └── route.ts
+    │   │   ├── retro
+    │   │   │   └── route.ts
+    │   │   └── newArrivals
+    │   │   │   └── route.ts
+    │   ├── admin
+    │   │   ├── add-jersey
+    │   │   │   └── route.ts
+    │   │   ├── recent
+    │   │   │   └── users
+    │   │   │   │   └── route.ts
+    │   │   ├── manage-orders
+    │   │   │   ├── [order_id]
+    │   │   │   │   └── route.ts
+    │   │   │   └── route.ts
+    │   │   ├── stats
+    │   │   │   └── route.ts
+    │   │   ├── support
+    │   │   │   └── route.ts
+    │   │   └── allJersey
+    │   │   │   ├── route.ts
+    │   │   │   └── jersey-form
+    │   │   │       └── route.ts
+    │   ├── jersey-details
+    │   │   └── [id]
+    │   │   │   └── route.ts
+    │   ├── user
+    │   │   ├── myOrders
+    │   │   │   ├── lastOrders
+    │   │   │   │   └── route.ts
+    │   │   │   └── route.ts
+    │   │   ├── user-stats
+    │   │   │   └── route.ts
+    │   │   ├── support
+    │   │   │   └── route.ts
+    │   │   └── review
+    │   │   │   └── route.ts
+    │   ├── cart
+    │   │   ├── sync-merge
+    │   │   │   └── route.ts
+    │   │   ├── route.ts
+    │   │   └── sync
+    │   │   │   └── route.ts
+    │   ├── jerseys
+    │   │   └── route.ts
+    │   ├── orders
+    │   │   └── create-draft
+    │   │   │   └── route.ts
+    │   └── payment
+    │   │   ├── payment-intent
+    │   │       └── route.ts
+    │   │   └── save-payment
+    │   │       └── route.ts
+    ├── providers.tsx
+    ├── components
+    │   ├── Banner
+    │   │   ├── BannerWrapper.tsx
+    │   │   └── Banner.tsx
+    │   ├── LayoutVisibility
+    │   │   └── LayoutVisibility.tsx
+    │   ├── CartSync
+    │   │   └── CartSync.tsx
+    │   ├── Review
+    │   │   ├── ReviewCard.tsx
+    │   │   └── Review.tsx
+    │   ├── Footer
+    │   │   └── Footer.tsx
+    │   ├── WhyChooseUs
+    │   │   └── WhyChooseUs.tsx
+    │   └── NewArrivals
+    │   │   └── NewArrivals.tsx
+    ├── dashboard
+    │   ├── components
+    │   │   ├── OrdersTable
+    │   │   │   ├── OrdersSkeleton.tsx
+    │   │   │   ├── OrdersTable.tsx
+    │   │   │   └── OrderRow.tsx
+    │   │   ├── DashboardSidebar
+    │   │   │   └── SidebarAnimation.ts
+    │   │   ├── DashboardTablesPagination
+    │   │   │   └── DashboardTablesPagination.tsx
+    │   │   ├── CategoryDrawer
+    │   │   │   └── CategoryDrawer.tsx
+    │   │   └── DashboardNavbar
+    │   │   │   └── DashboardNavbar.tsx
+    │   ├── admin
+    │   │   ├── addJersey
+    │   │   │   ├── page.tsx
+    │   │   │   └── components
+    │   │   │   │   ├── FormFields.tsx
+    │   │   │   │   └── AddJerseyForm.tsx
+    │   │   ├── allJersey
+    │   │   │   ├── components
+    │   │   │   │   ├── JerseysTableSkeleton.tsx
+    │   │   │   │   ├── JerseysTable.tsx
+    │   │   │   │   └── JerseysTableRow.tsx
+    │   │   │   ├── jersey-form
+    │   │   │   │   ├── page.tsx
+    │   │   │   │   └── components
+    │   │   │   │   │   ├── JerseyFormClient.tsx
+    │   │   │   │   │   ├── JerseyFormSkeleton.tsx
+    │   │   │   │   │   └── JerseyForm.tsx
+    │   │   │   └── page.tsx
+    │   │   ├── supportAndIssues
+    │   │   │   ├── components
+    │   │   │   │   ├── AllSupportAndIssuesLottie.tsx
+    │   │   │   │   ├── AllSupportAndIssuesSkeleton.tsx
+    │   │   │   │   └── AllSupportAndIssues.tsx
+    │   │   │   └── page.tsx
+    │   │   ├── adminProfile
+    │   │   │   ├── RecentData
+    │   │   │   │   ├── RecentDataSkeleton.tsx
+    │   │   │   │   └── RecentData.tsx
+    │   │   │   ├── StatsCards
+    │   │   │   │   ├── StatsSkeleton.tsx
+    │   │   │   │   └── StatsCards.tsx
+    │   │   │   └── DashboardGraph
+    │   │   │   │   ├── DashboardGraphSkeleton.tsx
+    │   │   │   │   └── DashboardGraph.tsx
+    │   │   ├── page.tsx
+    │   │   └── manageOrders
+    │   │   │   └── page.tsx
+    │   ├── user
+    │   │   ├── reviewPage
+    │   │   │   ├── page.tsx
+    │   │   │   └── components
+    │   │   │   │   └── ReviewForm.tsx
+    │   │   ├── UserDashboardContent
+    │   │   │   ├── LastOrders
+    │   │   │   │   ├── LastOrdersSkeleton.tsx
+    │   │   │   │   ├── LastOrdersEmpty.tsx
+    │   │   │   │   └── LastOrders.tsx
+    │   │   │   ├── UserStats
+    │   │   │   │   ├── UserStatsSkeleton.tsx
+    │   │   │   │   └── UserStats.tsx
+    │   │   │   └── UserDashboardContent.tsx
+    │   │   ├── page.tsx
+    │   │   ├── supportPage
+    │   │   │   ├── components
+    │   │   │   │   ├── SupportPageHistoryEmpty.tsx
+    │   │   │   │   ├── SupportPageHistorySkeleton.tsx
+    │   │   │   │   ├── SupportPageDropDown.tsx
+    │   │   │   │   └── SupportPageForm.tsx
+    │   │   │   └── page.tsx
+    │   │   └── myOrders
+    │   │   │   └── page.tsx
+    │   ├── page.tsx
+    │   └── layout.tsx
+    ├── jerseyDetailsModals
+    │   ├── JerseyTotalPrice.tsx
+    │   ├── JerseyPurchasePaymentMethod.tsx
+    │   ├── JerseySizeSelector.tsx
+    │   ├── JerseyLoginModal.tsx
+    │   └── JerseyPurchaseLocation.tsx
+    ├── sign-in
+    │   ├── page.tsx
+    │   └── components
+    │   │   ├── SignInFormSkeleton.tsx
+    │   │   ├── SignInPageClient.tsx
+    │   │   └── SignInForm.tsx
+    ├── sign-up
+    │   ├── page.tsx
+    │   └── components
+    │   │   ├── SignUpFormSkeleton.tsx
+    │   │   └── SignUpPageClient.tsx
+    ├── payment
+    │   ├── page.tsx
+    │   ├── PaymentPageClient.tsx
+    │   └── CheckoutForm.tsx
+    ├── SkeletonLoading
+    │   ├── CardSkeleton.tsx
+    │   ├── PaymentSkeleton.tsx
+    │   ├── JerseyCardSkeleton.tsx
+    │   ├── ReviewCardSkeleton.tsx
+    │   └── JerseyDetailsSkeleton.tsx
+    ├── jersey-details
+    │   └── [id]
+    │   │   ├── components
+    │   │       └── JerseyDetails
+    │   │       │   ├── JerseyDetailsLottie.tsx
+    │   │       │   ├── JerseyDetails.tsx
+    │   │       │   ├── JerseyDetailsButtons.tsx
+    │   │       │   └── JerseyDetailsContainer.tsx
+    │   │   └── page.tsx
+    ├── QueryProvider.tsx
+    ├── jerseys
+    │   ├── components
+    │   │   ├── JerseyLottie.tsx
+    │   │   ├── JerseyPagination.tsx
+    │   │   └── dropDown.tsx
+    │   └── page.tsx
+    ├── page.tsx
+    ├── not-found.tsx
+    ├── cart
+    │   └── components
+    │   │   ├── EmptyCartLottie.tsx
+    │   │   ├── CartSkeleton.tsx
+    │   │   └── CartList.tsx
+    ├── actions
+    │   └── auth
+    │   │   ├── signInUsers.ts
+    │   │   └── signUpUsers.ts
+    ├── forbidden
+    │   └── page.tsx
+    ├── layout.tsx
+    ├── globals.css
+    └── about
+    │   └── page.tsx
+├── types
+    ├── db.ts
+    ├── review.ts
+    ├── PaginatedSupportIssues.ts
+    ├── SupportIssue.ts
+    ├── jerseyPayload.ts
+    ├── PaymentRow.ts
+    ├── orders.ts
+    ├── jersey.ts
+    ├── next-auth.d.ts
+    └── ordersType.ts
+├── lib
+    ├── mysql.ts
+    ├── postgresql.ts
+    └── authOptions.ts
+├── next.config.ts
+├── eslint.config.mjs
+├── .gitignore
+├── tsconfig.json
+├── middleware.ts
+├── README.md
+└── package.json
+
+

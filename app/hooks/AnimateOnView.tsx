@@ -49,7 +49,7 @@ const AnimateOnView = ({
       initial={getInitial(direction, distance)}
       whileInView={{ opacity: 1, x: 0, y: 0, scale: 1 }}
       viewport={{
-        once: false, 
+        once: true, 
         amount,
       }}
       transition={transition}
